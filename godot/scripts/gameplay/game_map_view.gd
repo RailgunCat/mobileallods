@@ -461,6 +461,15 @@ func _draw_weather() -> void:
 func _portrait_rect(index: int) -> Rect2:
 	return Rect2(28, 62 + index * 58, 40, 52)
 
+func actor_portrait_texture(actor) -> Texture2D:
+	if ui_icons != null: return ui_icons.actor_portrait(actor.unit_type, session.definitions)
+	return textures[int(session.definitions["portrait_images"][actor.unit_type])]
+
+func _draw_actor_portrait(actor, bounds: Rect2, tint: Color = Color.WHITE) -> void:
+	var texture: Texture2D = actor_portrait_texture(actor)
+	var destination: Rect2 = preload("res://scripts/gameplay/ui_icons.gd").fit_rect(texture, bounds)
+	draw_texture_rect(texture, destination, false, tint)
+
 func _draw_battle_hud() -> void:
 	if ui_frame != null: ui_frame.draw(get_canvas_item(), Rect2(Vector2.ZERO, size))
 	if session == null or battle == null or not battle.active or session.mode != &"battle" or battle.outcome != &"": return
@@ -469,8 +478,7 @@ func _draw_battle_hud() -> void:
 	for i in range(session.party.size()):
 		var actor = session.party[i]
 		var rect: Rect2 = _portrait_rect(i)
-		var image_id: int = int(session.definitions["portrait_images"][actor.unit_type])
-		draw_texture_rect(ui_icons.portrait(image_id) if ui_icons != null else textures[image_id], rect, false, Color(0.4, 0.4, 0.4) if actor.dead else Color.WHITE)
+		_draw_actor_portrait(actor, rect, Color(0.4, 0.4, 0.4) if actor.dead else Color.WHITE)
 		if actor.instance_id == battle.selected_id: draw_rect(rect.grow(2), Color.GREEN, false, 2)
 		var ap: float = float(actor.stats[Stat.HP]) / maxi(1, actor.stats[Stat.MAX_HP])
 		draw_rect(Rect2(rect.end + Vector2(4, -rect.size.y * ap), Vector2(3, rect.size.y * ap)), Color.GREEN)
@@ -483,7 +491,7 @@ func _draw_battle_hud() -> void:
 	if focused != null:
 		var bottom: float = hud_obstruction.get_global_rect().position.y - global_position.y if hud_obstruction != null and hud_obstruction.visible else size.y - 20
 		var point := Vector2(size.x * 0.25, bottom - 80)
-		draw_texture_rect(ui_icons.portrait(int(session.definitions["portrait_images"][focused.unit_type])) if ui_icons != null else textures[int(session.definitions["portrait_images"][focused.unit_type])], Rect2(point, Vector2(40, 52)), false)
+		_draw_actor_portrait(focused, Rect2(point, Vector2(40, 52)))
 		var bar := Rect2(point + Vector2(72, 23), Vector2(150, 12))
 		draw_rect(bar, Color("003200"))
 		draw_rect(Rect2(bar.position, Vector2(bar.size.x * focused.stats[Stat.HP] / float(maxi(1, focused.stats[Stat.MAX_HP])), bar.size.y)), Color.GREEN)

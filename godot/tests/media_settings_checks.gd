@@ -29,6 +29,18 @@ func run(root, checks) -> void:
 	root.preferences.update("hd_icons", false, false)
 	checks.check(root.sound_effects.streams.size() == 183 and root.sound_effects.voices.size() == 12, "selected WAV pack decodes into a bounded pool")
 	checks.check(root.ui_icons.portraits.size() == 24 and root.ui_icons.spells.size() == 16, "all HD portrait and spell IDs load as native textures")
+	for kind in range(Ids.UnitKind.TAGRIM, Ids.UnitKind.POISONED_TROLL + 1):
+		root.preferences.update("hd_icons", true, false)
+		var image_id: int = int(root.metadata["portrait_images" if kind in Ids.HERO_TYPES else "unit_portrait_images"][kind])
+		checks.check(root.ui_icons.actor_portrait(kind, root.metadata) == root.ui_icons.portraits[image_id], "HD battle portrait identifies unit type %d rather than a shared dialogue ID" % kind)
+		root.preferences.update("hd_icons", false, false)
+		checks.check(root.ui_icons.actor_portrait(kind, root.metadata) == root.view.textures[int(root.metadata["portrait_images"][kind])], "HD off preserves the original portrait for unit type %d" % kind)
+	root.preferences.update("hd_icons", true, false)
+	var bat_portrait: Texture2D = root.ui_icons.portraits[212]
+	root.ui_icons.portraits.erase(212)
+	checks.check(root.ui_icons.actor_portrait(Ids.UnitKind.BAT, root.metadata) == root.view.textures[212], "missing HD bat portrait falls back to the original bat, never a mage")
+	root.ui_icons.portraits[212] = bat_portrait
+	root.preferences.update("hd_icons", false, false)
 	var legacy: Texture2D = root.ui_icons.portrait(16)
 	var old_spell: Texture2D = root.ui_icons.spell(0)
 	checks.check(legacy == root.view.textures[16] and old_spell is AtlasTexture, "HD off uses the exact original resources")

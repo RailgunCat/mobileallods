@@ -91,5 +91,12 @@ and exact mouse alignment; screen UVs remain unchanged. No temporal flicker.
 The setting starts off and persists independently of saves.
 Visual reference: https://docs.libretro.com/shader/crt/ (CRT-aperture).
 The shader is an original implementation, not a port of a RetroArch preset.
+
+HD battle portraits resolve creature identity through unit_portrait_images,
+not the shared dialogue portrait table. Bat/vampire type 12 uses image 212;
+squirrel, goblin, skeleton and other creatures use their own unit portrait IDs.
+Hero portraits retain the established dialogue portraits. HD off preserves the
+original game lookup. A missing HD creature portrait falls back to the original
+unit portrait, and all HUD portraits fit their slots without stretching.
 In-engine QA captures: build/portrait-li-fixed.png, cursor-spell.png, crt-off.png,
 crt-on.png and settings-crt.png (tests/capture_interaction.gd).
