@@ -16,6 +16,7 @@ const SaveService = preload("res://scripts/gameplay/save_service.gd")
 const SaveSlots = preload("res://scripts/gameplay/save_slots.gd")
 const MediaSettingsChecks = preload("res://tests/media_settings_checks.gd")
 const InteractionChecks = preload("res://tests/ui_interaction_checks.gd")
+const CorpseTargetingChecks = preload("res://tests/corpse_targeting_checks.gd")
 const PresentationChecks = preload("res://tests/presentation_checks.gd")
 const SaveChecks = preload("res://tests/save_checks.gd")
 const FullCampaignChecks = preload("res://tests/full_campaign_checks.gd")
@@ -802,6 +803,7 @@ func _refresh_battle() -> void:
 	attack_button.text = "Стрелять в цель" if actor.stats[Stat.ARCHERY] > 0 else "Ударить цель"
 	if not attack_button.disabled:
 		attack_button.disabled = not battle.attack_plan(actor, battle.unit(attack_target_id))["valid"]
+		if battle.unit(attack_target_id).dead: attack_button.text = "Уничтожить тело"
 	if selected_spell >= 0:
 		attack_button.text = "Применить заклинание"
 		attack_button.disabled = not battle.can_input() or not battle.cast_plan(actor, selected_spell, cast_cell)["valid"]
@@ -902,7 +904,7 @@ func _select_battle_cell(cell: Vector2i, append_shot: bool = false) -> void:
 	for id: int in battle.participants:
 		var actor = battle.unit(id)
 		if Rect2i(actor.cell, actor.footprint).has_point(cell):
-			if actor.shattered: return
+			if actor.shattered: continue
 			if actor.dead and actor.side_id == Side.PARTY:
 				status.text = "%s повержен. Тело пока занимает клетки." % _unit_name(actor)
 				return
@@ -931,6 +933,7 @@ func _select_battle_cell(cell: Vector2i, append_shot: bool = false) -> void:
 				view.route_cells = route.duplicate()
 				view.route_exact = plan["valid"]
 				status.text = "%s · HP %d/%d.\n%s" % [_unit_name(actor), actor.stats[Stat.HP], actor.stats[Stat.MAX_HP], "Повторный клик или кнопка — атаковать." if plan["valid"] else "Не хватает ОД для подхода или цель вне дальности."]
+				if actor.dead and plan["valid"]: status.text = "Тело: %s. Повторный клик или «Уничтожить тело» освободит проход." % _unit_name(actor)
 				_refresh_battle()
 				attack_button.disabled = not plan["valid"]
 			return
@@ -1654,6 +1657,7 @@ func _run_checks() -> void:
 	SaveChecks.new().run_autosave_ui(self, checks)
 	MediaSettingsChecks.new().run(self, checks)
 	InteractionChecks.new().run(self, checks)
+	CorpseTargetingChecks.new().run(self, checks)
 	PresentationChecks.new().run(self, checks)
 	await PresentationChecks.new().layout(self, checks)
 	_snapshot()
