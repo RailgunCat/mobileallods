@@ -95,12 +95,18 @@ The shader is an original implementation, not a port of a RetroArch preset.
 HD battle portraits resolve creature identity through unit_portrait_images,
 not the shared dialogue portrait table. Bat/vampire type 12 uses image 212;
 squirrel, goblin, skeleton and other creatures use their own unit portrait IDs.
-Hero portraits retain the established dialogue portraits. HD off preserves the
-original game lookup. A missing HD creature portrait falls back to the original
+Hero portraits retain the established dialogue portraits. With HD off, creatures
+use their original unit portraits as requested, so bats and skeletons retain
+their identity in both modes. A missing HD creature portrait falls back to the original
 unit portrait, and all HUD portraits fit their slots without stretching.
 During the enemy turn, the lower combat HUD keeps the acting enemy's identity;
 recent hit feedback must not replace it with the allied victim's portrait.
 Real enemy-turn captures before/after impact: build/bat-enemy-turn-start.png and
 bat-enemy-turn-after-hit.png (tests/capture_bat_portrait.gd).
+
+Firewall uses the original flame PNG with independently swaying vertical strips,
+a breathing glow and rising pixel embers; keep its feet anchored to the hazard
+cell. It samples presentation time without consuming combat RNG. Green movement
+route dots are visible in ordinary battle movement mode, including hover preview.
 In-engine QA captures: build/portrait-li-fixed.png, cursor-spell.png, crt-off.png,
 crt-on.png and settings-crt.png (tests/capture_interaction.gd).

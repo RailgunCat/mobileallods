@@ -18,6 +18,8 @@ const MediaSettingsChecks = preload("res://tests/media_settings_checks.gd")
 const InteractionChecks = preload("res://tests/ui_interaction_checks.gd")
 const CorpseTargetingChecks = preload("res://tests/corpse_targeting_checks.gd")
 const ReportedUIChecks = preload("res://tests/reported_ui_checks.gd")
+const MapFourChecks = preload("res://tests/map_four_checks.gd")
+const CombatNavigationChecks = preload("res://tests/combat_navigation_checks.gd")
 const PresentationChecks = preload("res://tests/presentation_checks.gd")
 const SaveChecks = preload("res://tests/save_checks.gd")
 const FullCampaignChecks = preload("res://tests/full_campaign_checks.gd")
@@ -1071,7 +1073,9 @@ func _update_cursor() -> void:
 	var on_map: bool = hovered == view or (hovered != null and view.is_ancestor_of(hovered))
 	var point: Vector2 = view.get_local_mouse_position()
 	on_map = on_map and Rect2(Vector2.ZERO, view.size).has_point(point)
-	cursors.apply(cursors.resolve(self, point, on_map), ui_icons)
+	var state: Dictionary = cursors.resolve(self, point, on_map)
+	view.set_movement_preview(state)
+	cursors.apply(state, ui_icons)
 
 
 func _route_finished(blocked: bool) -> void:
@@ -1660,6 +1664,8 @@ func _run_checks() -> void:
 	InteractionChecks.new().run(self, checks)
 	CorpseTargetingChecks.new().run(self, checks)
 	ReportedUIChecks.new().run(self, checks)
+	MapFourChecks.new().run(checks, world, metadata, table, rewards, campaign_data)
+	CombatNavigationChecks.new().run(self, checks)
 	PresentationChecks.new().run(self, checks)
 	await PresentationChecks.new().layout(self, checks)
 	_snapshot()

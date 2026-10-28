@@ -58,6 +58,27 @@ static func fire_glow() -> Texture2D:
 	# m.t(): 40x40 ARGB4444 radial orange glow (0xe72), with stepped alpha.
 	return _radial_glow(Color(14.0 / 15, 7.0 / 15, 2.0 / 15))
 
+static func fire_wall_strips(cell: Vector2i, clock: float, source_size: Vector2) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var tick: int = int((clock + 0.000000001) / STEP)
+	var base := Vector2(cell * 16 + Vector2i(8, 12))
+	for index in range(8):
+		var phase: float = tick * 0.65 + index * 0.9 + cell.x * 0.7 + cell.y
+		var height: float = 24 + roundf(sin(phase) * 3)
+		var sway: float = roundf(sin(phase * 0.8) * 1.5)
+		result.append({"source": Rect2(source_size.x * index / 8.0, 0, source_size.x / 8.0, source_size.y), "destination": Rect2(base.x - 12 + index * 3 + sway, base.y - height, 4, height)})
+	return result
+
+static func fire_wall_sparks(cell: Vector2i, clock: float) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var tick: int = int((clock + 0.000000001) / STEP)
+	var origin := Vector2(cell * 16 + Vector2i(8, 8))
+	for index in range(7):
+		var seed: int = _hash(cell.x * 173 + cell.y * 317 + index * 997)
+		var age: float = float((tick + seed % 19) % 19) / 19.0
+		result.append({"point": (origin + Vector2(seed % 23 - 11 + sin(age * TAU + index) * 2, 3 - age * 34)).floor(), "alpha": 1.0 - age, "size": 1 + seed % 2})
+	return result
+
 
 static func ice_glow() -> Texture2D:
 	return _radial_glow(Color(0.25, 0.6, 1.0, 0.75))

@@ -34,7 +34,7 @@ func run(root, checks) -> void:
 		var image_id: int = int(root.metadata["portrait_images" if kind in Ids.HERO_TYPES else "unit_portrait_images"][kind])
 		checks.check(root.ui_icons.actor_portrait(kind, root.metadata) == root.ui_icons.portraits[image_id], "HD battle portrait identifies unit type %d rather than a shared dialogue ID" % kind)
 		root.preferences.update("hd_icons", false, false)
-		checks.check(root.ui_icons.actor_portrait(kind, root.metadata) == root.view.textures[int(root.metadata["portrait_images"][kind])], "HD off preserves the original portrait for unit type %d" % kind)
+		checks.check(root.ui_icons.actor_portrait(kind, root.metadata) == root.view.textures[image_id], "HD off uses the original species portrait for unit type %d" % kind)
 	root.preferences.update("hd_icons", true, false)
 	var bat_portrait: Texture2D = root.ui_icons.portraits[212]
 	root.ui_icons.portraits.erase(212)

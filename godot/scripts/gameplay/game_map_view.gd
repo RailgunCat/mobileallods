@@ -17,6 +17,7 @@ var show_collision: bool = false
 var show_reachable: bool = false
 var show_debug_markers: bool = false
 var route_cells: Array[Vector2i] = []
+var movement_preview: Array[Vector2i] = []
 var route_exact: bool = true
 signal camera_follow_changed(enabled: bool)
 var camera_follow: bool = true
@@ -278,6 +279,9 @@ func _draw_ground_overlay() -> void:
 				draw_rect(rect.grow(-1), Color(0.2, 0.9, 0.6, 0.16))
 			var zone: int = zone_image(cell)
 			if zone >= 0: draw_texture(textures[zone], rect.position)
+	if battle != null and battle.can_input() and zone_action == &"move":
+		for cell: Vector2i in movement_preview:
+			draw_circle(Vector2(cell * 16 + Vector2i(8, 8)), 1.25, Color.GREEN)
 	if not show_debug_markers: return
 	var points := PackedVector2Array([follow_point])
 	for cell in route_cells:
@@ -326,6 +330,9 @@ func _draw_foreground_overlay() -> void:
 					else: draw_texture_rect_region(textures[sprite["atlas"]], destination, Rect2(int(sprite["frame"]) * 21, 0, 21, 20))
 		for hazard: Dictionary in battle.hazards:
 			var point: Vector2 = Vector2(hazard["cell"]) * 16 + Vector2(8, 8)
+			if int(hazard["spell"]) == Spell.FIRE_WALL:
+				_draw_fire_wall(hazard["cell"])
+				continue
 			var id: int = ImageId.FIRE_WALL if int(hazard["spell"]) == Spell.FIRE_WALL else ImageId.MIASMA
 			if textures.has(id): draw_texture_rect(textures[id], Rect2(point - Vector2(12, 20), Vector2(24, 24)), false)
 		if not battle.current.is_empty() and battle.current.get("phase") == "flight":
@@ -395,6 +402,21 @@ func _draw_foreground_overlay() -> void:
 		draw_arc(point, 8, 0, TAU, 24, Color("77ffd2"), 1.0 / pixel_scale)
 
 
+func set_movement_preview(state: Dictionary) -> void:
+	movement_preview.clear()
+	if state.get("kind", "") == "move" and not state.get("blocked", true): movement_preview.assign(state.get("path", []))
+
+func _draw_fire_wall(cell: Vector2i) -> void:
+	if _fire_glow == null: _fire_glow = SpellVisuals.fire_glow()
+	var texture: Texture2D = textures[ImageId.FIRE_WALL]
+	var point := Vector2(cell * 16 + Vector2i(8, 8))
+	var pulse: float = 0.50 + 0.12 * sin(combat_feedback.clock * 9 + cell.x + cell.y)
+	draw_texture(_fire_glow, point - Vector2(20, 24), Color(1, 0.8, 0.5, pulse))
+	for strip: Dictionary in SpellVisuals.fire_wall_strips(cell, combat_feedback.clock, texture.get_size()):
+		draw_texture_rect_region(texture, strip["destination"], strip["source"])
+	for spark: Dictionary in SpellVisuals.fire_wall_sparks(cell, combat_feedback.clock):
+		draw_rect(Rect2(spark["point"], Vector2.ONE * int(spark["size"])), Color(1, 0.65, 0.12, spark["alpha"]))
+
 func _draw_lightning(cell: Vector2i, elapsed: float) -> void:
 	# i.a(Graphics): two unscaled image-192 copies, revealed top to bottom
 	# in half-image steps every 100 ms. Anchor to the cell's feet, not flight_to.
@@ -463,7 +485,8 @@ func _portrait_rect(index: int) -> Rect2:
 
 func actor_portrait_texture(actor) -> Texture2D:
 	if ui_icons != null: return ui_icons.actor_portrait(actor.unit_type, session.definitions)
-	return textures[int(session.definitions["portrait_images"][actor.unit_type])]
+	var table: String = "portrait_images" if actor.unit_type in Ids.HERO_TYPES else "unit_portrait_images"
+	return textures[int(session.definitions[table][actor.unit_type])]
 
 func _draw_actor_portrait(actor, bounds: Rect2, tint: Color = Color.WHITE) -> void:
 	var texture: Texture2D = actor_portrait_texture(actor)

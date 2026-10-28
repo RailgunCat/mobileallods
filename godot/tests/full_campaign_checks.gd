@@ -70,7 +70,7 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, rew
 			checks.check(story.fault.is_empty() and (not story.busy() or fixture.mode in [&"travel", &"world_map"]), "campaign scene %d script %d executes or hands off: %s" % [location, id, story.fault])
 			if id == 137: checks.check(forced.size() == 1 and not forced[0].is_empty(), "script 137 requests its marked encounter once after completion")
 			count += 1
-	checks.check(count == 147, "all 147 recovered scene scripts exercised")
+	checks.check(count == 147, "all 147 recovered scene program IDs checked through original first-match lookup")
 	game.dungeon_seeds[11] = 20261027
 	checks.check(game.travel(-12, 0), "final dragon chamber reachable")
 	var dragon

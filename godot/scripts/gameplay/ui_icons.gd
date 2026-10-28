@@ -41,12 +41,13 @@ func portrait(id: int) -> Texture2D:
 
 func actor_portrait(unit_type: int, definitions: Dictionary) -> Texture2D:
 	var dialogue_id: int = int(definitions["portrait_images"][unit_type])
-	if not preferences.values["hd_icons"] or unit_type in Ids.HERO_TYPES:
+	if unit_type in Ids.HERO_TYPES:
 		return portrait(dialogue_id)
 	# Many original dialogue IDs are shared by unrelated creatures (e.g. 23).
 	# The unit portrait table preserves their actual species and appearance.
 	var unit_id: int = int(definitions["unit_portrait_images"][unit_type])
-	return portraits.get(unit_id, originals.get(unit_id, originals.get(dialogue_id)))
+	if preferences.values["hd_icons"] and portraits.has(unit_id): return portraits[unit_id]
+	return originals.get(unit_id, originals.get(dialogue_id))
 
 func spell(frame: int) -> Texture2D:
 	if preferences.values["hd_icons"] and spells.has(frame): return spells[frame]

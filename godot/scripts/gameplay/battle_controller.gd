@@ -147,7 +147,7 @@ func begin(game, triggers: Array) -> bool:
 		if best.x < 0: return false
 		chosen[id] = best
 		placement.place(id, best, actor.footprint)
-	arena = bounds
+	arena = _connected_arena(bounds, placement, chosen, ids)
 	participants.assign(ids)
 	state.clear()
 	queue.clear()
@@ -181,6 +181,37 @@ func begin(game, triggers: Array) -> bool:
 	_start_side(0)
 	changed.emit()
 	return true
+
+
+func _connected_arena(bounds: Rect2i, collision, positions: Dictionary, ids: Array[int]) -> Rect2i:
+	# The legacy camera rectangle can cut the only corridor around a wall.
+	# Include a terrain-valid approach for each hostile before fixing the arena.
+	var terrain := Collision.new()
+	terrain.width = collision.width
+	terrain.height = collision.height
+	terrain.terrain = collision.terrain
+	var result: Rect2i = bounds
+	for id: int in ids:
+		var actor = unit(id)
+		if actor in session.party or not actor.encounter_enabled: continue
+		var finder := Pathfinder.new()
+		finder.build(terrain, positions[id], actor.footprint)
+		var best := Vector2i(-1, -1)
+		var best_cost: int = 1000
+		for ally in session.party:
+			if not positions.has(ally.instance_id): continue
+			var target := {"cell": positions[ally.instance_id], "footprint": ally.footprint}
+			for y in range(target.cell.y - actor.footprint.y, target.cell.y + ally.footprint.y + 1):
+				for x in range(target.cell.x - actor.footprint.x, target.cell.x + ally.footprint.x + 1):
+					var cell := Vector2i(x, y)
+					if _adjacent(cell, actor.footprint, target) and finder.distance(cell) < best_cost:
+						best_cost = finder.distance(cell)
+						best = cell
+		if best.x < 0: continue
+		var route: Dictionary = finder.route(best)
+		if not route["reachable"]: continue
+		for cell: Vector2i in route["path"]: result = result.merge(Rect2i(cell, actor.footprint))
+	return result.intersection(Rect2i(0, 0, terrain.width, terrain.height))
 
 
 func eligible(actor) -> bool:
@@ -518,14 +549,16 @@ func attack_plan(actor, target) -> Dictionary:
 	return result
 
 
-func _approach(actor, target) -> Dictionary:
+func _approach(actor, target, allow_partial: bool = false) -> Dictionary:
 	var finder := Pathfinder.new()
-	finder.build(Grid.new(session.collision, arena), actor.cell, actor.footprint, actor.instance_id)
+	var grid := Grid.new(session.collision, arena)
+	finder.build(grid, actor.cell, actor.footprint, actor.instance_id)
 	var best := Vector2i(-1, -1)
-	var cost: int = 1000
+	var cost: int = Pathfinder.INFINITY_COST if allow_partial else 1000
 	for y in range(target.cell.y - actor.footprint.y, target.cell.y + target.footprint.y + 1):
 		for x in range(target.cell.x - actor.footprint.x, target.cell.x + target.footprint.x + 1):
 			var cell := Vector2i(x, y)
+			if allow_partial and not grid.can_stand(cell, actor.footprint, actor.instance_id): continue
 			if _adjacent(cell, actor.footprint, target) and finder.distance(cell) < cost:
 				cost = finder.distance(cell)
 				best = cell
@@ -640,8 +673,8 @@ func _enemy_action(actor) -> void:
 	for target in targets:
 		if _order_attack(actor, target): return
 	for target in targets:
-		var plan: Dictionary = _approach(actor, target)
-		if not plan["reachable"] or plan["path"].is_empty(): continue
+		var plan: Dictionary = _approach(actor, target, true)
+		if plan["path"].is_empty(): continue
 		var cells: Array[Vector2i] = []
 		cells.assign(plan["path"].slice(0, actor.stats[Stat.ACTION_POINTS]))
 		if _enqueue(actor.instance_id, "move", cells):

@@ -39,6 +39,7 @@ func resolve(game, point: Vector2, on_map: bool) -> Dictionary:
 	if key == _resolve_key: return _resolved.duplicate()
 	_resolve_key = key
 	var blocked: bool = not game.battle.arena.has_point(cell)
+	var path: Array = []
 	if not blocked:
 		match kind:
 			"spell": blocked = not game.battle.cast_plan(actor, game.selected_spell, cell)["valid"]
@@ -49,7 +50,8 @@ func resolve(game, point: Vector2, on_map: bool) -> Dictionary:
 			"move":
 				var plan: Dictionary = game.battle.preview(cell)
 				blocked = not plan["affordable"] or plan["path"].is_empty()
-	_resolved = {"kind": kind, "spell": game.selected_spell, "blocked": blocked}
+				path = plan["path"]
+	_resolved = {"kind": kind, "spell": game.selected_spell, "blocked": blocked, "path": path}
 	return _resolved.duplicate()
 
 func _pixels(texture: Texture2D) -> Image:

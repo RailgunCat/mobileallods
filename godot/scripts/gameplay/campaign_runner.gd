@@ -68,7 +68,11 @@ func configure(session, world: Dictionary, campaign_data: Dictionary, activate: 
 	for record: Array in game.current_scene["triggers"]: triggers.append(SceneData.trigger(record))
 	scripts.clear()
 	var entries: Array = SceneData.scripts(game.current_scene["scripts"], game.definitions["travel"]["opcode_lengths"])
-	for entry: Dictionary in entries: scripts[int(entry["script_id"])] = entry["instructions"]
+	# Original m.void_d scans in source order and stops at the first match.
+	# Map four contains two records numbered 45; the first is the hermit talk.
+	for entry: Dictionary in entries:
+		var id: int = int(entry["script_id"])
+		if not scripts.has(id): scripts[id] = entry["instructions"]
 	script_id = -1
 	pc = 0
 	modal = {}
@@ -82,7 +86,20 @@ func configure(session, world: Dictionary, campaign_data: Dictionary, activate: 
 	shaking = false
 	encounter_ids.clear()
 	force_encounter = false
+	_repair_skipped_hermit_conversation()
 	changed.emit()
+
+func _repair_skipped_hermit_conversation() -> void:
+	# Old builds ran the later duplicate, disabled 45 and left the hermit
+	# standing silently. Repair this exact incomplete state when loading/traveling.
+	var id: int = Ids.StoryScript.CONFRONT_HERMIT
+	if not enabled or game.location_id != 3 or int(game.triggers[id]) != TriggerState.DISABLED: return
+	if int(game.quests[Ids.Quest.HERMIT_SEARCH]) == QuestState.COMPLETED or int(game.spawn_states[18]) != SpawnState.HIDDEN: return
+	for actor in game.units:
+		if actor.unit_type == Ids.UnitKind.HERMIT and actor.spawn_flag == 17 and not actor.dead and game.is_active(actor) and actor not in game.party:
+			game.triggers[id] = TriggerState.ENABLED
+			_record("conversation_repaired", {"script_id": id, "reason": "old_duplicate_script_lookup"})
+			return
 
 
 func busy() -> bool:
