@@ -1,0 +1,568 @@
+{
+  "jar_sha256": "b64126c1fa29a0cd75e4f48f23be28fb9fcb5f1c6c99c4dca59d57a7331ffd2a",
+  "basis": "CFR 0.152 with renamedupmembers; line numbers checked against local files",
+  "source_hashes": {
+    "analysis/decompiled/a.java": "06d00e8a04291a03f52102a70ad70457f364cc6a2ab0b09e6f611289cb560c35",
+    "analysis/decompiled/aa.java": "709272d5ee490106f6002c85ee7fb528a1ef1a5f936a32d5813ad79ccc7bd0d6",
+    "analysis/decompiled/ab.java": "17835369b159dbb050de2ff73cc5bb54540208f54fd9053643ee53efd618f47a",
+    "analysis/decompiled/ac.java": "0b358420ff35b292db58a7d3218c3cd60b06d2b30d8b37919e44562c9ef4fc32",
+    "analysis/decompiled/ad.java": "506c744271844446cf4cfffe5a049c62da4598be42c98e189322f398d0db5712",
+    "analysis/decompiled/ae.java": "a820b614646e610c83446f67d7491744db69de281cb93f0d203e06cc0a574911",
+    "analysis/decompiled/af.java": "0ce3809899abd6767040234674d13f5bd134a27d6a3f871800c366042e3786e9",
+    "analysis/decompiled/ag.java": "f521c979483425275f404f9e491589c8f2a50195282aaf6a33262134113a9ee1",
+    "analysis/decompiled/ah.java": "2b5ab1e4d7e2ce7707c3a23e8fb3f9e32872a5a81954c0a09de2fbaee3dbf24e",
+    "analysis/decompiled/ai.java": "06621b41f341561a8cdedae59c2e03c2d7475be690ec76db9dd310f258ea1f4a",
+    "analysis/decompiled/aj.java": "249b28151fd6978b269ad51da0f50b5dc28104807e63ec5527317c42a1cff785",
+    "analysis/decompiled/b.java": "f45468b3a708325097ec902b4b4c8f1b1ed832fad8693938bb5fce0e66a3ced8",
+    "analysis/decompiled/c.java": "1f96048c272a0734d9b30b0395d9bad24d9768ff7dd8c5511dc82cc1065fd74d",
+    "analysis/decompiled/com/hellomoto/fullscreen/FullCn.java": "a2b8cd9a35a65fd3e29ae7416c4940bf1f9afcf74b5f8322968d7123c6039a65",
+    "analysis/decompiled/Container/GameMIDlet.java": "32fd9c208fbc41076c6a34d27b991ec0efdc7792f3e619c7e892cf6d8cca526c",
+    "analysis/decompiled/d.java": "792d58a0d648b147a7d083b1c553f88f534114a4925c7cd8aeb9c4fea3ae0804",
+    "analysis/decompiled/e.java": "5a5f92d211fcf62230c396cc2f9b0ccdb75795ed8d10158a6c1c4406014d8e1d",
+    "analysis/decompiled/f.java": "b3bd8a3c2e8a89c62562867cf1212c5cf5d86ed500e5cac7f193963eee6509db",
+    "analysis/decompiled/g.java": "bef860e312b2ccfd50dab9345eed3805a578be7362c891fa4827d476ddf40768",
+    "analysis/decompiled/h.java": "542015cd83ecdd23814912ccc4683b38daccd263097a8b23c7dc9f654fec5900",
+    "analysis/decompiled/i.java": "9a7eedfb2028b1f8d8cfcba883c3de431272001b5a83651efaa2e451b48c8035",
+    "analysis/decompiled/j.java": "4074ba3c0984c36509aec763026a2caf90e4d1dcc6e194b60cb3663faf194355",
+    "analysis/decompiled/k.java": "74da1b229beda23934623c81ab7fcaf24c76e58d368c25f0dfb69c0596a73353",
+    "analysis/decompiled/l.java": "f80fde7e79d83d92847ee03470ec5f0f1b5db1cb1cd467a4c62a77fe5da2b0d6",
+    "analysis/decompiled/m.java": "dd9e934c8035faaf85ca7b7368dcb2fd2e10e3ae7351cadb4c3654e7ab001307",
+    "analysis/decompiled/n.java": "d244605a23acb5233c09b315449b6b664dc70959ac7e9b1563586766115622fb",
+    "analysis/decompiled/o.java": "4f9b2680a95a75931036e9afe23c25e6b8e0870c5eb60c86a0ce3808a2363037",
+    "analysis/decompiled/p.java": "d764af9cc65fe2125c52d65bf40bc8c01df74e0ccbc20531e4e7681c5f2e7544",
+    "analysis/decompiled/q.java": "2282a31b692d9917098294b1a47649a9f7388cbdcbefd23b3b2177def46d9e3b",
+    "analysis/decompiled/r.java": "e2197490fc9912d8bebb4f55fc9aaf1f253bfb93245941a9ee291e23882fb46f",
+    "analysis/decompiled/s.java": "02cd30a16dba049c74380e46ac8b2f88b87ecd60170f595633f6e5e145311243",
+    "analysis/decompiled/t.java": "bac3fcf9ed8e55860e401229628f73f0a861756607a53caa52d24ddb7712b95a",
+    "analysis/decompiled/u.java": "e537e5d2caa03dc46057ffa75511c3bff99ff5d3ec95915c330ffa3ead3f4c16",
+    "analysis/decompiled/v.java": "9e8f090230288358b3a0e26220a313a9fab604029c6c401900893803273a3220",
+    "analysis/decompiled/w.java": "0e2603fb7fd9487031aa63623420ab7a45c6714f96b4084f4bf8e030801179e3",
+    "analysis/decompiled/x.java": "fafe4497d3de1262e7ecfad41f734b8e0377aad8958242a7560096a713d5fc10",
+    "analysis/decompiled/y.java": "f998bbdb71e8ca9a8f603ff8a43f64aa9f91d448ac48e6280e9bba458904ef37",
+    "analysis/decompiled/z.java": "7530f1f43b0c9e5b4f072cde4ceb5007a3aa609abdd9836dce87974192196d7d"
+  },
+  "systems": [
+    {
+      "id": "bootstrap",
+      "title": "Новая игра и начальные флаги",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4212,
+          "declaration": "public final void P() {",
+          "purpose": "Герой, партия, флаги квестов/спавнов, ag=0, ah=0"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4746,
+          "declaration": "public final void T() {",
+          "purpose": "Входы первой карты"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 74,
+          "declaration": "private void a(int n2, int n3, int n4, int n5, byte by, boolean bl, int n6, int n7, int n8) {",
+          "purpose": "Конструктор юнита, размер, базовое снаряжение"
+        }
+      ]
+    },
+    {
+      "id": "maps",
+      "title": "Карты, сцены и состояние мира",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4413,
+          "declaration": "public final void void_a(int n2, int n3) {",
+          "purpose": "Загрузка карты и специальные случаи"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4680,
+          "declaration": "public final void g(int n2) {",
+          "purpose": "Загрузка scripts/triggers/units из scenes.pak"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4858,
+          "declaration": "public final void Z() {",
+          "purpose": "Дополнительные триггеры и случайные варианты карты 7"
+        }
+      ]
+    },
+    {
+      "id": "collision",
+      "title": "Проходимость и занятость клеток",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 5001,
+          "declaration": "public final void b(int n2, int n3) {",
+          "purpose": "Маски объектов и специальный source tile 42"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 704,
+          "declaration": "public final void j() {",
+          "purpose": "Освободить клетки юнита"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 712,
+          "declaration": "public final void k() {",
+          "purpose": "Занять клетки юнита"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 792,
+          "declaration": "public final boolean boolean_a(int n2, int n3) {",
+          "purpose": "Проверка свободного движения в пикселях"
+        }
+      ]
+    },
+    {
+      "id": "pathfinding",
+      "title": "Маршрут и дальность хода",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2710,
+          "declaration": "public final void b(int n2, int n3, int n4, int n5) {",
+          "purpose": "Поле стоимости: 4 направления, штраф 1000"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2762,
+          "declaration": "public final byte[] byte_arr_a(int n2, int n3) {",
+          "purpose": "Восстановление маршрута"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2814,
+          "declaration": "public final boolean boolean_a(int n2, int n3, int n4, int n5) {",
+          "purpose": "Проверка прямоугольного footprint"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 728,
+          "declaration": "public final boolean boolean_a(int n2) {",
+          "purpose": "Пошаговое продвижение по маршруту"
+        }
+      ]
+    },
+    {
+      "id": "exploration",
+      "title": "Свободное движение и следование",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 997,
+          "declaration": "public final void l() {",
+          "purpose": "Обновление исследования, встречи, триггеры"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 548,
+          "declaration": "public final void a(n n2) {",
+          "purpose": "Ведущий и ведомый"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 588,
+          "declaration": "public final void b(n n2) {",
+          "purpose": "Следование по истории координат"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 639,
+          "declaration": "public final void g() {",
+          "purpose": "Управляемое движение с шагом до 4 пикселей"
+        }
+      ]
+    },
+    {
+      "id": "encounters",
+      "title": "Обнаружение и арена",
+      "references": [
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 616,
+          "declaration": "public final void void_e() {",
+          "purpose": "Включение обнаруженного участника"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 1347,
+          "declaration": "public final void s() {",
+          "purpose": "Границы арены, состав, размещение, восстановление HP/MP"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2114,
+          "declaration": "public final void D() {",
+          "purpose": "Начало боя"
+        }
+      ]
+    },
+    {
+      "id": "turns",
+      "title": "Стороны и ход бойца",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2149,
+          "declaration": "public final void E() {",
+          "purpose": "Следующий доступный боец"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2166,
+          "declaration": "public final void F() {",
+          "purpose": "Перебор бойцов текущей стороны"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2177,
+          "declaration": "public final void G() {",
+          "purpose": "Смена стороны, новый круг, эффекты"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 1016,
+          "declaration": "public final boolean boolean_a() {",
+          "purpose": "Доступность бойца для действий"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 1020,
+          "declaration": "public final void o() {",
+          "purpose": "Восстановить очки действия"
+        }
+      ]
+    },
+    {
+      "id": "commands",
+      "title": "Очередь боевых команд",
+      "references": [
+        {
+          "path": "analysis/decompiled/ac.java",
+          "line": 17,
+          "declaration": "public ac(n n2, int n3, int n4, int n5) {",
+          "purpose": "Команда: исполнитель, тип, два параметра"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2085,
+          "declaration": "public final void a(ac ac2) {",
+          "purpose": "Добавить команду в очередь"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 1926,
+          "declaration": "public final void C() {",
+          "purpose": "Обработка очереди и переход к вводу/ИИ"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2367,
+          "declaration": "public final void J() {",
+          "purpose": "Фазы исполнения движения, удара, защиты, магии"
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "title": "Характеристики и снаряжение",
+      "references": [
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 41,
+          "declaration": "public final q a(n n2, ab ab2, ab ab3) {",
+          "purpose": "Пересчёт текущего набора статов"
+        },
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 237,
+          "declaration": "public final void a(ab ab2, ab ab3) {",
+          "purpose": "Сумма базы, эффектов, экипировки и кристаллов"
+        },
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 296,
+          "declaration": "public final void void_b() {",
+          "purpose": "Производные параметры"
+        },
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 314,
+          "declaration": "public final void void_c() {",
+          "purpose": "Бонусы навыков и ограничения"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 6429,
+          "declaration": "public final int int_d(int n2) {",
+          "purpose": "Масштаб уровня с округлением на каждом шаге"
+        }
+      ]
+    },
+    {
+      "id": "damage",
+      "title": "Урон и эффекты",
+      "references": [
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 161,
+          "declaration": "public final q q_a(int n2) {",
+          "purpose": "Пакет атаки/магии"
+        },
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 442,
+          "declaration": "public final void a(q q2) {",
+          "purpose": "Применение физического/чёрного/белого воздействия"
+        },
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 214,
+          "declaration": "public final void a(int n2, int n3, int n4, int n5) {",
+          "purpose": "Добавить/обновить модификатор"
+        },
+        {
+          "path": "analysis/decompiled/q.java",
+          "line": 383,
+          "declaration": "public final void d() {",
+          "purpose": "Тики эффектов, яд, регенерация"
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "Боевой ИИ",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2355,
+          "declaration": "public final void I() {",
+          "purpose": "Выбор стратегии"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2223,
+          "declaration": "public final boolean boolean_b() {",
+          "purpose": "Магическое действие"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2261,
+          "declaration": "public final boolean boolean_c() {",
+          "purpose": "Подход и обычные атаки"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2291,
+          "declaration": "public final boolean boolean_d() {",
+          "purpose": "Движение к цели"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2321,
+          "declaration": "public final boolean boolean_e() {",
+          "purpose": "Действие по павшему юниту"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 2347,
+          "declaration": "public final void H() {",
+          "purpose": "Защита/завершение хода"
+        }
+      ]
+    },
+    {
+      "id": "effects",
+      "title": "Снаряды и момент попадания",
+      "references": [
+        {
+          "path": "analysis/decompiled/w.java",
+          "line": 20,
+          "declaration": "public w(ac ac2) {",
+          "purpose": "Один из снарядов; воздействие при достижении цели"
+        },
+        {
+          "path": "analysis/decompiled/ag.java",
+          "line": 25,
+          "declaration": "public ag(ac ac2) {",
+          "purpose": "Эффекты отдельных заклинаний"
+        },
+        {
+          "path": "analysis/decompiled/r.java",
+          "line": 30,
+          "declaration": "public void a(Graphics graphics, int n2) {",
+          "purpose": "Базовый интерфейс визуальных эффектов"
+        }
+      ]
+    },
+    {
+      "id": "campaign",
+      "title": "Сценарии и предметы на земле",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 3450,
+          "declaration": "public final boolean boolean_f() {",
+          "purpose": "Триггеры и подбор предметов"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 3501,
+          "declaration": "public final void void_d(int n2) {",
+          "purpose": "Запуск сценария"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 3530,
+          "declaration": "public final void M() {",
+          "purpose": "Интерпретатор 23 кодов"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 3809,
+          "declaration": "public final n n_b(int n2) {",
+          "purpose": "Поиск по сюжетной группе"
+        },
+        {
+          "path": "analysis/decompiled/g.java",
+          "line": 4146,
+          "declaration": "public final void o() {",
+          "purpose": "Чтение журнала заданий"
+        }
+      ]
+    },
+    {
+      "id": "items",
+      "title": "Предметы и развитие",
+      "references": [
+        {
+          "path": "analysis/decompiled/ab.java",
+          "line": 23,
+          "declaration": "public ab(int n2) {",
+          "purpose": "Тип предмета и число гнёзд"
+        },
+        {
+          "path": "analysis/decompiled/ab.java",
+          "line": 44,
+          "declaration": "public final int a() {",
+          "purpose": "Цена с учётом кристаллов"
+        },
+        {
+          "path": "analysis/decompiled/ab.java",
+          "line": 115,
+          "declaration": "public final void a(ab ab2) {",
+          "purpose": "Вставить кристалл"
+        },
+        {
+          "path": "analysis/decompiled/ab.java",
+          "line": 124,
+          "declaration": "public final void b(ab ab2) {",
+          "purpose": "Извлечь кристалл"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 949,
+          "declaration": "public final void void_a(int n2) {",
+          "purpose": "Опыт, уровень, очки развития"
+        }
+      ]
+    },
+    {
+      "id": "outcome",
+      "title": "Исход боя и награды",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 1877,
+          "declaration": "public final void A() {",
+          "purpose": "Проверка оставшихся сторон и особый финальный случай"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 1212,
+          "declaration": "public final void p() {",
+          "purpose": "Послебоевые сюжетные условия"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 1249,
+          "declaration": "public final void q() {",
+          "purpose": "Награды, восстановление партии, возврат к исследованию"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 6359,
+          "declaration": "public final int[] int_arr_a(int n2) {",
+          "purpose": "Строка rewards.txt по типу юнита"
+        }
+      ]
+    },
+    {
+      "id": "dungeons",
+      "title": "Процедурные подземелья",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 5259,
+          "declaration": "public final int int_a(int n2, int n3, int n4, int n5) {",
+          "purpose": "Генерация связанной структуры"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 5406,
+          "declaration": "public final byte[][] byte_arr_arr_a(int n2, int n3, int n4, int n5, int n6, int n7) {",
+          "purpose": "Часть построения карты"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 5545,
+          "declaration": "public final void c(int n2, int n3) {",
+          "purpose": "Подземелье по seed, содержимое и дополнительные сценарии"
+        }
+      ]
+    },
+    {
+      "id": "saves",
+      "title": "Сохранение и загрузка",
+      "references": [
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 3943,
+          "declaration": "public final byte[] byte_arr_a() {",
+          "purpose": "Часть сериализации состояния"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 3970,
+          "declaration": "public final byte[] byte_arr_b() {",
+          "purpose": "Часть сериализации состояния"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4149,
+          "declaration": "public final void N() {",
+          "purpose": "Запись семи RMS records"
+        },
+        {
+          "path": "analysis/decompiled/m.java",
+          "line": 4188,
+          "declaration": "public final void O() {",
+          "purpose": "Чтение RMS records"
+        },
+        {
+          "path": "analysis/decompiled/n.java",
+          "line": 281,
+          "declaration": "public final void a(byte[] byArray, int n2) {",
+          "purpose": "Сериализация юнита"
+        }
+      ]
+    }
+  ]
+}

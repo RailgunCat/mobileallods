@@ -1,0 +1,303 @@
+{
+  "source_sha256": "b64126c1fa29a0cd75e4f48f23be28fb9fcb5f1c6c99c4dca59d57a7331ffd2a",
+  "source_method_sha256": "9f35546fec7ab3c1630e8b4489fd19d07dbeb2ad50a90a3cb0ca53b6cfb55f8f",
+  "cases": [
+    {
+      "name": "demo",
+      "units": [
+        {
+          "id": 1,
+          "position": [
+            344,
+            328
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 1,
+          "party": true,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 1002,
+          "position": [
+            376,
+            328
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 2,
+          "party": true,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 1004,
+          "position": [
+            352,
+            272
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": true,
+          "state": 0
+        },
+        {
+          "id": 1001,
+          "position": [
+            344,
+            72
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 5,
+          "party": false,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 1000,
+          "position": [
+            112,
+            480
+          ],
+          "footprint": [
+            3,
+            3
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": false,
+          "state": 0
+        }
+      ],
+      "width": 38,
+      "height": 38,
+      "arena": [
+        16,
+        14,
+        11,
+        13
+      ],
+      "participants": [
+        1,
+        1002,
+        1004
+      ]
+    },
+    {
+      "name": "chain-and-hidden",
+      "units": [
+        {
+          "id": 1,
+          "position": [
+            328,
+            328
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 1,
+          "party": true,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 10,
+          "position": [
+            352,
+            272
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": true,
+          "state": 0
+        },
+        {
+          "id": 11,
+          "position": [
+            416,
+            304
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 12,
+          "position": [
+            480,
+            304
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 13,
+          "position": [
+            552,
+            304
+          ],
+          "footprint": [
+            3,
+            3
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 14,
+          "position": [
+            32,
+            32
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 6,
+          "party": false,
+          "triggered": false,
+          "state": 1
+        }
+      ],
+      "width": 38,
+      "height": 38,
+      "arena": [
+        15,
+        14,
+        23,
+        13
+      ],
+      "participants": [
+        1,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    {
+      "name": "top-left-edge",
+      "units": [
+        {
+          "id": 1,
+          "position": [
+            32,
+            48
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 1,
+          "party": true,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 10,
+          "position": [
+            64,
+            80
+          ],
+          "footprint": [
+            3,
+            3
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": true,
+          "state": 0
+        }
+      ],
+      "width": 38,
+      "height": 38,
+      "arena": [
+        1,
+        1,
+        12,
+        14
+      ],
+      "participants": [
+        1,
+        10
+      ]
+    },
+    {
+      "name": "bottom-right-edge",
+      "units": [
+        {
+          "id": 1,
+          "position": [
+            584,
+            568
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "flag": 1,
+          "party": true,
+          "triggered": false,
+          "state": 0
+        },
+        {
+          "id": 10,
+          "position": [
+            552,
+            544
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "flag": 0,
+          "party": false,
+          "triggered": true,
+          "state": 0
+        }
+      ],
+      "width": 38,
+      "height": 38,
+      "arena": [
+        26,
+        24,
+        12,
+        14
+      ],
+      "participants": [
+        1,
+        10
+      ]
+    }
+  ]
+}
