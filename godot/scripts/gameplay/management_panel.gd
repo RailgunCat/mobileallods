@@ -6,6 +6,7 @@ const Kind = Ids.ItemKind
 const Inventory = preload("res://scripts/gameplay/inventory_rules.gd")
 const Progression = preload("res://scripts/gameplay/progression_rules.gd")
 const UiTheme = preload("res://scripts/gameplay/legacy_theme.gd")
+const Journal = preload("res://scripts/gameplay/quest_journal.gd")
 signal closed
 
 var ui_icons
@@ -337,9 +338,8 @@ func render_shop() -> void:
 
 func render_journal() -> void:
 	var states := {Ids.QuestState.ACTIVE: "Выполняется", Ids.QuestState.COMPLETED: "Завершено", Ids.QuestState.FAILED: "Провалено"}
-	for quest: Dictionary in campaign_data["quests"]:
+	for quest: Dictionary in Journal.entries(campaign_data["quests"], game.quests):
 		var state: int = int(game.quests[int(quest["id"])])
-		if state == Ids.QuestState.NOT_STARTED: continue
 		label(content, "%s · %s" % [states[state], quest["title"]]).add_theme_color_override("font_color", Color("82e191") if state == Ids.QuestState.COMPLETED else Color("e9d8aa"))
 		label(content, str(quest["text"]))
 

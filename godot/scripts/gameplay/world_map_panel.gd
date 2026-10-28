@@ -93,8 +93,8 @@ func _show_body(text: String) -> void:
 	lines = wrap_lines(text, 200)
 	scroll = 0
 	clear_regions()
-	region(Rect2(9, 294, 100, 25), show_rumour)
-	region(Rect2(130, 294, 100, 25), show_town)
+	region(Rect2(9, 294, 100, 25), show_tavern.bind(true))
+	region(Rect2(130, 294, 100, 25), show_tavern.bind(true))
 	queue_redraw()
 
 func show_rumour() -> void:
@@ -138,11 +138,12 @@ func confirm() -> void:
 		if town_selected == 0: show_rumour()
 		elif town_selected == 1: take_quest()
 		else: show_town()
+	elif screen == &"body": show_tavern(true)
 	else: show_town()
 
-func show_tavern() -> void:
+func show_tavern(keep_selection: bool = false) -> void:
 	screen = &"tavern"
-	town_selected = 0
+	if not keep_selection: town_selected = 0
 	_menu_regions()
 	queue_redraw()
 
@@ -150,6 +151,7 @@ func back() -> void:
 	if screen == &"town_help": show_town(true)
 	elif screen == &"world": dismiss()
 	elif screen == &"town": show_world()
+	elif screen == &"body": show_tavern(true)
 	else: show_town()
 
 func dismiss() -> void:

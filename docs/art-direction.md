@@ -98,5 +98,9 @@ squirrel, goblin, skeleton and other creatures use their own unit portrait IDs.
 Hero portraits retain the established dialogue portraits. HD off preserves the
 original game lookup. A missing HD creature portrait falls back to the original
 unit portrait, and all HUD portraits fit their slots without stretching.
+During the enemy turn, the lower combat HUD keeps the acting enemy's identity;
+recent hit feedback must not replace it with the allied victim's portrait.
+Real enemy-turn captures before/after impact: build/bat-enemy-turn-start.png and
+bat-enemy-turn-after-hit.png (tests/capture_bat_portrait.gd).
 In-engine QA captures: build/portrait-li-fixed.png, cursor-spell.png, crt-off.png,
 crt-on.png and settings-crt.png (tests/capture_interaction.gd).

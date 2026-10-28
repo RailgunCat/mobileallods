@@ -470,6 +470,15 @@ func _draw_actor_portrait(actor, bounds: Rect2, tint: Color = Color.WHITE) -> vo
 	var destination: Rect2 = preload("res://scripts/gameplay/ui_icons.gd").fit_rect(texture, bounds)
 	draw_texture_rect(texture, destination, false, tint)
 
+func battle_hud_actor():
+	var focused = battle.unit(battle.selected_id)
+	# On the enemy side this panel identifies the acting enemy. Hit feedback
+	# describes its victim and must not replace the attacker's identity.
+	if battle.current_side == Side.HOSTILE: return focused
+	if not battle.feedback.is_empty() and battle.tick_count - int(battle.feedback["tick"]) < 20:
+		focused = battle.unit(int(battle.feedback["target"]))
+	return focused
+
 func _draw_battle_hud() -> void:
 	if ui_frame != null: ui_frame.draw(get_canvas_item(), Rect2(Vector2.ZERO, size))
 	if session == null or battle == null or not battle.active or session.mode != &"battle" or battle.outcome != &"": return
@@ -486,8 +495,7 @@ func _draw_battle_hud() -> void:
 			var mana: float = float(actor.stats[Stat.MANA]) / actor.stats[Stat.MAX_MANA]
 			draw_rect(Rect2(rect.end + Vector2(9, -rect.size.y), Vector2(3, rect.size.y)), Color("000032"))
 			draw_rect(Rect2(rect.end + Vector2(9, -rect.size.y * mana), Vector2(3, rect.size.y * mana)), Color.BLUE)
-	var focused = battle.unit(battle.selected_id)
-	if not battle.feedback.is_empty() and battle.tick_count - int(battle.feedback["tick"]) < 20: focused = battle.unit(int(battle.feedback["target"]))
+	var focused = battle_hud_actor()
 	if focused != null:
 		var bottom: float = hud_obstruction.get_global_rect().position.y - global_position.y if hud_obstruction != null and hud_obstruction.visible else size.y - 20
 		var point := Vector2(size.x * 0.25, bottom - 80)

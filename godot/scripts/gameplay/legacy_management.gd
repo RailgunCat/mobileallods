@@ -6,6 +6,7 @@ const Kind = Ids.ItemKind
 const Inventory = preload("res://scripts/gameplay/inventory_rules.gd")
 const Progression = preload("res://scripts/gameplay/progression_rules.gd")
 const Rewards = preload("res://scripts/gameplay/battle_rewards.gd")
+const Journal = preload("res://scripts/gameplay/quest_journal.gd")
 signal closed
 var game
 var data: Dictionary
@@ -83,9 +84,7 @@ func _refresh() -> void:
 		for index in range(game.party.size()):
 			region(Rect2(35, 24 + index * 17, 170, 17), func(): party_index = index; confirm())
 	elif screen == &"journal":
-		quests.clear()
-		for quest: Dictionary in data["quests"]:
-			if int(game.quests[int(quest["id"])]) != Ids.QuestState.NOT_STARTED: quests.append(quest)
+		quests.assign(Journal.entries(data["quests"], game.quests))
 		selected = clampi(selected, 0, maxi(0, quests.size() - 1))
 		var first: int = maxi(0, selected - 4)
 		for index in range(first, mini(first + 5, quests.size())):

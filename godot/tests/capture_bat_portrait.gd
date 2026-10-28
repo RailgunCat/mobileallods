@@ -33,6 +33,29 @@ func _capture() -> void:
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("res://../build/bat-portrait-%s.png" % ("hd" if hd else "legacy"))
 		print("Bat HD=", hd, "; portrait=", game.view.actor_portrait_texture(enemy).resource_path)
+	# Reproduce the reported transition with real AI and real hit feedback.
+	var reported = preload("res://tests/reported_ui_checks.gd").new()
+	reported.enemy_fixture(game)
+	game.preferences.update("hd_icons", true, false)
+	game.battle.end_side()
+	for tick in range(100):
+		game._process(0.062)
+		if game.battle.current_side == Ids.Side.HOSTILE: break
+	for stage in ["start", "after-hit"]:
+		if stage == "after-hit" and not reported.enemy_hit(game):
+			push_error("Bat capture did not reach a real enemy hit")
+			quit(1)
+			return
+		await process_frame
+		await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png("res://../build/bat-enemy-turn-%s.png" % stage)
+		var focused = game.view.battle_hud_actor()
+		print("Enemy turn ", stage, ": actor=", focused.instance_id, "; type=", focused.unit_type, "; portrait=", game.view.actor_portrait_texture(focused).resource_path, "; hit feedback=", game.battle.feedback)
+		if game.battle.current_side != Ids.Side.HOSTILE or focused.unit_type != Ids.UnitKind.BAT:
+			push_error("Enemy-turn capture shows the wrong actor")
+			quit(1)
+			return
 	game.queue_free()
 	await process_frame
 	quit()

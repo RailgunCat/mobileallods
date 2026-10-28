@@ -3,6 +3,8 @@ const Ids = preload("res://scripts/gameplay/game_ids.gd")
 const Stat = Ids.Stat
 const Inventory = preload("res://scripts/gameplay/inventory_rules.gd")
 const Item = preload("res://scripts/gameplay/item_instance.gd")
+const YES_RECT := Rect2(52, 249, 56, 24)
+const BACK_RECT := Rect2(132, 249, 66, 24)
 signal closed
 var game
 var selected: int = 0
@@ -36,6 +38,9 @@ func _refresh() -> void:
 		selected = clampi(selected, 0, maxi(0, candidates.size() - 1))
 		region(Rect2(10, 24, 40, 16), func(): navigate(-1))
 		region(Rect2(195, 24, 35, 16), func(): navigate(1))
+		if screen == &"confirm":
+			region(YES_RECT, confirm, "Да")
+			region(BACK_RECT, back, "Назад")
 		var action: Hotspot = region(Rect2(10, 294, 100, 25), confirm)
 		buy_button = action
 		sell_button = action
@@ -148,7 +153,8 @@ func _draw() -> void:
 		if screen == &"confirm":
 			draw_rect(Rect2(18, 226, 204, 47), Color.BLACK)
 			write("Продать?" if selling else "Купить?", Vector2(120, 236), HORIZONTAL_ALIGNMENT_CENTER)
-			write("Да             Назад", Vector2(120, 254), HORIZONTAL_ALIGNMENT_CENTER)
+			write("Да", Vector2(YES_RECT.get_center().x, 254), HORIZONTAL_ALIGNMENT_CENTER)
+			write("Назад", Vector2(BACK_RECT.get_center().x, 254), HORIZONTAL_ALIGNMENT_CENTER)
 	if not message.is_empty(): write(message, Vector2(120, 278), HORIZONTAL_ALIGNMENT_CENTER)
 	footer()
 	finish_draw()
