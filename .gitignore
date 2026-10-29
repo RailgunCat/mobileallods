@@ -10,7 +10,7 @@
 /AGENTS.md
 /docs/skill-sources.json
 
-# Art, audio, fonts, archives and packaged games never belong in this repository.
+# Source art, audio, fonts, archives and packaged games stay local.
 *.png
 *.jpg
 *.jpeg
@@ -46,6 +46,10 @@
 *.pck
 *.apk
 *.aab
+
+# README previews are documentation, not source game assets.
+!/docs/screenshots/combat-crt-off.png
+!/docs/screenshots/combat-crt-on.png
 
 # Godot-generated caches; script/shader .uid files are source metadata.
 **/.godot/
