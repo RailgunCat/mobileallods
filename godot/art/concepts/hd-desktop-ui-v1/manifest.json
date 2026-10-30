@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "date": "2026-10-27",
+  "generator": "built-in image_gen",
+  "scope": "desktop UI art concepts only",
+  "game_code_changed": false,
+  "game_resources_replaced": false,
+  "assets": [
+    {
+      "file": "01-character-training-desktop-v1.png",
+      "role": "desktop-character-training-concept",
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "1d26a31b434d6251d34c3aef870dee853778cebe5f71ba81dda6ae76097778e5",
+      "png_verified": true,
+      "status": "visual-proposal-only",
+      "interactive": false,
+      "integration": false
+    },
+    {
+      "file": "02-inventory-equipment-desktop-v1.png",
+      "role": "inventory-and-equipment-concept",
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "8c54413768beab70dfcc0967b15b33851f754728ee47ff9e5a15ae1602d744e7",
+      "png_verified": true,
+      "status": "visual-proposal-only",
+      "interactive": false,
+      "integration": false
+    },
+    {
+      "file": "03-shop-trade-desktop-v1.png",
+      "role": "shop-trade-screen-concept",
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "3ef82d0651fea3a1a9c36de5ac788156087d9b7ac59f6b77ad15d5e90d0fd43c",
+      "png_verified": true,
+      "status": "visual-proposal-only",
+      "interactive": false,
+      "integration": false
+    },
+    {
+      "file": "04-quest-journal-desktop-v1.png",
+      "role": "quest-journal-concept",
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "04915c22b17bfca93be3d6973a866987180470c99242e6ab4a1eaaed237d0a9a",
+      "png_verified": true,
+      "status": "visual-proposal-only",
+      "interactive": false,
+      "integration": false
+    },
+    {
+      "file": "05-gameplay-hud-desktop-v1.png",
+      "role": "desktop-gameplay-hud-concept",
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "a6676608cb6add712d750380aeed2804cb17b6b6906373f55e0c2a986b001507",
+      "png_verified": true,
+      "status": "visual-proposal-only",
+      "interactive": false,
+      "integration": false
+    }
+  ],
+  "references": [
+    {
+      "file": "references/pc-character-warrior.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/newhero1.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "retrieved": "2026-10-27",
+      "sha256": "6cdfe9ec33328a94b1fcc046b7038e2249dfa22f9a9d7db79dd0b94e4e2acf9f",
+      "usage": "original PC Allods: Seal of Mystery screenshot; local visual reference, not generated art"
+    },
+    {
+      "file": "references/pc-character-mage.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/newhero2.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "retrieved": "2026-10-27",
+      "sha256": "a1ed6ee783375aa77ec4359fcf684308ab7152301a711d08a9eabb09a836221b",
+      "usage": "original PC Allods: Seal of Mystery screenshot; local visual reference, not generated art"
+    },
+    {
+      "file": "references/pc-school.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/school.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "retrieved": "2026-10-27",
+      "sha256": "9a623e06e5e2e02f635731d29cd97371b125d50558ec3b345341ffb19f8af003",
+      "usage": "original PC Allods: Seal of Mystery screenshot; local visual reference, not generated art"
+    },
+    {
+      "file": "references/pc-field-ui.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/mainscreen.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "retrieved": "2026-10-27",
+      "sha256": "c4b70e68dc4ee6b686672487ea9897fc7a6123fbbf1f162834a0576574b446e0",
+      "usage": "original PC Allods: Seal of Mystery screenshot; local visual reference, not generated art"
+    }
+  ]
+}

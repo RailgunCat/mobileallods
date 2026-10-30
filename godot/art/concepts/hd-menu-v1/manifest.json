@@ -1,0 +1,317 @@
+{
+  "version": 1,
+  "date": "2026-10-27",
+  "status": "concept-only",
+  "generator": "built-in image_gen",
+  "game_graphics_changed": false,
+  "assets": [
+    {
+      "file": "01-main-menu-background-v1.png",
+      "key": "title_art",
+      "role": "text-free-main-menu-background",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        12
+      ],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "red-hooded-figure",
+        "quiet-left-menu-area"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "79a345bb3bcbdf18e658bed5b544bdd87dba3c6397f1f399d2f5c37f55ad42c3",
+      "png_crc_verified": true
+    },
+    {
+      "file": "02-town-free-study-v1.png",
+      "key": "town_art",
+      "role": "text-free-town-menu-background",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "town-street",
+        "tavern-exterior",
+        "shop-exterior",
+        "town-gate",
+        "quiet-left-menu-area"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "3807976a696abfac43e4f64047ad454068c0427e3fd6f1c93e9767dc93837860",
+      "png_crc_verified": true,
+      "variant": "free early study; superseded as original-reference direction by 06-town-original277-v1.png"
+    },
+    {
+      "file": "03-main-menu-lettering-gold-v1.png",
+      "key": "gold_captions",
+      "role": "gold-menu-lettering-concept-sheet",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        3
+      ],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "Новая игра",
+        "Продолжить",
+        "Загрузить игру",
+        "Сохранить игру",
+        "Сеть",
+        "Настройки",
+        "Помощь",
+        "Авторы",
+        "Выход",
+        "Журнал",
+        "Персонаж",
+        "Инвентарь",
+        "Управление",
+        "Главное меню",
+        "Выход из игры",
+        "Музыка"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "11f77335ca4424b7705414c9c90b44841ad0352a92e7bdf912b51913212cee8a",
+      "png_crc_verified": true,
+      "grid_columns": 2,
+      "grid_rows": 8,
+      "exact_crop_rectangles": null,
+      "grid_is_conceptual": true,
+      "intended_labels": [
+        "Новая игра",
+        "Продолжить",
+        "Загрузить игру",
+        "Сохранить игру",
+        "Сеть",
+        "Настройки",
+        "Помощь",
+        "Авторы",
+        "Выход",
+        "Журнал",
+        "Персонаж",
+        "Инвентарь",
+        "Управление",
+        "Главное меню",
+        "Выход из игры",
+        "Музыка"
+      ],
+      "text_review": "visually reviewed; final glyph/kerning cleanup and exact production text require separate typesetting"
+    },
+    {
+      "file": "04-town-and-ui-lettering-green-v1.png",
+      "key": "green_captions",
+      "role": "green-town-and-ui-lettering-sheet",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        1
+      ],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "Город",
+        "Таверна",
+        "Магазин",
+        "Выход",
+        "Слухи",
+        "Работа",
+        "Купить",
+        "Продать",
+        "Назад",
+        "Карта мира",
+        "Персонаж",
+        "Инвентарь",
+        "Журнал",
+        "Снаряжение",
+        "Принять",
+        "Закрыть"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "b038a7473a69d1790e38b9960243e86cc2fff50bfe064dadd39a55def077c928",
+      "png_crc_verified": true,
+      "grid_columns": 2,
+      "grid_rows": 8,
+      "exact_crop_rectangles": null,
+      "grid_is_conceptual": true,
+      "intended_labels": [
+        "Город",
+        "Таверна",
+        "Магазин",
+        "Выход",
+        "Слухи",
+        "Работа",
+        "Купить",
+        "Продать",
+        "Назад",
+        "Карта мира",
+        "Персонаж",
+        "Инвентарь",
+        "Журнал",
+        "Снаряжение",
+        "Принять",
+        "Закрыть"
+      ],
+      "text_review": "visually reviewed; final glyph/kerning cleanup and exact production text require separate typesetting"
+    },
+    {
+      "file": "05-allods-wordmark-v1.png",
+      "key": "wordmark",
+      "role": "standalone-title-wordmark",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        12
+      ],
+      "expected_transparent_background": true,
+      "intended_subjects": [
+        "АЛЛОДЫ"
+      ],
+      "width": 2062,
+      "height": 763,
+      "bit_depth": 8,
+      "color_type": 6,
+      "sha256": "caa003251f4539b1719b460d741ff50c7a64258421e342cfb8cff514b3679b88",
+      "png_crc_verified": true,
+      "alpha_validation": {
+        "min": 0,
+        "max": 255,
+        "fully_transparent_pixels": 1001971,
+        "fully_opaque_pixels": 1060,
+        "partial_alpha_pixels": 570275
+      }
+    },
+    {
+      "file": "06-town-original277-v1.png",
+      "key": "city277",
+      "role": "town-background-from-original277",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        277
+      ],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "stone-town",
+        "red-tile-roofs",
+        "rear-gate-tower",
+        "cobbled-courtyard"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "8401a09a8bebaedab3c21f364f2c216a3a66abc448c69219918f0ceb3f24db2e",
+      "png_crc_verified": true,
+      "variant": "original mobile crop expanded with PC screenshot; not an exact reconstruction of missing mobile screen layout"
+    },
+    {
+      "file": "07-shop-original276-v1.png",
+      "key": "shop276",
+      "role": "shop-background-from-original276",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        276
+      ],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "stone-arched-armory",
+        "merchant",
+        "weapon-racks",
+        "empty-counter"
+      ],
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "17a1915314e53eea696a9e06e221a5b4162ec45dd03f5a2b47e525ec6e9a9306",
+      "png_crc_verified": true
+    },
+    {
+      "file": "08-tavern-original278-v1.png",
+      "key": "tavern278",
+      "role": "tavern-background-from-original278",
+      "status": "concept-only-not-integrated",
+      "original_reference_image_ids": [
+        278
+      ],
+      "expected_transparent_background": false,
+      "intended_subjects": [
+        "heavyset-innkeeper",
+        "barrels",
+        "wooden-counter",
+        "dim-stone-tavern"
+      ],
+      "width": 1672,
+      "height": 940,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "6f939c2d6ac823cd8a2d98de6c01faeb4e9b358a6aef4277eb2c31f68ec127a0",
+      "png_crc_verified": true
+    }
+  ],
+  "references": [
+    {
+      "file": "references/pc-allods1-town.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/town.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "description": "Город Плагат, PC «Аллоды: Печать тайны»",
+      "retrieved": "2026-10-27",
+      "usage": "local visual research reference; third-party original game screenshot, not generated artwork",
+      "sha256": "6ec19ce22618b256527b8b2a0bbc4f8edfef691f52d7f9a64455d9ff48a61660"
+    },
+    {
+      "file": "references/pc-allods1-tavern.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/taverna.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "description": "Трактир, PC «Аллоды: Печать тайны»",
+      "retrieved": "2026-10-27",
+      "usage": "local visual research reference; third-party original game screenshot, not generated artwork",
+      "sha256": "3b83dc50af7d68e6b59175badbbf2f026fb68983f9d98615c7a2398ca7413566"
+    },
+    {
+      "file": "references/pc-allods1-shop.jpg",
+      "url": "https://vertigosn.ru/pics/solution/Allods/lavka.jpg",
+      "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+      "description": "Оружейная лавка, PC «Аллоды: Печать тайны»",
+      "retrieved": "2026-10-27",
+      "usage": "local visual research reference; third-party original game screenshot, not generated artwork",
+      "sha256": "96ef7a758a0d3fe98482e9b8ec4645491275838fc70d539cbc5dbfe4a5eff6c9"
+    },
+    {
+      "file": "references/original-mobile-003.png",
+      "source_image_id": 3,
+      "usage": "locally supplied original Java ME artwork; not generated",
+      "sha256": "0df685c1604367b2a60fe283ca9b5a326d5cb5bf1e45ccc77350926c926efb90"
+    },
+    {
+      "file": "references/original-mobile-012.png",
+      "source_image_id": 12,
+      "usage": "locally supplied original Java ME artwork; not generated",
+      "sha256": "0d9b1ca9f66541ac5541fb33308a9de424d05f7d32a836e2d89694b61ac79e82"
+    },
+    {
+      "file": "references/original-mobile-276.png",
+      "source_image_id": 276,
+      "usage": "locally supplied original Java ME artwork; not generated",
+      "sha256": "0208517db2d091fc8da5e578fda6b8c3dc037800dd78ca8f348cc60f96409a0a"
+    },
+    {
+      "file": "references/original-mobile-277.png",
+      "source_image_id": 277,
+      "usage": "locally supplied original Java ME artwork; not generated",
+      "sha256": "c33868639e439726654fb1a88ecf19c1a1c7fc019cca953a2711bfbb5a325cbb"
+    },
+    {
+      "file": "references/original-mobile-278.png",
+      "source_image_id": 278,
+      "usage": "locally supplied original Java ME artwork; not generated",
+      "sha256": "5a1809496fe4dcf7b2cb5f223b8fe63c57a11f82900b40ef8135a208fcad6ab2"
+    }
+  ]
+}

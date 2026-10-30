@@ -1,0 +1,805 @@
+{
+  "version": 1,
+  "date": "2026-10-27",
+  "generator": "built-in image_gen",
+  "scope": "Tagrim HD sprite art tests for source083..088 only",
+  "game_resources_changed": false,
+  "in_engine_integration": false,
+  "source_unit": {
+    "type": 0,
+    "images": [
+      83,
+      83,
+      84,
+      85,
+      86,
+      86,
+      87,
+      88
+    ],
+    "frame_sizes": [
+      [
+        40,
+        50
+      ],
+      [
+        40,
+        50
+      ],
+      [
+        40,
+        50
+      ],
+      [
+        40,
+        46
+      ],
+      [
+        56,
+        49
+      ],
+      [
+        56,
+        49
+      ],
+      [
+        32,
+        56
+      ],
+      [
+        32,
+        56
+      ]
+    ],
+    "origins": [
+      [
+        23,
+        35
+      ],
+      [
+        17,
+        35
+      ],
+      [
+        20,
+        40
+      ],
+      [
+        18,
+        36
+      ],
+      [
+        36,
+        35
+      ],
+      [
+        18,
+        35
+      ],
+      [
+        17,
+        46
+      ],
+      [
+        15,
+        42
+      ]
+    ],
+    "frame_columns": [
+      [
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        3,
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        2
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0
+      ]
+    ],
+    "frame_rows": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0
+      ]
+    ],
+    "frame_ticks": [
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "idle_frame": 0,
+    "shadow_type": 0
+  },
+  "assets": [
+    {
+      "file": "083-tagrim-walk-side-hd-v1.png",
+      "source_image_id": 83,
+      "unit_type": 0,
+      "role": "left-side-walk-test",
+      "direction": "left",
+      "frames": 4,
+      "source_frame_size": [
+        40,
+        50
+      ],
+      "source_origin": [
+        23,
+        35
+      ],
+      "source_frame_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_frame_ticks": 2,
+      "source_tick_ms": 62,
+      "preview_sequence": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "status": "art-test-candidate-not-production",
+      "facing_consistency": "visually inspected; manual QA still required",
+      "production_anchor": null,
+      "width": 2172,
+      "height": 724,
+      "color_type": 6,
+      "bit_depth": 8,
+      "sha256": "990824fd17775a10422183c9e5894b81661ae25bdad2669911bb231a7e8110cb",
+      "png_crc_verified": true,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparent_pixels": 1161833,
+        "opaque_pixels": 612,
+        "partial_pixels": 410083
+      },
+      "candidate_equal_sections": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 12,
+            "y": 102,
+            "width": 531,
+            "height": 508
+          },
+          "foreground_pixels": 94511
+        },
+        {
+          "index": 1,
+          "x": 543,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 0,
+            "y": 106,
+            "width": 543,
+            "height": 501
+          },
+          "foreground_pixels": 91171
+        },
+        {
+          "index": 2,
+          "x": 1086,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 0,
+            "y": 123,
+            "width": 543,
+            "height": 470
+          },
+          "foreground_pixels": 92379
+        },
+        {
+          "index": 3,
+          "x": 1629,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 0,
+            "y": 102,
+            "width": 522,
+            "height": 508
+          },
+          "foreground_pixels": 94925
+        }
+      ],
+      "sections_are_not_approved_crop_rects": true,
+      "bbox_bottom_spread_px": 17,
+      "bbox_bottom_is_not_foot_anchor": true
+    },
+    {
+      "file": "084-tagrim-walk-back-hd-v1.png",
+      "source_image_id": 84,
+      "unit_type": 0,
+      "role": "back-walk-test",
+      "direction": "up",
+      "frames": 4,
+      "source_frame_size": [
+        40,
+        50
+      ],
+      "source_origin": [
+        20,
+        40
+      ],
+      "source_frame_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "source_frame_ticks": 2,
+      "source_tick_ms": 62,
+      "preview_sequence": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "status": "art-test-candidate-not-production",
+      "facing_consistency": "visually inspected; manual QA still required",
+      "production_anchor": null,
+      "width": 2172,
+      "height": 724,
+      "color_type": 6,
+      "bit_depth": 8,
+      "sha256": "de7f0712081cf2272f8e81beaf44b833a540a4ab6fbcff214eb714b79800b019",
+      "png_crc_verified": true,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparent_pixels": 1138783,
+        "opaque_pixels": 904,
+        "partial_pixels": 432841
+      },
+      "candidate_equal_sections": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 135,
+            "y": 97,
+            "width": 341,
+            "height": 508
+          },
+          "foreground_pixels": 105958
+        },
+        {
+          "index": 1,
+          "x": 543,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 105,
+            "y": 101,
+            "width": 366,
+            "height": 502
+          },
+          "foreground_pixels": 100331
+        },
+        {
+          "index": 2,
+          "x": 1086,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 103,
+            "y": 107,
+            "width": 334,
+            "height": 498
+          },
+          "foreground_pixels": 103450
+        },
+        {
+          "index": 3,
+          "x": 1629,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 108,
+            "y": 101,
+            "width": 340,
+            "height": 504
+          },
+          "foreground_pixels": 100980
+        }
+      ],
+      "sections_are_not_approved_crop_rects": true,
+      "bbox_bottom_spread_px": 2,
+      "bbox_bottom_is_not_foot_anchor": true
+    },
+    {
+      "file": "085-tagrim-idle-walk-front-hd-v1.png",
+      "source_image_id": 85,
+      "unit_type": 0,
+      "role": "front-idle-walk-test",
+      "direction": "down",
+      "frames": 4,
+      "source_frame_size": [
+        40,
+        46
+      ],
+      "source_origin": [
+        18,
+        36
+      ],
+      "source_frame_columns": [
+        1,
+        2,
+        3,
+        2
+      ],
+      "source_frame_ticks": 2,
+      "source_tick_ms": 62,
+      "preview_sequence": [
+        1,
+        2,
+        3,
+        2
+      ],
+      "status": "art-test-candidate-not-production",
+      "facing_consistency": "visually inspected; manual QA still required",
+      "production_anchor": null,
+      "width": 2172,
+      "height": 724,
+      "color_type": 6,
+      "bit_depth": 8,
+      "sha256": "56d235e868fba561f5ac00a0b9be69c4b96520cb4893f65ea35f71171addc85c",
+      "png_crc_verified": true,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparent_pixels": 1034843,
+        "opaque_pixels": 1147,
+        "partial_pixels": 536538
+      },
+      "candidate_equal_sections": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 25,
+            "y": 50,
+            "width": 497,
+            "height": 549
+          },
+          "foreground_pixels": 129361
+        },
+        {
+          "index": 1,
+          "x": 543,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 38,
+            "y": 53,
+            "width": 505,
+            "height": 597
+          },
+          "foreground_pixels": 123994
+        },
+        {
+          "index": 2,
+          "x": 1086,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 53,
+            "y": 50,
+            "width": 467,
+            "height": 595
+          },
+          "foreground_pixels": 127563
+        },
+        {
+          "index": 3,
+          "x": 1629,
+          "y": 0,
+          "width": 543,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 27,
+            "y": 51,
+            "width": 503,
+            "height": 604
+          },
+          "foreground_pixels": 127958
+        }
+      ],
+      "sections_are_not_approved_crop_rects": true,
+      "bbox_bottom_spread_px": 56,
+      "bbox_bottom_is_not_foot_anchor": true
+    },
+    {
+      "file": "086-tagrim-attack-side-hd-v1.png",
+      "source_image_id": 86,
+      "unit_type": 0,
+      "role": "side-attack-test",
+      "direction": "left",
+      "frames": 3,
+      "source_frame_size": [
+        56,
+        49
+      ],
+      "source_origin": [
+        36,
+        35
+      ],
+      "source_frame_columns": [
+        0,
+        1,
+        2
+      ],
+      "source_frame_ticks": 3,
+      "source_tick_ms": 62,
+      "preview_sequence": [
+        0,
+        1,
+        2
+      ],
+      "status": "art-test-candidate-not-production",
+      "facing_consistency": "visually inspected; manual QA still required",
+      "production_anchor": null,
+      "width": 2172,
+      "height": 724,
+      "color_type": 6,
+      "bit_depth": 8,
+      "sha256": "f615e582c842e0ff4f377b94dc301e8abe4ecfd0349f4e63050ac431110ec568",
+      "png_crc_verified": true,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparent_pixels": 1164813,
+        "opaque_pixels": 975,
+        "partial_pixels": 406740
+      },
+      "candidate_equal_sections": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 147,
+            "y": 45,
+            "width": 577,
+            "height": 591
+          },
+          "foreground_pixels": 130473
+        },
+        {
+          "index": 1,
+          "x": 724,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 0,
+            "y": 115,
+            "width": 696,
+            "height": 528
+          },
+          "foreground_pixels": 132242
+        },
+        {
+          "index": 2,
+          "x": 1448,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 37,
+            "y": 112,
+            "width": 622,
+            "height": 527
+          },
+          "foreground_pixels": 116585
+        }
+      ],
+      "sections_are_not_approved_crop_rects": true,
+      "bbox_bottom_spread_px": 7,
+      "bbox_bottom_is_not_foot_anchor": true
+    },
+    {
+      "file": "087-tagrim-attack-back-hd-v1.png",
+      "source_image_id": 87,
+      "unit_type": 0,
+      "role": "back-attack-test",
+      "direction": "up",
+      "frames": 3,
+      "source_frame_size": [
+        32,
+        56
+      ],
+      "source_origin": [
+        17,
+        46
+      ],
+      "source_frame_columns": [
+        0,
+        1,
+        2
+      ],
+      "source_frame_ticks": 3,
+      "source_tick_ms": 62,
+      "preview_sequence": [
+        0,
+        1,
+        2
+      ],
+      "status": "art-test-candidate-not-production",
+      "facing_consistency": "visually inspected; manual QA still required",
+      "production_anchor": null,
+      "width": 2172,
+      "height": 724,
+      "color_type": 6,
+      "bit_depth": 8,
+      "sha256": "6b11276d1445c958b428f665aca4f48e9f6f67ccbf0f7bb12641a2bc51d49ace",
+      "png_crc_verified": true,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparent_pixels": 1212011,
+        "opaque_pixels": 891,
+        "partial_pixels": 359626
+      },
+      "candidate_equal_sections": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 234,
+            "y": 42,
+            "width": 412,
+            "height": 640
+          },
+          "foreground_pixels": 117520
+        },
+        {
+          "index": 1,
+          "x": 724,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 166,
+            "y": 26,
+            "width": 448,
+            "height": 644
+          },
+          "foreground_pixels": 109056
+        },
+        {
+          "index": 2,
+          "x": 1448,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 68,
+            "y": 129,
+            "width": 419,
+            "height": 553
+          },
+          "foreground_pixels": 112380
+        }
+      ],
+      "sections_are_not_approved_crop_rects": true,
+      "bbox_bottom_spread_px": 12,
+      "bbox_bottom_is_not_foot_anchor": true
+    },
+    {
+      "file": "088-tagrim-attack-front-hd-v1.png",
+      "source_image_id": 88,
+      "unit_type": 0,
+      "role": "front-attack-test",
+      "direction": "down",
+      "frames": 3,
+      "source_frame_size": [
+        32,
+        56
+      ],
+      "source_origin": [
+        15,
+        42
+      ],
+      "source_frame_columns": [
+        0,
+        1,
+        2
+      ],
+      "source_frame_ticks": 3,
+      "source_tick_ms": 62,
+      "preview_sequence": [
+        0,
+        1,
+        2
+      ],
+      "status": "art-test-candidate-not-production",
+      "facing_consistency": "visually inspected; manual QA still required",
+      "production_anchor": null,
+      "width": 2172,
+      "height": 724,
+      "color_type": 6,
+      "bit_depth": 8,
+      "sha256": "5e77b21c67945045b48ab8b10838adf0281f798d55e43e60783ba6ff6b03cb55",
+      "png_crc_verified": true,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparent_pixels": 1216396,
+        "opaque_pixels": 733,
+        "partial_pixels": 355399
+      },
+      "candidate_equal_sections": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 250,
+            "y": 31,
+            "width": 432,
+            "height": 637
+          },
+          "foreground_pixels": 113151
+        },
+        {
+          "index": 1,
+          "x": 724,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 204,
+            "y": 159,
+            "width": 417,
+            "height": 510
+          },
+          "foreground_pixels": 111305
+        },
+        {
+          "index": 2,
+          "x": 1448,
+          "y": 0,
+          "width": 724,
+          "height": 724,
+          "alpha_bbox": {
+            "x": 51,
+            "y": 142,
+            "width": 550,
+            "height": 512
+          },
+          "foreground_pixels": 111350
+        }
+      ],
+      "sections_are_not_approved_crop_rects": true,
+      "bbox_bottom_spread_px": 15,
+      "bbox_bottom_is_not_foot_anchor": true
+    }
+  ],
+  "limitations": [
+    "Equal sections are only diagnostic candidate crops.",
+    "Alpha-bbox bottom can include cape or sword, not actual planted foot.",
+    "Consistent foot anchors, loop smoothness and attack timing are not certified.",
+    "New images are not scaled source atlases and must not replace existing textures directly."
+  ]
+}

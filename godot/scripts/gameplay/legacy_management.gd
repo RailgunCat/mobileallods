@@ -24,11 +24,15 @@ var crystals: Array = []
 var message: String = ""
 var quests: Array[Dictionary] = []
 var scroll: int = 0
+var hd_screen: Control
 
 
 func _ready() -> void:
 	super._ready()
 	enable_world_background()
+	hd_screen = preload("res://scripts/gameplay/hd_management_screen.gd").new()
+	hd_screen.controller = self
+	add_child(hd_screen)
 
 
 func open(session, campaign: Dictionary, textures: Dictionary, initial_page: int) -> void:
@@ -48,6 +52,7 @@ func open(session, campaign: Dictionary, textures: Dictionary, initial_page: int
 	scroll = 0
 	show()
 	_refresh()
+	hd_screen.reset()
 
 
 func actor():
@@ -119,8 +124,8 @@ func _refresh() -> void:
 				return order[a_kind] < order[b_kind] if a_kind != b_kind else a.instance_id < b.instance_id
 			)
 			selected = clampi(selected, 0, maxi(0, candidates.size() - 1))
-			region(Rect2(10, 6, 35, 15), func(): navigate(-1))
-			region(Rect2(65, 6, 25, 15), func(): navigate(1))
+			region(Rect2(44, 6, 16, 16), func(): navigate(-1))
+			region(Rect2(74, 6, 16, 16), func(): navigate(1))
 			if item() != null and item().definition_id < Ids.ItemId.FIRST_CRYSTAL:
 				var y: int = _action_y()
 				region(Rect2(45, y, 160, 18), func(): action_index = 0; confirm())
@@ -159,6 +164,9 @@ func navigate(step: int) -> void:
 
 
 func handle_key(key: int) -> void:
+	if hd_screen != null and hd_screen.active():
+		hd_screen.handle_key(key)
+		return
 	if key == KEY_ESCAPE: back()
 	elif key in [KEY_ENTER, KEY_SPACE, KEY_KP_ENTER]: confirm()
 	elif screen == &"character" and key == KEY_TAB: _change_training_page(not schools)
@@ -258,6 +266,7 @@ func _arrow(point: Vector2, color: Color) -> void:
 
 func _draw() -> void:
 	if images.is_empty(): return
+	if hd_screen != null and hd_screen.active(): return
 	begin_draw()
 	match screen:
 		&"party":
@@ -269,6 +278,10 @@ func _draw() -> void:
 	if not message.is_empty(): write(message, Vector2(120, 282), HORIZONTAL_ALIGNMENT_CENTER)
 	footer()
 	finish_draw()
+
+func _gui_input(event: InputEvent) -> void:
+	if hd_screen != null and hd_screen.active(): return
+	super._gui_input(event)
 
 
 func quest_state(quest: Dictionary) -> String:

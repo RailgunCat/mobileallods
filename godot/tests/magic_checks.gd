@@ -112,6 +112,50 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary) -> 
 	_interactions(checks, world, metadata, table)
 	_fps(checks, world, metadata, table)
 	_meteor(checks, world, metadata, table)
+	_petrified_animation(checks, world, metadata, table)
+
+
+func _petrified_animation(checks, world: Dictionary, metadata: Dictionary, table: Dictionary) -> void:
+	for kind in [Ids.UnitKind.BAT, Ids.UnitKind.TAGRIM]:
+		var pair := fixture(world, metadata, table)
+		var game = pair[0]
+		var battle = pair[1]
+		var target = battle.unit(1001)
+		var cell: Vector2i = target.cell
+		target.configure({"instance_id": target.instance_id, "unit_type": kind, "story_group": Ids.StoryGroup.HOSTILES, "spawn_flag": target.spawn_flag, "side_id": Side.HOSTILE}, metadata, table)
+		target.encounter_enabled = true
+		target.move_to(cell)
+		game.collision.occupy(target.instance_id, target.cell, target.footprint)
+		target.facing = Ids.Facing.RIGHT
+		target.walking = true
+		var definition: Dictionary = metadata["exploration"]["units"][kind]
+		var duration: int = int(definition["frame_ticks"][target.facing])
+		for tick in range(duration + 1): target.animate_tick(definition)
+		var caster = battle.unit(2000)
+		caster.stats[Stat.LIGHT_EARTH_MAGIC] = 31
+		Spells.impact(battle, caster, Spell.PETRIFY, target.cell)
+		checks.check(target.petrified(), "Statue spell petrifies animation fixture type %d" % kind)
+		var frame: int = target.animation_frame
+		var ticks_left: int = target._frame_ticks_left
+		var frozen: bool = true
+		for tick in range(40):
+			target.animate_tick(definition)
+			frozen = frozen and target.animation_frame == frame and target._frame_ticks_left == ticks_left
+		checks.check(frozen, "Statue freezes the current frame and animation timer for type %d" % kind)
+		if kind == Ids.UnitKind.BAT:
+			frozen = true
+			for tick in range(24):
+				battle.advance(0.062)
+				frozen = frozen and target.animation_frame == frame and target._frame_ticks_left == ticks_left
+			checks.check(frozen, "petrified bat stops flapping during real combat ticks")
+		for round_index in range(target.petrify_rounds): battle._tick_hazards()
+		checks.check(not target.petrified(), "Statue animation lock expires at the normal round boundary")
+		target.walking = true
+		var resumed: bool = false
+		for tick in range(duration + 1):
+			target.animate_tick(definition)
+			if target.animation_frame != frame: resumed = true
+		checks.check(resumed, "animation resumes after Statue expires for type %d" % kind)
 
 
 func _meteor(checks, world: Dictionary, metadata: Dictionary, table: Dictionary) -> void:

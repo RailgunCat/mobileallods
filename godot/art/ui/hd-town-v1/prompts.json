@@ -1,0 +1,64 @@
+[
+    {
+        "value":  [
+                      {
+                          "key":  "shop276",
+                          "file":  "07-shop-original276-v1.png",
+                          "role":  "shop-background-from-original276",
+                          "refs":  [
+                                       "F:/Projects/my/mobileallods/godot/data/legacy/images/276.png",
+                                       "F:/Projects/my/mobileallods/godot/art/concepts/hd-menu-v1/references/pc-allods1-shop.jpg",
+                                       "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/06-weapons-books-crystals-v1.png"
+                                   ],
+                          "subjects":  [
+                                           "stone-arched-armory",
+                                           "merchant",
+                                           "weapon-racks",
+                                           "empty-counter"
+                                       ],
+                          "transparent":  false,
+                          "prompt":  "Use case: stylized-concept. HIGH RESOLUTION painted HD concept for Allods Java ME menu illustration. Faithful to the supplied original game references, not generic fantasy. Rich hand-painted 1990s RPG atmosphere with clear forms, realistic worn stone/wood/cloth, controlled brush detail, no pixelation, no modern 3D glossy render, no cartoon. Desktop landscape preferably 2560x1440. This is concept art kept outside the game. No UI buttons or stats, no embedded logos, no readable lettering, no watermark. Reinterpret original SHOP image276 (reference1) in high resolution; reference2 is the fuller PC Allods: Seal of Mystery weapon shop and clarifies its missing center. Preserve the stone arched alcove, heavy dark oak shelves/side posts, metal helmets and small blue/clear potion flasks on upper shelf, long polearms and swords leaning at left, round shields and steel cuirass to right. At center-right stands the same modest human shopkeeper from PC reference, reddish short hair and beard/mustache, green tunic, tan apron and brown belt, arms calmly folded; he is NOT the fat tavern keeper. Lower portion a sturdy dark wooden counter with a clear undecorated work area for future UI. Warm small torchlight, gray masonry and worn silver weapons against dark brown interior. Expand into a wide cohesive interior with some calmer dark shelving at left for optional overlays. NO actual item grids, inventories, prices, labels, player portraits or interface panels. Original image has a \u0027Магазин\u0027 sign: omit its word here so caption is a separate future graphic; a blank small dark wooden signboard is allowed. Do not scatter magical neon items; reference3 only guides crisp painterly material quality, not rainbow loot. Perspective is eye-level shop illustration as original, not a tile sprite or exterior building.",
+                          "source_file":  "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-3192d125-fa10-43a5-9f13-76bf6aa1afa8.png"
+                      },
+                      {
+                          "key":  "tavern278",
+                          "file":  "08-tavern-original278-v1.png",
+                          "role":  "tavern-background-from-original278",
+                          "refs":  [
+                                       "F:/Projects/my/mobileallods/godot/data/legacy/images/278.png",
+                                       "F:/Projects/my/mobileallods/godot/art/concepts/hd-menu-v1/references/pc-allods1-tavern.jpg",
+                                       "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/02-dialogue-portraits-v1.png"
+                                   ],
+                          "subjects":  [
+                                           "heavyset-innkeeper",
+                                           "barrels",
+                                           "wooden-counter",
+                                           "dim-stone-tavern"
+                                       ],
+                          "transparent":  false,
+                          "prompt":  "Use case: stylized-concept. HIGH RESOLUTION painted HD concept for Allods Java ME menu illustration. Faithful to the supplied original game references, not generic fantasy. Rich hand-painted 1990s RPG atmosphere with clear forms, realistic worn stone/wood/cloth, controlled brush detail, no pixelation, no modern 3D glossy render, no cartoon. Desktop landscape preferably 2560x1440. This is concept art kept outside the game. No UI buttons or stats, no embedded logos, no readable lettering, no watermark. Reinterpret ORIGINAL TAVERN illustration image278 (reference1), using PC Allods: Seal of Mystery tavern screenshot (reference2) as expanded context. Preserve the specific character identity: very HEAVYSET middle-aged human innkeeper, broad jowly clean-shaven face, short dark hair receding at temples, small eyes, dark green short-sleeved tunic, huge stained beige apron over round belly; both elbows/arms rest outward at waist height in relaxed welcoming posture. He is the tavern host, not a slim shop merchant, not a bearded dwarf. Place him center-right at the wooden bar, barrel stacks behind and at lower left, mugs on side shelf, timber supports, worn stone wall, dim navy hanging cloth in the back. Lower right can show unobtrusive corner of table/workbench as original. Leftmost30 percent dark quiet barrels/wall for later \u0027Слухи\u0027/\u0027Работа\u0027 menu but no actual writing. Warm restrained candle/torch light, charcoal and brown, natural human anatomy, likeness and clothes more important than ornament. Reference3 guides painterly face detail, do not substitute its existing faces. Remove all PC HUD, character portraits, recruitment prices, captions, green UI borders and item panels. No readable signs, no coins floating in air, no exaggerated smile, no weapon pose.",
+                          "source_file":  "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-97d73e12-8e59-4c07-b2e9-41eb13dc4a4f.png"
+                      }
+                  ],
+        "Count":  2
+    },
+    {
+        "key":  "city277",
+        "file":  "06-town-original277-v1.png",
+        "role":  "town-background-from-original277",
+        "refs":  [
+                     "F:/Projects/my/mobileallods/godot/data/legacy/images/277.png",
+                     "F:/Projects/my/mobileallods/godot/art/concepts/hd-menu-v1/references/pc-allods1-town.jpg",
+                     "F:/Projects/my/mobileallods/godot/art/concepts/hd-world-v1/03-buildings-v1.png"
+                 ],
+        "subjects":  [
+                         "stone-town",
+                         "red-tile-roofs",
+                         "rear-gate-tower",
+                         "cobbled-courtyard"
+                     ],
+        "transparent":  false,
+        "prompt":  "Use case: stylized-concept. HIGH RESOLUTION painted HD concept for Allods Java ME menu illustration. Faithful to the supplied original game references, not generic fantasy. Rich hand-painted 1990s RPG atmosphere with clear forms, realistic worn stone/wood/cloth, controlled brush detail, no pixelation, no modern 3D glossy render, no cartoon. Desktop landscape preferably 2560x1440. This is concept art kept outside the game. No UI buttons or stats, no embedded logos, no readable lettering, no watermark. Reconstruct and extend the ORIGINAL CITY artwork, image277 (reference1), using the complete PC Allods: Seal of Mystery town screenshot (reference2) to understand architecture. Reference3 only suggests paint finish, NOT building types. The mobile image is a cropped stone town with RED TERRACOTTA TILED ROOFS, not straw huts. Preserve recognizable arrangement: massive weathered gray stone gate/tower in rear; steep red-tile roofs and narrow gabled stone facades overlapping in foreground; dark arched doorways; warm brown/gray rough masonry; small courtyard/cobbled passage. The full PC image shows the wider town and central small statue; use that to extend beyond the crop without inventing a new unrelated village. Medieval town is dense and enclosed, slightly elevated oblique courtyard view, overcast blue-gray sky just above roofline. Foreground left inn has steep red gable and small dark arch; compact shop near center; right building may show the round copper roof from PC reference, modest rather than gigantic cathedral. Center/mobile crop should remain recognizable. Most visual detail in middle and right, leftmost quarter subtly shaded for optional future captions without erasing roofs. Remove ALL huge red annotation numbers, names, interface, cursors, panels and PC HUD. No straw roofs, no new wooden country tavern, no readable shop signs. A single coherent landscape painting, not a collage or screenshot frame.",
+        "source_file":  "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-90d7d013-43aa-4cb9-be44-9b01172c5587.png"
+    }
+]

@@ -4,6 +4,8 @@ const STEP: float = 0.062
 const METEOR_FALL_TICKS: int = 14 # First n with n * (n + 1) > 190.
 const DEBRIS_LIFETIME: float = 2.0
 const Spells = preload("res://scripts/gameplay/spell_rules.gd")
+const Spell = preload("res://scripts/gameplay/game_ids.gd").Spell
+const IMPACT_LIFETIME: float = 12 * STEP
 
 
 static func _hash(value: int) -> int:
@@ -56,7 +58,7 @@ static func projectile_frame(direction: Vector2) -> int:
 
 static func fire_glow() -> Texture2D:
 	# m.t(): 40x40 ARGB4444 radial orange glow (0xe72), with stepped alpha.
-	return _radial_glow(Color(14.0 / 15, 7.0 / 15, 2.0 / 15))
+	return radial_glow(Color(14.0 / 15, 7.0 / 15, 2.0 / 15))
 
 static func fire_wall_strips(cell: Vector2i, clock: float, source_size: Vector2) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
@@ -81,10 +83,10 @@ static func fire_wall_sparks(cell: Vector2i, clock: float) -> Array[Dictionary]:
 
 
 static func ice_glow() -> Texture2D:
-	return _radial_glow(Color(0.25, 0.6, 1.0, 0.75))
+	return radial_glow(Color(0.25, 0.6, 1.0, 0.75))
 
 
-static func _radial_glow(color: Color) -> Texture2D:
+static func radial_glow(color: Color) -> Texture2D:
 	var pixels := Image.create(40, 40, false, Image.FORMAT_RGBA8)
 	for y in range(40):
 		for x in range(40):
@@ -108,4 +110,34 @@ static func fire_sparks(from: Vector2, to: Vector2, clock: float, flight_ticks: 
 			var offset := Vector2(_hash(seed) % 20 - 10, _hash(seed + 1) % 20 - 10)
 			var drift := Vector2(_hash(seed + 2) % 30 - 15, _hash(seed + 3) % 30 - 15) * age / 100.0
 			result.append({"point": (origin + offset + drift).floor(), "size": 1 + seed % 2, "alpha": 1.0 - float(age) / lifetime})
+	return result
+
+
+static func spell_color(spell: int) -> Color:
+	match spell:
+		Spell.HEAL: return Color("65ef9b")
+		Spell.LIGHTNING, Spell.SPARK: return Color("85d7ff")
+		Spell.FROST: return Color("a0dfff")
+		Spell.SLOW: return Color("b295ee")
+		Spell.VAMPIRISM: return Color("ec4770")
+		Spell.MIASMA: return Color("93c952")
+		Spell.PETRIFY, Spell.STONE_SKIN: return Color("c6b594")
+		Spell.HASTE, Spell.BLESS: return Color("ffe6a0")
+		_: return Color("ffad4c")
+
+
+static func impact_particles(spell: int, cell: Vector2i, age: float) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if age < 0 or age + 0.000000001 >= IMPACT_LIFETIME: return result
+	var tick: int = int((age + 0.000000001) / STEP)
+	var progress: float = tick / 12.0
+	var center := Vector2(cell * 16 + Vector2i(8, -4))
+	var rising: bool = spell in [Spell.HEAL, Spell.VAMPIRISM, Spell.HASTE, Spell.BLESS, Spell.STONE_SKIN]
+	for index in range(14 if spell == Spell.FIREBALL else 9):
+		var seed: int = _hash(cell.x * 173 + cell.y * 317 + spell * 65537 + index * 997)
+		var angle: float = deg_to_rad(seed % 360)
+		var radius: float = (6 + seed % 15) * progress
+		var offset := Vector2(cos(angle) * radius, sin(angle) * radius * 0.65)
+		if rising: offset = Vector2(seed % 25 - 12, 10 - progress * (20 + seed % 16))
+		result.append({"point": (center + offset).floor(), "alpha": 1.0 - progress, "size": 1 + seed % 2})
 	return result

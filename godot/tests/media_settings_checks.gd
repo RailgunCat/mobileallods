@@ -11,12 +11,16 @@ func run(root, checks) -> void:
 	migrated.path = path
 	migrated.load_settings()
 	checks.check(not migrated.values["music_enabled"] and migrated.values["music_volume"] == 32 and migrated.values["sfx_enabled"] and not migrated.values["hd_icons"], "old music preference migrates with new defaults")
+	checks.check(migrated.values["vsync_enabled"] and migrated.values["fps_limit"] == 0, "old settings retain default VSync and no independent frame limit")
 	config.set_value("audio", "music_volume", 999)
 	config.set_value("audio", "sfx_volume", "broken")
 	config.set_value("graphics", "hd_icons", "false")
+	config.set_value("graphics", "vsync_enabled", "false")
+	config.set_value("graphics", "fps_limit", -60)
 	config.save(path)
 	migrated.load_settings()
 	checks.check(migrated.values["music_volume"] == 100 and migrated.values["sfx_volume"] == 65 and not migrated.values["hd_icons"], "settings validate types and clamp volume")
+	checks.check(migrated.values["vsync_enabled"] and migrated.values["fps_limit"] == 0, "invalid display settings fall back to safe defaults")
 	DirAccess.remove_absolute(path)
 	var original_path: String = root.preferences.path
 	var original: Dictionary = root.preferences.values.duplicate()
@@ -47,19 +51,20 @@ func run(root, checks) -> void:
 	root._show_game_menu()
 	root.game_menu.selected = Ids.GameMenuChoice.SETTINGS
 	root.game_menu.confirm()
-	checks.check(root.game_menu.settings_open and root.game_menu.regions.size() == 6, "settings expose independent music, SFX, HD and CRT controls")
+	checks.check(root.game_menu.settings_open and root.game_menu.regions.size() == 8, "settings expose audio, HD, CRT, VSync and frame limit controls")
 	root.game_menu.settings_selected = 1
 	root.game_menu.handle_settings_key(KEY_RIGHT)
 	checks.check(root.preferences.values["music_volume"] == 45 and is_equal_approx(root.music.player.volume_linear, 0.45) and root.preferences.values["sfx_volume"] == 65, "keyboard music volume updates only music")
 	var click := InputEventMouseButton.new()
 	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = true
-	click.position = root.game_menu.screen_origin + Vector2(120, 176) * root.game_menu.screen_scale
+	var slider_y: float = root.game_menu.SETTINGS_TOP + 3 * root.game_menu.SETTINGS_ROW + 20
+	click.position = root.game_menu.screen_origin + Vector2(120, slider_y) * root.game_menu.screen_scale
 	root.game_menu._gui_input(click)
 	checks.check(root.preferences.values["sfx_volume"] == 50 and root.preferences.values["music_volume"] == 45, "mouse slider updates SFX independently")
 	var drag := InputEventMouseMotion.new()
 	drag.button_mask = MOUSE_BUTTON_MASK_LEFT
-	drag.position = root.game_menu.screen_origin + Vector2(200, 176) * root.game_menu.screen_scale
+	drag.position = root.game_menu.screen_origin + Vector2(200, slider_y) * root.game_menu.screen_scale
 	root.game_menu._gui_input(drag)
 	checks.check(root.preferences.values["sfx_volume"] == 100, "volume slider supports dragging to its endpoint")
 	root.game_menu.settings_selected = 2
@@ -78,10 +83,12 @@ func run(root, checks) -> void:
 	root.ui_icons.portraits.erase(16)
 	checks.check(root.ui_icons.portrait(16) == legacy, "missing individual HD resource falls back without changing the setting")
 	root.ui_icons.portraits[16] = saved_hd
+	_display_options(root, checks)
 	var restored := Settings.new()
 	restored.path = path
 	restored.load_settings()
-	checks.check(restored.values == root.preferences.values, "all six preferences survive a fresh settings instance")
+	checks.check(restored.values == root.preferences.values, "all preferences including display options survive a fresh settings instance")
+	root.preferences.update("fps_limit", 0, false)
 	root.game_menu.back()
 	root.game_menu.back()
 	root._demo_battle(true)
@@ -144,6 +151,7 @@ func run(root, checks) -> void:
 	for frame in range(20): root._refresh_visuals()
 	checks.check(heard.size() == before, "visual refresh never replays combat effects")
 	root._restart(false)
+
 	checks.check(root.sound_effects.voices.all(func(voice): return not voice.playing), "restart clears pending sound playback")
 	root._show_main_menu(true)
 	var key := InputEventKey.new()
@@ -211,3 +219,41 @@ func run(root, checks) -> void:
 	root.preferences.path = original_path
 	DirAccess.remove_absolute(path)
 	root._restart(false)
+
+
+func _display_options(root, checks) -> void:
+	var menu = root.game_menu
+	root.preferences.update("vsync_enabled", true, false)
+	root.preferences.update("fps_limit", 0, false)
+	menu.settings_selected = 6
+	menu.handle_settings_key(KEY_RIGHT)
+	checks.check(not root.preferences.values["vsync_enabled"] and Engine.max_fps == 0, "keyboard toggles VSync independently of frame limit")
+	if DisplayServer.get_name() != "headless":
+		checks.check(DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_DISABLED, "VSync toggle immediately reaches the game window")
+	menu.navigate(1)
+	menu.handle_settings_key(KEY_RIGHT)
+	checks.check(root.preferences.values["fps_limit"] == 30 and Engine.max_fps == 30, "keyboard frame limit immediately updates engine pacing")
+	menu.handle_settings_key(KEY_LEFT)
+	checks.check(root.preferences.values["fps_limit"] == 0 and Engine.max_fps == 0, "unlimited frames removes the engine cap")
+	var region: Rect2 = menu.regions[7].logical_rect
+	checks.check(region.end.y < 268, "last settings row fits above keyboard help and footer")
+	var click := InputEventMouseButton.new()
+	click.pressed = true
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.position = menu.screen_origin + region.get_center() * menu.screen_scale
+	# This rectangle belongs to the legacy settings layout. The HD layout has
+	# its own pointer checks in hd_menu_checks.gd.
+	root.preferences.update("hd_icons", false, false)
+	menu._gui_input(click)
+	checks.check(root.preferences.values["fps_limit"] == 30 and Engine.max_fps == 30, "mouse click selects the visible frame-limit row")
+	root.preferences.update("hd_icons", true, false)
+	for limit in [60, 144, 240, 360]:
+		root.preferences.update("fps_limit", limit, false)
+		checks.check(Engine.max_fps == limit and not root.preferences.values["vsync_enabled"], "frame cap %d applies without changing VSync" % limit)
+	for invalid in [-1, 999, "60", true, 60.5]:
+		root.preferences.update("fps_limit", invalid, false)
+		checks.check(Engine.max_fps == 0, "invalid frame cap %s cannot reach the engine" % str(invalid))
+	root.preferences.update("fps_limit", 60)
+	var config := ConfigFile.new()
+	config.load(root.preferences.path)
+	checks.check(config.get_value("graphics", "fps_limit") == 60 and config.get_value("graphics", "vsync_enabled") == false, "display settings persist in graphics independently of campaign saves")

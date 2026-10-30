@@ -19,7 +19,11 @@ const InteractionChecks = preload("res://tests/ui_interaction_checks.gd")
 const CorpseTargetingChecks = preload("res://tests/corpse_targeting_checks.gd")
 const ReportedUIChecks = preload("res://tests/reported_ui_checks.gd")
 const MapFourChecks = preload("res://tests/map_four_checks.gd")
+const MapFiveChecks = preload("res://tests/map_five_checks.gd")
+const LateMapChecks = preload("res://tests/late_map_checks.gd")
 const CombatNavigationChecks = preload("res://tests/combat_navigation_checks.gd")
+const EnemyAIChecks = preload("res://tests/enemy_ai_checks.gd")
+const SpellPresentationChecks = preload("res://tests/spell_presentation_checks.gd")
 const PresentationChecks = preload("res://tests/presentation_checks.gd")
 const SaveChecks = preload("res://tests/save_checks.gd")
 const FullCampaignChecks = preload("res://tests/full_campaign_checks.gd")
@@ -87,6 +91,7 @@ var status: Label
 var move_button: Button
 var stop_button: Button
 var route: Array[Vector2i] = []
+var route_pixels: Array[Vector2] = []
 var moving: bool:
 	get: return exploration.is_moving()
 var metadata: Dictionary
@@ -121,6 +126,7 @@ var dialogue_next: Button
 var dialogue_restart: Button
 var dialogue_scroll: ScrollContainer
 var quests_label: Label
+var journal_notice: PanelContainer
 var _script_locked: bool = false
 var battle_overlay: BattleOverlay
 var action_bar: ActionBar
@@ -168,6 +174,7 @@ func _ready() -> void:
 	add_child(music)
 	if "--gameplay-test" in OS.get_cmdline_user_args(): preferences.path = "user://media-run-%d.cfg" % Time.get_ticks_usec()
 	preferences.load_settings()
+	preferences.apply_display()
 	music.configure(preferences)
 	sound_effects = SoundEffects.new()
 	add_child(sound_effects)
@@ -179,7 +186,7 @@ func _ready() -> void:
 	cursors = CursorService.new()
 	add_child(cursors)
 	cursors.configure()
-	for screen in [view, action_bar, management, legacy_management, shop]: screen.ui_icons = ui_icons
+	for screen in [view, action_bar, management, legacy_management, shop, world_panel, main_menu, game_menu, save_slots, battle_overlay]: screen.ui_icons = ui_icons
 	preferences.changed.connect(_settings_changed)
 	for screen in [main_menu, game_menu, legacy_management, shop, world_panel, save_slots]:
 		screen.ui_action.connect(func(kind: String): sound_effects.play_clip("click_ok.wav" if kind == "confirm" else "back.wav", false))
@@ -197,6 +204,7 @@ func _ready() -> void:
 	battle.combat_text.connect(func(point: Vector2, message: String): view.combat_feedback.add_text(point, message, battle.tick_count * 0.062))
 	battle.spell_impact.connect(func(spell: int, cell: Vector2i, tick: int):
 		sound_effects.spell_impact(spell)
+		view.combat_feedback.add_spell(spell, cell, tick * 0.062)
 		if spell == Spell.METEOR: view.combat_feedback.add_meteor(cell, tick * 0.062)
 	)
 	battle.presentation_reset.connect(func(): view.combat_feedback.clear(); view.zone_action = &"none")
@@ -556,6 +564,7 @@ func _build_interface() -> void:
 		_settings_from_title = true
 		main_menu.hide()
 		game_menu.open(view.textures, metadata, battle.active)
+		game_menu.hd_screen.title_background = true
 		game_menu.open_settings()
 	)
 	main_menu.load_requested.connect(func(): _open_save_slots(false, &"main_menu"))
@@ -563,15 +572,22 @@ func _build_interface() -> void:
 	add_child(save_slots)
 	save_slots.closed.connect(_close_save_slots)
 	save_slots.selected_slot.connect(_save_slot_selected)
+	journal_notice = preload("res://scripts/gameplay/journal_notice.gd").new()
+	add_child(journal_notice)
+	journal_notice.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	journal_notice.offset_left = -150
+	journal_notice.offset_right = 150
+	journal_notice.offset_top = 24
 	_set_debug_sidebar_visible(false)
 
 
 func _settings_changed(key: String) -> void:
+	if key in ["", "vsync_enabled", "fps_limit"]: preferences.apply_display()
 	if crt_filter != null: crt_filter.apply(bool(preferences.values["crt_enabled"]))
 	game_menu.queue_redraw()
 	if key not in ["", "hd_icons"]: return
 	action_bar._signature = ""
-	for screen in [view, legacy_management, shop]: screen.queue_redraw()
+	for screen in [view, legacy_management, shop, world_panel]: screen.queue_redraw()
 	if management.visible: management.render()
 	if not campaign.modal.is_empty():
 		var page: Dictionary = campaign.modal["pages"][int(campaign.modal["page"])]
@@ -649,6 +665,7 @@ func _restart(activate_campaign: bool = true, autosave_entry: bool = true) -> vo
 		_fail("Не удалось создать игровую сессию.")
 		return
 	view.session = session
+	journal_notice.configure(session)
 	_configure_exploration_view()
 	campaign.configure(session, world, campaign_data, activate_campaign)
 	status.text = "Выберите клетку на карте.\nЗелёный путь — цель доступна. Жёлтый — подход к препятствию."
@@ -993,6 +1010,7 @@ func _select_cell(cell: Vector2i, _source_id: int) -> void:
 	selected = cell
 	var result: Dictionary = exploration.preview(cell)
 	route.assign(result["path"])
+	route_pixels.assign(result.get("pixel_path", []))
 	view.route_cells = route.duplicate()
 	view.route_exact = result["reachable"]
 	if result["reachable"]:
@@ -1015,7 +1033,7 @@ func _begin_move() -> void:
 		return
 	if route.is_empty() or moving:
 		return
-	exploration.start_route(route)
+	exploration.start_route(route, route_pixels)
 	status.text = "Тагрим идёт по маршруту…"
 	_refresh()
 
@@ -1075,6 +1093,7 @@ func _update_cursor() -> void:
 	on_map = on_map and Rect2(Vector2.ZERO, view.size).has_point(point)
 	var state: Dictionary = cursors.resolve(self, point, on_map)
 	view.set_movement_preview(state)
+	view.set_spell_preview(state)
 	cursors.apply(state, ui_icons)
 
 
@@ -1241,6 +1260,7 @@ func _open_save_slots(saving: bool, origin: StringName) -> void:
 	game_menu.hide()
 	session.mode = &"game_menu" if origin == &"game_menu" else &"main_menu"
 	save_slots.open(saves, view.textures, metadata, saving)
+	save_slots.hd_screen.title_background = origin == &"main_menu"
 
 func _close_save_slots() -> void:
 	if _save_origin == &"main_menu":
@@ -1267,6 +1287,7 @@ func _save_slot_selected(slot: int) -> void:
 	# Keep the live session object and its signal connections.
 	for key in ["map", "current_scene", "location_id", "entry_id", "world_rng", "last_rumour", "gate_choices", "campaign_completed", "rain_remaining", "rain_elapsed", "rain_layers", "flags", "dungeon_seeds", "hero", "collision", "units", "party", "gold", "inventory", "next_item_id", "simulation_tick"]: session.set(key, restored.get(key))
 	session.commands.clear()
+	journal_notice.configure(session)
 	session.god_mode = false
 	session.mode = &"exploration"
 	session.rebuild_paths()
@@ -1461,6 +1482,7 @@ func _snapshot() -> void:
 
 func _run_checks() -> void:
 	# Travel/new-game checks must never overwrite the player's autosave.
+	battle.seed_value = 20261026
 	var original_save_directory: String = saves.directory
 	saves.directory = "user://gameplay-test-%d" % Time.get_ticks_usec()
 	_restart(false)
@@ -1470,6 +1492,7 @@ func _run_checks() -> void:
 	BattleChecks.new().run(checks, world, metadata, table)
 	CombatChecks.new().run(checks, world, metadata, table, rewards)
 	MagicChecks.new().run(checks, world, metadata, table)
+	EnemyAIChecks.new().run(checks, world, metadata, table)
 	EconomyChecks.new().run(checks, world, metadata, table, rewards)
 	TravelChecks.new().generation(checks, metadata)
 	TravelChecks.new().travel(checks, world, metadata, table, rewards, campaign_data)
@@ -1665,9 +1688,17 @@ func _run_checks() -> void:
 	CorpseTargetingChecks.new().run(self, checks)
 	ReportedUIChecks.new().run(self, checks)
 	MapFourChecks.new().run(checks, world, metadata, table, rewards, campaign_data)
+	MapFiveChecks.new().run(checks, world, metadata, table, rewards)
+	preload("res://tests/map_seven_checks.gd").new().run(checks, world, metadata, table, rewards, campaign_data)
+	preload("res://tests/mage_encounter_checks.gd").new().run(checks, world, metadata, table, rewards, campaign_data)
+	LateMapChecks.new().run(self, checks)
 	CombatNavigationChecks.new().run(self, checks)
 	PresentationChecks.new().run(self, checks)
+	SpellPresentationChecks.new().run(self, checks)
 	await PresentationChecks.new().layout(self, checks)
+	await preload("res://tests/hd_management_checks.gd").new().run(self, checks)
+	await preload("res://tests/hd_menu_checks.gd").new().run(self, checks)
+	await preload("res://tests/hd_remaining_checks.gd").new().run(self, checks)
 	_snapshot()
 	# Let the audio thread release stopped Ogg playback before the test quits.
 	set_process(false)

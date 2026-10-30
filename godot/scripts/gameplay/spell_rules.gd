@@ -13,9 +13,11 @@ static func rank(actor, spell_id: int, definitions: Dictionary) -> int:
 	return int((actor.stats[int(spell["school_stat"])] - 1) / float(spell["rank_step"]))
 
 
-static func learned(actor, spell_id: int, definitions: Dictionary) -> bool:
+static func learned(actor, spell_id: int, definitions: Dictionary, ai: bool = false) -> bool:
 	if spell_id < 0 or spell_id >= Spell.COUNT: return false
 	var spell: Dictionary = definitions["spell_definitions"][spell_id]
+	# m.boolean_b() admits equality; the player spell menu keeps its own gate.
+	if ai: return actor.stats[int(spell["school_stat"])] >= int(spell["rank_step"])
 	return actor.stats[int(spell["school_stat"])] > int(spell["rank_step"])
 
 
@@ -52,6 +54,88 @@ static func target_valid(battle, actor, spell_id: int, cell: Vector2i) -> bool:
 	return target != null or not battle.session.collision.is_terrain_blocked(cell)
 
 
+static func damage_cells(actor, spell_id: int, cell: Vector2i, definitions: Dictionary) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	if spell_id == Spell.LIGHTNING:
+		# Preserve the source's Frost-school radius and center/arm hit order.
+		cells.append(cell)
+		for distance in range(1, rank(actor, Spell.FROST, definitions)):
+			for direction in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]: cells.append(cell + direction * distance)
+	elif spell_id == Spell.FIREBALL:
+		var extent: int = rank(actor, spell_id, definitions)
+		for y in range(cell.y - extent - 1, cell.y + extent + 1):
+			for x in range(cell.x - extent - 1, cell.x + extent + 1):
+				if absi(x - cell.x) + absi(y - cell.y) <= extent: cells.append(Vector2i(x, y))
+	return cells
+
+
+static func frost_pair(battle, actor, point: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = [point, point + Vector2i.RIGHT]
+	for cell in cells:
+		var occupant = battle.actor_at(cell)
+		if (occupant != null and occupant.side_id == actor.side_id) or (occupant == null and battle.session.collision.is_terrain_blocked(cell)): return []
+	return cells
+
+
+static func miasma_cells(anchor: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	var left: int = int((anchor.x * 16 - 25) / 16.0)
+	var top: int = int((anchor.y * 16 - 20) / 16.0)
+	for y in range(top, top + 4):
+		for x in range(left, left + 4): cells.append(Vector2i(x, y))
+	return cells
+
+
+static func fire_wall_cells(battle, actor, cell: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	for pixels: Vector2i in wall_positions(actor, cell, battle.session.definitions):
+		var point := Vector2i(int(pixels.x / 16.0), int((pixels.y - 8) / 16.0))
+		if battle.actor_at(point) == null:
+			if battle.session.collision.is_terrain_blocked(point): continue
+			if point.y * 16 < pixels.y - 8 and battle.session.collision.is_terrain_blocked(point + Vector2i.DOWN): continue
+			if point.x * 16 < pixels.x - 8 and battle.session.collision.is_terrain_blocked(point + Vector2i.RIGHT): continue
+		cells.append(point)
+	return cells
+
+
+static func area_preview(battle, actor, spell_id: int, cell: Vector2i) -> Dictionary:
+	var cells: Array[Vector2i] = []
+	var possible: Array[Vector2i] = []
+	var caption: String = ""
+	match spell_id:
+		Spell.LIGHTNING, Spell.FIREBALL:
+			cells = damage_cells(actor, spell_id, cell, battle.session.definitions)
+			caption = "Молния · область удара" if spell_id == Spell.LIGHTNING else "Огненный шар · область взрыва"
+		Spell.FROST:
+			cells = frost_pair(battle, actor, cell)
+			if rank(actor, spell_id, battle.session.definitions) > 1:
+				for y in [-2, 0, 2]:
+					for x in [-2, 0, 2]:
+						for point in frost_pair(battle, actor, cell + Vector2i(x, y)):
+							if point not in cells and point not in possible: possible.append(point)
+			caption = "Мороз · пунктир: случайные осколки"
+		Spell.MIASMA:
+			cells = miasma_cells(cell)
+			caption = "Миазмы · 4×4 · урон каждый раунд"
+		Spell.FIRE_WALL:
+			cells = fire_wall_cells(battle, actor, cell)
+			caption = "Стена огня · урон каждый раунд"
+		_: return {}
+	var visible: Array[Vector2i] = []
+	var uncertain: Array[Vector2i] = []
+	var allies: Array[Vector2i] = []
+	for point in cells:
+		if battle.session.collision.contains(point) and point not in visible: visible.append(point)
+	for point in possible:
+		if battle.session.collision.contains(point) and point not in uncertain: uncertain.append(point)
+	if spell_id in [Spell.MIASMA, Spell.FIRE_WALL]:
+		for point in visible:
+			var victim = battle.actor_at(point)
+			if victim != null and not victim.dead and victim.side_id == actor.side_id: allies.append(point)
+	if not allies.is_empty(): caption += " · союзник в зоне!"
+	return {"cells": visible, "possible": uncertain, "allies": allies, "target": cell, "spell": spell_id, "caption": caption}
+
+
 static func impact(battle, actor, spell_id: int, cell: Vector2i) -> void:
 	var target = battle.actor_at(cell)
 	if battle.session.god_mode and target in battle.session.party and actor.side_id != target.side_id: return
@@ -61,12 +145,7 @@ static func impact(battle, actor, spell_id: int, cell: Vector2i) -> void:
 		Spell.FIRE_ARROW, Spell.HEAL, Spell.SPARK, Spell.METEOR:
 			if target != null: battle.apply_payload(actor, target, payload(actor, spell_id, battle.session.definitions), spell_id)
 		Spell.LIGHTNING:
-			# i(): cross radius uses meteor-school row 7, including this source quirk.
-			var extent: int = rank(actor, Spell.FROST, battle.session.definitions)
-			var cells: Array[Vector2i] = [cell]
-			for i in range(1, extent):
-				for direction in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]: cells.append(cell + direction * i)
-			for point in cells:
+			for point in damage_cells(actor, spell_id, cell, battle.session.definitions):
 				var victim = battle.actor_at(point)
 				if victim != null and victim.side_id != actor.side_id: battle.apply_payload(actor, victim, payload(actor, spell_id, battle.session.definitions), spell_id)
 		Spell.SLOW:
@@ -75,14 +154,9 @@ static func impact(battle, actor, spell_id: int, cell: Vector2i) -> void:
 			var cells: Array[Vector2i] = [cell]
 			for i in range(1, spell_rank): cells.append(cell + Vector2i((battle.rng.bounded(3) - 1) * 2, (battle.rng.bounded(3) - 1) * 2))
 			for point in cells:
-				var blocked: bool = false
-				for offset in [Vector2i.ZERO, Vector2i.RIGHT]:
-					var occupant = battle.actor_at(point + offset)
-					if (occupant != null and occupant.side_id == actor.side_id) or (occupant == null and battle.session.collision.is_terrain_blocked(point + offset)): blocked = true
-				if blocked: continue
 				var seen: Array[int] = []
-				for offset in [Vector2i.ZERO, Vector2i.RIGHT]:
-					var victim = battle.actor_at(point + offset)
+				for hit_cell in frost_pair(battle, actor, point):
+					var victim = battle.actor_at(hit_cell)
 					if victim != null and victim.side_id != actor.side_id and victim.instance_id not in seen:
 						battle.apply_payload(actor, victim, payload(actor, spell_id, battle.session.definitions), spell_id)
 						seen.append(victim.instance_id)
@@ -91,21 +165,13 @@ static func impact(battle, actor, spell_id: int, cell: Vector2i) -> void:
 			var duration: int = int(actor.stats[Stat.DARK_AIR_MAGIC] / 3.0) / 2 + 1
 			battle.hazards.append({"spell": spell_id, "actor": actor.instance_id, "cell": cell, "duration": duration})
 		Spell.FIRE_WALL:
-			for pixels: Vector2i in wall_positions(actor, cell, battle.session.definitions):
-				var point := Vector2i(int(pixels.x / 16.0), int((pixels.y - 8) / 16.0))
-				var occupant = battle.actor_at(point)
-				if occupant == null:
-					if battle.session.collision.is_terrain_blocked(point): continue
-					if point.y * 16 < pixels.y - 8 and battle.session.collision.is_terrain_blocked(point + Vector2i.DOWN): continue
-					if point.x * 16 < pixels.x - 8 and battle.session.collision.is_terrain_blocked(point + Vector2i.RIGHT): continue
+			for point in fire_wall_cells(battle, actor, cell):
 				battle.hazards.append({"spell": spell_id, "actor": actor.instance_id, "cell": point, "duration": 4})
 		Spell.FIREBALL:
 			# ag(): loops cells, so large footprints can receive repeated hits.
-			for y in range(cell.y - spell_rank - 1, cell.y + spell_rank + 1):
-				for x in range(cell.x - spell_rank - 1, cell.x + spell_rank + 1):
-					if absi(x - cell.x) + absi(y - cell.y) > spell_rank: continue
-					var victim = battle.actor_at(Vector2i(x, y))
-					if victim != null and victim.side_id != actor.side_id: battle.apply_payload(actor, victim, payload(actor, spell_id, battle.session.definitions), spell_id)
+			for point in damage_cells(actor, spell_id, cell, battle.session.definitions):
+				var victim = battle.actor_at(point)
+				if victim != null and victim.side_id != actor.side_id: battle.apply_payload(actor, victim, payload(actor, spell_id, battle.session.definitions), spell_id)
 		Spell.PETRIFY:
 			if int(2000 * spell_rank / float(maxi(1, target.stats[Stat.DARK_RESISTANCE]))) > battle.rng.bounded(100):
 				Effects.add(target, table, Stat.PHYSICAL_RESISTANCE, target.base_stats[Stat.PHYSICAL_RESISTANCE], spell_rank, StatusIcon.PETRIFY)

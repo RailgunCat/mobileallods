@@ -1,0 +1,61 @@
+{
+  "version": 2,
+  "date": "2026-10-30",
+  "generator": "built-in image_gen",
+  "scope": "inventory and character training concepts; no game integration",
+  "assets": [
+    {
+      "file": "01-character-training-v2.png",
+      "role": "character-training",
+      "status": "visual-proposal-only",
+      "width": 1672,
+      "height": 941,
+      "bit_depth": 8,
+      "color_type": 2,
+      "transparent": false,
+      "sha256": "57119fe7cbf7e23048d0cd0ba40e95b408b29e72701cad4256b402bfb44e4819",
+      "png_verified": true,
+      "interactive": false,
+      "integrated": false
+    },
+    {
+      "file": "02-inventory-v2-class-corrected.png",
+      "role": "inventory",
+      "status": "visual-proposal-only",
+      "width": 1672,
+      "height": 940,
+      "bit_depth": 8,
+      "color_type": 2,
+      "transparent": false,
+      "sha256": "d93f8db6527ab94b0ddbe01de06597951676b54b21f2a179c02b8218dd7e4015",
+      "png_verified": true,
+      "interactive": false,
+      "integrated": false
+    },
+    {
+      "file": "02-inventory-v2.png",
+      "role": "inventory-before-class-correction",
+      "status": "discarded-draft",
+      "width": 1672,
+      "height": 940,
+      "bit_depth": 8,
+      "color_type": 2,
+      "transparent": false,
+      "sha256": "b48eb9d24ffe8256a8791ea34d6784c0bdea3347369f46d9f143443a407e22a8",
+      "png_verified": true,
+      "interactive": false,
+      "integrated": false
+    }
+  ],
+  "design_document": "../../../../docs/inventory-character-concept.md",
+  "limitations": [
+    "Text is approximate; use project font at implementation.",
+    "Stat values and bar fills are illustrative.",
+    "Doll is a single illustration; equipment layers require separate art."
+  ],
+  "verification": {
+    "progression_checks": 404,
+    "progression_failures": 0,
+    "log": "build/progression-audit.log"
+  }
+}

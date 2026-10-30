@@ -1,0 +1,488 @@
+{
+	"portraits": {
+		"16": "res://data/hd/icons/portraits-016.png",
+		"17": "res://data/hd/icons/portraits-017.png",
+		"18": "res://data/hd/icons/portraits-018.png",
+		"19": "res://data/hd/icons/portraits-019.png",
+		"20": "res://data/hd/icons/portraits-020.png",
+		"205": "res://data/hd/icons/portraits-205.png",
+		"206": "res://data/hd/icons/portraits-206.png",
+		"207": "res://data/hd/icons/portraits-207.png",
+		"208": "res://data/hd/icons/portraits-208.png",
+		"209": "res://data/hd/icons/portraits-209.png",
+		"21": "res://data/hd/icons/portraits-021.png",
+		"210": "res://data/hd/icons/portraits-210.png",
+		"211": "res://data/hd/icons/portraits-211.png",
+		"212": "res://data/hd/icons/portraits-212.png",
+		"213": "res://data/hd/icons/portraits-213.png",
+		"214": "res://data/hd/icons/portraits-214.png",
+		"215": "res://data/hd/icons/portraits-215.png",
+		"216": "res://data/hd/icons/portraits-216.png",
+		"217": "res://data/hd/icons/portraits-217.png",
+		"218": "res://data/hd/icons/portraits-218.png",
+		"219": "res://data/hd/icons/portraits-219.png",
+		"22": "res://data/hd/icons/portraits-022.png",
+		"23": "res://data/hd/icons/portraits-023.png",
+		"24": "res://data/hd/icons/portraits-024.png"
+	},
+	"sources": [
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-016.png",
+			"rect": [
+				8,
+				8,
+				403,
+				398
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-017.png",
+			"rect": [
+				427,
+				8,
+				399,
+				398
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-018.png",
+			"rect": [
+				842,
+				8,
+				404,
+				398
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-019.png",
+			"rect": [
+				8,
+				422,
+				403,
+				386
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-020.png",
+			"rect": [
+				427,
+				422,
+				399,
+				386
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-021.png",
+			"rect": [
+				842,
+				422,
+				404,
+				386
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-022.png",
+			"rect": [
+				8,
+				824,
+				403,
+				422
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-023.png",
+			"rect": [
+				427,
+				824,
+				399,
+				422
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "02-dialogue-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-024.png",
+			"rect": [
+				842,
+				824,
+				404,
+				422
+			],
+			"sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-000.png",
+			"rect": [
+				8,
+				8,
+				298,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-001.png",
+			"rect": [
+				322,
+				8,
+				297,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-002.png",
+			"rect": [
+				635,
+				8,
+				298,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-003.png",
+			"rect": [
+				949,
+				8,
+				297,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-004.png",
+			"rect": [
+				8,
+				320,
+				298,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-005.png",
+			"rect": [
+				322,
+				320,
+				297,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-006.png",
+			"rect": [
+				635,
+				320,
+				298,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-007.png",
+			"rect": [
+				949,
+				320,
+				297,
+				296
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-008.png",
+			"rect": [
+				8,
+				632,
+				298,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-009.png",
+			"rect": [
+				322,
+				632,
+				297,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-010.png",
+			"rect": [
+				635,
+				632,
+				298,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-011.png",
+			"rect": [
+				949,
+				632,
+				297,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-012.png",
+			"rect": [
+				8,
+				947,
+				298,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-013.png",
+			"rect": [
+				322,
+				947,
+				297,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-014.png",
+			"rect": [
+				635,
+				947,
+				298,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "04-spells-and-status-v1.png",
+			"output": "res://data/hd/icons/spells-015.png",
+			"rect": [
+				949,
+				947,
+				297,
+				299
+			],
+			"sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-205.png",
+			"rect": [
+				8,
+				8,
+				312,
+				303
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-206.png",
+			"rect": [
+				336,
+				8,
+				305,
+				303
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-207.png",
+			"rect": [
+				657,
+				8,
+				308,
+				303
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-208.png",
+			"rect": [
+				981,
+				8,
+				309,
+				303
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-209.png",
+			"rect": [
+				1306,
+				8,
+				305,
+				303
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-210.png",
+			"rect": [
+				8,
+				327,
+				312,
+				296
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-211.png",
+			"rect": [
+				336,
+				327,
+				305,
+				296
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-212.png",
+			"rect": [
+				657,
+				327,
+				308,
+				296
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-213.png",
+			"rect": [
+				981,
+				327,
+				309,
+				296
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-214.png",
+			"rect": [
+				1306,
+				327,
+				305,
+				296
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-215.png",
+			"rect": [
+				8,
+				639,
+				312,
+				324
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-216.png",
+			"rect": [
+				336,
+				639,
+				305,
+				324
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-217.png",
+			"rect": [
+				657,
+				639,
+				308,
+				324
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-218.png",
+			"rect": [
+				981,
+				639,
+				309,
+				324
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		},
+		{
+			"file": "03-unit-portraits-v1.png",
+			"output": "res://data/hd/icons/portraits-219.png",
+			"rect": [
+				1306,
+				639,
+				305,
+				324
+			],
+			"sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611"
+		}
+	],
+	"spells": {
+		"0": "res://data/hd/icons/spells-000.png",
+		"1": "res://data/hd/icons/spells-001.png",
+		"10": "res://data/hd/icons/spells-010.png",
+		"11": "res://data/hd/icons/spells-011.png",
+		"12": "res://data/hd/icons/spells-012.png",
+		"13": "res://data/hd/icons/spells-013.png",
+		"14": "res://data/hd/icons/spells-014.png",
+		"15": "res://data/hd/icons/spells-015.png",
+		"2": "res://data/hd/icons/spells-002.png",
+		"3": "res://data/hd/icons/spells-003.png",
+		"4": "res://data/hd/icons/spells-004.png",
+		"5": "res://data/hd/icons/spells-005.png",
+		"6": "res://data/hd/icons/spells-006.png",
+		"7": "res://data/hd/icons/spells-007.png",
+		"8": "res://data/hd/icons/spells-008.png",
+		"9": "res://data/hd/icons/spells-009.png"
+	}
+}

@@ -2,12 +2,13 @@ extends "res://scripts/gameplay/legacy_ui_screen.gd"
 const Choice = preload("res://scripts/gameplay/game_ids.gd").GameMenuChoice
 const Controls = preload("res://scripts/gameplay/controls_help.gd")
 const Credits = preload("res://scripts/gameplay/credits.gd")
-const SETTINGS_TOP: int = 54
-const SETTINGS_ROW: int = 34
+const Settings = preload("res://scripts/gameplay/game_settings.gd")
+const SETTINGS_TOP: int = 44
+const SETTINGS_ROW: int = 28
 const TITLES = ["Продолжить", "Журнал", "Персонаж", "Инвентарь", "Сохранить игру", "Загрузить игру", "Настройки", "Помощь", "Главное меню", "Выход из игры", "Управление", "Авторы и права"]
 const FIRST_ROW_Y: int = 24
 const ROW_HEIGHT: int = 21
-const SETTING_KEYS = ["music_enabled", "music_volume", "sfx_enabled", "sfx_volume", "hd_icons", "crt_enabled"]
+const SETTING_KEYS = ["music_enabled", "music_volume", "sfx_enabled", "sfx_volume", "hd_icons", "crt_enabled", "vsync_enabled", "fps_limit"]
 signal chosen(choice: int)
 signal setting_requested(key: String, value)
 signal settings_closed
@@ -21,10 +22,15 @@ var scroll: int = 0
 var help_text: String = ""
 var combat_locked: bool = false
 var _drag_setting: int = -1
+var hd_screen: Control
 
 func _ready() -> void:
 	super._ready()
 	enable_world_background()
+	hd_screen = preload("res://scripts/gameplay/hd_menu_screen.gd").new()
+	hd_screen.kind = &"pause"
+	hd_screen.controller = self
+	add_child(hd_screen)
 
 func open(textures: Dictionary, metadata: Dictionary, in_combat: bool = false) -> void:
 	combat_locked = in_combat
@@ -38,6 +44,8 @@ func open(textures: Dictionary, metadata: Dictionary, in_combat: bool = false) -
 	body = []
 	scroll = 0
 	visible = true
+	hd_screen.title_background = false
+	hd_screen.reset()
 	_build_regions()
 	queue_redraw()
 
@@ -67,6 +75,9 @@ func choice_enabled(choice: int) -> bool:
 	return not combat_locked or choice not in [Choice.SAVE, Choice.CHARACTER, Choice.INVENTORY, Choice.JOURNAL]
 
 func navigate(step: int) -> void:
+	if hd_screen.active() and not settings_open and not body.is_empty():
+		hd_screen.scroll_body(step)
+		return
 	if settings_open: settings_selected = posmod(settings_selected + step, SETTING_KEYS.size())
 	elif body.is_empty(): selected = posmod(selected + step, Choice.COUNT)
 	else: scroll = clampi(scroll + step, 0, maxi(0, body.size() - 18))
@@ -77,6 +88,7 @@ func adjust(step: int) -> void:
 	var key: String = SETTING_KEYS[settings_selected]
 	var value = preferences.values[key]
 	if key.ends_with("_volume"): value = clampi(int(value) + step * 5, 0, 100)
+	elif key == "fps_limit": value = Settings.FPS_LIMITS[posmod(Settings.FPS_LIMITS.find(int(value)) + step, Settings.FPS_LIMITS.size())]
 	else: value = not value
 	setting_requested.emit(key, value)
 	music_enabled = bool(preferences.values["music_enabled"])
@@ -103,6 +115,7 @@ func _set_slider(index: int, x: float) -> void:
 	queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
+	if hd_screen.active(): return
 	if settings_open and preferences != null:
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			if not event.pressed:
@@ -163,20 +176,22 @@ func back() -> void:
 
 func _draw() -> void:
 	if images.is_empty(): return
+	if hd_screen.active(): return
 	begin_draw()
 	if settings_open:
 		write("Настройки", Vector2(120, 28), HORIZONTAL_ALIGNMENT_CENTER)
 		if preferences != null:
-			var labels := ["Музыка", "Громкость музыки", "Звуки", "Громкость звуков", "HD-иконки", "CRT-фильтр"]
+			var labels := ["Музыка", "Громкость музыки", "Звуки", "Громкость звуков", "HD-режим", "CRT-фильтр", "Верт. синхр.", "Лимит кадров"]
 			for index in range(SETTING_KEYS.size()):
 				var key: String = SETTING_KEYS[index]
 				var value = preferences.values[key]
 				var suffix: String = "%d%%" % int(value) if key.ends_with("_volume") else ("вкл." if value else "выкл.")
+				if key == "fps_limit": suffix = "без лимита" if int(value) == 0 else str(value)
 				var point := Vector2(40, SETTINGS_TOP + index * SETTINGS_ROW)
 				if key in ["hd_icons", "crt_enabled"]:
 					var font: Font = ThemeDB.fallback_font
 					draw_string(font, point + Vector2(0, 10), "HD" if key == "hd_icons" else "CRT", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color.GREEN)
-					write(("-иконки: " if key == "hd_icons" else "-фильтр: ") + suffix, point + Vector2(ceilf(font.get_string_size("HD" if key == "hd_icons" else "CRT", HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x), 0))
+					write(("-режим: " if key == "hd_icons" else "-фильтр: ") + suffix, point + Vector2(ceilf(font.get_string_size("HD" if key == "hd_icons" else "CRT", HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x), 0))
 				else: write(labels[index] + ": " + suffix, point)
 				if key.ends_with("_volume"):
 					draw_rect(Rect2(40, SETTINGS_TOP + 20 + index * SETTINGS_ROW, 160, 5), Color("343434"))

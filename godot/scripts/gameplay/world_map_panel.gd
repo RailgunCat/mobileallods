@@ -16,6 +16,18 @@ var lines: PackedStringArray = []
 var scroll: int = 0
 var message: String = ""
 var map_position := Vector2(41, 48)
+var hd_interior: Control
+var hd_remaining: Control
+
+func _ready() -> void:
+	super._ready()
+	hd_interior = preload("res://scripts/gameplay/hd_town_screen.gd").new()
+	hd_interior.controller = self
+	add_child(hd_interior)
+	hd_remaining = preload("res://scripts/gameplay/hd_remaining_screen.gd").new()
+	hd_remaining.kind = &"world"
+	hd_remaining.controller = self
+	add_child(hd_remaining)
 
 func open(session, campaign_data: Dictionary, textures: Dictionary, must_choose: bool = false) -> void:
 	game = session
@@ -28,6 +40,7 @@ func open(session, campaign_data: Dictionary, textures: Dictionary, must_choose:
 	selected = game.location_id + 1 if game.location_id >= 0 else 0
 	visible = true
 	show_world()
+	hd_remaining.reset()
 
 func show_world() -> void:
 	if game == null or not game.world_travel_unlocked(): return
@@ -36,6 +49,9 @@ func show_world() -> void:
 	game.mode = &"world_map"
 	visible = true
 	message = ""
+	var destination: int = _quest_destination()
+	if destination > 0: selected = destination
+	_world_message()
 	clear_regions()
 	buttons.clear()
 	for node: Dictionary in game.definitions["travel"]["world_nodes"]:
@@ -45,6 +61,7 @@ func show_world() -> void:
 			if selected == index: confirm()
 			else:
 				selected = index
+				_world_message()
 				queue_redraw()
 		, str(game.definitions["travel"]["location_names"][index]))
 		choice.disabled = int(game.flags["e"][index]) == 0
@@ -52,6 +69,18 @@ func show_world() -> void:
 	region(Rect2(9, 294, 100, 25), confirm)
 	region(Rect2(130, 294, 100, 25), dismiss)
 	queue_redraw()
+
+func _quest_destination() -> int:
+	var destination: int = 0
+	for offer: Dictionary in game.definitions["travel"]["tavern_offers"]:
+		var index: int = int(offer["unlock"])
+		if index <= game.location_id + 1 or int(game.flags["e"][index]) == 0: continue
+		if int(game.quests[int(offer["quest"])]) == Ids.QuestState.ACTIVE:
+			destination = maxi(destination, index)
+	return destination
+
+func _world_message() -> void:
+	message = "Цель задания: локация %d" % selected if selected > 0 and selected == _quest_destination() else ""
 
 func show_town(skip_help: bool = false) -> void:
 	if game == null or not game.world_travel_unlocked(): return
@@ -115,7 +144,9 @@ func navigate(step: int) -> void:
 		for i in range(13):
 			selected = posmod(selected + step, 13)
 			if int(game.flags["e"][selected]) != 0: break
+		_world_message()
 	elif screen in [&"town", &"tavern"]: town_selected = posmod(town_selected + step, 3)
+	elif screen == &"body" and hd_interior.active(): hd_interior._scroll_body(step)
 	else: scroll = clampi(scroll + step, 0, maxi(0, lines.size() - 18))
 	queue_redraw()
 
@@ -161,6 +192,8 @@ func dismiss() -> void:
 
 func _draw() -> void:
 	if images.is_empty(): return
+	if hd_interior != null and hd_interior.active(): return
+	if hd_remaining != null and hd_remaining.active(): return
 	begin_draw()
 	if screen == &"world":
 		draw_texture(images[UiImage.WORLD_MAP], map_position)
@@ -169,9 +202,13 @@ func _draw() -> void:
 			if int(game.flags["e"][index]) == 0: continue
 			var point := map_position + Vector2(float(node["position"][0]), float(node["position"][1]))
 			draw_texture(images[UiImage.WORLD_SELECTED_NODE] if index == selected else images[UiImage.WORLD_NODE], point - Vector2(2, 2))
-			if index == selected: draw_texture(images[UiImage.WORLD_CURSOR], point + Vector2(9, -9))
+			if index == selected:
+				draw_arc(point + Vector2(0.5, 0.5), 6, 0, TAU, 16, Color("f2c973"), 1, false)
+				draw_texture(images[UiImage.WORLD_CURSOR], point + Vector2(9, -9))
+				if index > 0: write(str(index), point + Vector2(-3, -20), HORIZONTAL_ALIGNMENT_LEFT, Color("f2c973"))
 			if index == game.location_id + 1: draw_texture(images[UiImage.PARTY_FLAG], point - Vector2(11, 12))
-		write(str(game.definitions["travel"]["location_names"][selected]), Vector2(120, 284), HORIZONTAL_ALIGNMENT_CENTER)
+		var title: String = str(game.definitions["travel"]["location_names"][selected])
+		write("%d. %s" % [selected, title] if selected > 0 else title, Vector2(120, 284), HORIZONTAL_ALIGNMENT_CENTER)
 	elif screen in [&"town", &"tavern"]:
 		write("Город" if screen == &"town" else "Таверна", Vector2(120, 28), HORIZONTAL_ALIGNMENT_CENTER)
 		var titles: Array = ["Таверна", "Магазин", "Выход"] if screen == &"town" else ["Слухи", "Работа", "Выход"]
@@ -182,3 +219,7 @@ func _draw() -> void:
 	if not message.is_empty(): write(message, Vector2(120, 267), HORIZONTAL_ALIGNMENT_CENTER)
 	footer(screen != &"town_help", not required or screen != &"world")
 	finish_draw()
+
+func _gui_input(event: InputEvent) -> void:
+	if hd_remaining != null and hd_remaining.active(): return
+	super._gui_input(event)

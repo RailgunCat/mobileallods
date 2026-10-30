@@ -14,10 +14,19 @@ var candidates: Array = []
 var message: String = ""
 var buy_button: Hotspot
 var sell_button: Hotspot
+var hd_interior: Control
+
+func _ready() -> void:
+	super._ready()
+	hd_interior = preload("res://scripts/gameplay/hd_town_screen.gd").new()
+	hd_interior.controller = self
+	hd_interior.is_shop = true
+	add_child(hd_interior)
 
 
 func open(session, textures: Dictionary) -> void:
 	game = session
+	message = ""
 	setup(textures, game.definitions)
 	visible = true
 	screen = &"choice"
@@ -111,6 +120,7 @@ func _comparison(item) -> Array:
 
 func _draw() -> void:
 	if images.is_empty(): return
+	if hd_interior != null and hd_interior.active(): return
 	begin_draw()
 	if screen == &"choice":
 		write("Магазин", Vector2(120, 28), HORIZONTAL_ALIGNMENT_CENTER)

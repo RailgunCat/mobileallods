@@ -7,6 +7,14 @@ var service
 var saving: bool = false
 var selected: int = 0
 var message: String = ""
+var hd_screen: Control
+
+func _ready() -> void:
+	super._ready()
+	hd_screen = preload("res://scripts/gameplay/hd_menu_screen.gd").new()
+	hd_screen.kind = &"slots"
+	hd_screen.controller = self
+	add_child(hd_screen)
 
 func open(saves, textures: Dictionary, metadata: Dictionary, write_save: bool) -> void:
 	service = saves
@@ -15,6 +23,7 @@ func open(saves, textures: Dictionary, metadata: Dictionary, write_save: bool) -
 	message = ""
 	setup(textures, metadata)
 	visible = true
+	hd_screen.reset()
 	clear_regions()
 	for slot in range(slot_count()):
 		region(Rect2(20, ROW_TOP + slot * ROW_STEP, 200, ROW_STEP - 2), func():
@@ -47,6 +56,7 @@ func back() -> void:
 
 func _draw() -> void:
 	if images.is_empty(): return
+	if hd_screen.active(): return
 	begin_draw()
 	write("Сохранить игру" if saving else "Загрузить игру", Vector2(120, 28), HORIZONTAL_ALIGNMENT_CENTER)
 	for slot in range(slot_count()):
@@ -56,3 +66,7 @@ func _draw() -> void:
 	for i in range(mini(3, lines.size())): write(lines[i], Vector2(20, 245 + i * 14))
 	footer(true, true)
 	finish_draw()
+
+func _gui_input(event: InputEvent) -> void:
+	if hd_screen.active(): return
+	super._gui_input(event)

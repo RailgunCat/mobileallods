@@ -25,7 +25,7 @@ func drive(battle, limit: int = 3000) -> bool:
 		if battle.can_input() and battle.selected_id >= 0:
 			if battle.selected_id == battle.session.hero.instance_id and battle.session.party.size() > 1 and battle.session.party[1].unit_type == Ids.UnitKind.LI and not battle.session.party[1].dead:
 				battle.defend()
-			else: battle._enemy_action(battle.unit(battle.selected_id))
+			else: Combat.new().player_action(battle)
 		battle.advance(0.062)
 	return false
 
@@ -56,6 +56,7 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, rew
 	story.start_script(Ids.StoryScript.HELP_HERMIT)
 	checks.check(settle(story) and game.party.size() == 2 and game.party[1].instance_id == 1001 and int(game.spawn_states[6]) == 0, "source hermit joins and reveals bat before Li")
 	var battle := Battle.new()
+	battle.seed_value = 20261026
 	battle.begin(game, [1003])
 	checks.check(Combat.new().drive(battle) and battle.outcome == &"victory", "hero and original hermit win real bat combat")
 	checks.check(battle.return_to_exploration(), "bat victory returns to exploration")

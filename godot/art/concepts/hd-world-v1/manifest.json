@@ -1,0 +1,931 @@
+{
+  "version": 1,
+  "date": "2026-10-27",
+  "status": "concept-only-not-integrated",
+  "generator": "built-in image_gen",
+  "logical_cell_pixels": 16,
+  "proposed_hd_visual_cell_pixels": 64,
+  "visual_scale_is_proposal": true,
+  "active_game_graphics_changed": false,
+  "assets": [
+    {
+      "file": "01-outdoor-terrain-v1.png",
+      "width": 1448,
+      "height": 1086,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "fdb24801de2d941644d561809b0a834572f76286fda41b235ef1697d23f8be0f",
+      "grid_columns": 4,
+      "grid_rows": 3,
+      "grid_is_conceptual": true,
+      "background": "opaque charcoal presentation board",
+      "seamless_verified": false,
+      "alpha_ready": false,
+      "in_engine_verified": false,
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "name": "grass-base",
+          "reference_images": [
+            {
+              "image_id": 26,
+              "width": 100,
+              "height": 116,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "name": "grass-variation",
+          "reference_images": [
+            {
+              "image_id": 26,
+              "width": 100,
+              "height": 116,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "name": "packed-earth",
+          "reference_images": [
+            {
+              "image_id": 27,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "name": "pebbled-road",
+          "reference_images": [
+            {
+              "image_id": 27,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "name": "road-edge-horizontal",
+          "reference_images": [
+            {
+              "image_id": 28,
+              "width": 16,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 29,
+              "width": 16,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 30,
+              "width": 48,
+              "height": 16,
+              "source_offset": null
+            },
+            {
+              "image_id": 31,
+              "width": 48,
+              "height": 16,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "name": "road-edge-vertical",
+          "reference_images": [
+            {
+              "image_id": 28,
+              "width": 16,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 29,
+              "width": 16,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 30,
+              "width": 48,
+              "height": 16,
+              "source_offset": null
+            },
+            {
+              "image_id": 31,
+              "width": 48,
+              "height": 16,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "name": "road-corner",
+          "reference_images": [
+            {
+              "image_id": 26,
+              "width": 100,
+              "height": 116,
+              "source_offset": null
+            },
+            {
+              "image_id": 27,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 28,
+              "width": 16,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 29,
+              "width": 16,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 30,
+              "width": 48,
+              "height": 16,
+              "source_offset": null
+            },
+            {
+              "image_id": 31,
+              "width": 48,
+              "height": 16,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "36–43 — вода, а не углы дороги."
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "name": "open-water",
+          "reference_images": [
+            {
+              "image_id": 36,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 37,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 38,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 39,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 40,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 41,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 42,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            },
+            {
+              "image_id": 43,
+              "width": 32,
+              "height": 32,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "34 — берег; открытая вода — 36–43."
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "name": "shore-straight",
+          "reference_images": [
+            {
+              "image_id": 34,
+              "width": 32,
+              "height": 16,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "name": "shore-corner",
+          "reference_images": [
+            {
+              "image_id": 34,
+              "width": 32,
+              "height": 16,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "name": "wood-planks",
+          "reference_images": [
+            {
+              "image_id": 32,
+              "width": 64,
+              "height": 16,
+              "source_offset": null
+            },
+            {
+              "image_id": 33,
+              "width": 32,
+              "height": 16,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "name": "rocky-ground",
+          "reference_images": [
+            {
+              "image_id": 27,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        }
+      ]
+    },
+    {
+      "file": "02-dungeon-stonework-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "e558e54d76ef2c44f269b6b0ade2fc4e11d23519b4ef101d556c6b74fca72137",
+      "grid_columns": 3,
+      "grid_rows": 3,
+      "grid_is_conceptual": true,
+      "background": "opaque charcoal presentation board",
+      "seamless_verified": false,
+      "alpha_ready": false,
+      "in_engine_verified": false,
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "name": "dark-floor",
+          "reference_images": [
+            {
+              "image_id": 64,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "name": "worn-floor",
+          "reference_images": [
+            {
+              "image_id": 64,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 65,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "Для сравнения двух полов нужно учитывать и 65."
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "name": "north-wall",
+          "reference_images": [
+            {
+              "image_id": 69,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "name": "side-wall",
+          "reference_images": [
+            {
+              "image_id": 66,
+              "width": 8,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 67,
+              "width": 8,
+              "height": 48,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "name": "wall-corner",
+          "reference_images": [
+            {
+              "image_id": 66,
+              "width": 8,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 67,
+              "width": 8,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 68,
+              "width": 48,
+              "height": 8,
+              "source_offset": null
+            },
+            {
+              "image_id": 69,
+              "width": 48,
+              "height": 48,
+              "source_offset": null
+            },
+            {
+              "image_id": 73,
+              "width": 48,
+              "height": 8,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "70 — паутина, 71/72 — факел, а не особые угловые блоки."
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "name": "round-pillar",
+          "reference_images": [],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "76/77 не цилиндрические колонны; у концепта колонны нет точного исходного соответствия."
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "name": "doorway",
+          "reference_images": [],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "78/79 — статуи, а не арка входа."
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "name": "stairs-down",
+          "reference_images": [],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null,
+          "audit_note": "80 — ритуальная площадка, а не спуск по лестнице."
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "name": "ritual-floor",
+          "reference_images": [
+            {
+              "image_id": 80,
+              "width": 93,
+              "height": 80,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        }
+      ]
+    },
+    {
+      "file": "03-buildings-v1.png",
+      "width": 1555,
+      "height": 1011,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "ca9ec1dc0d17a84405700391f4e1f8cf83a901b7957cb8b6f17e02d34f76aed9",
+      "grid_columns": 3,
+      "grid_rows": 2,
+      "grid_is_conceptual": true,
+      "background": "opaque charcoal presentation board",
+      "seamless_verified": false,
+      "alpha_ready": false,
+      "in_engine_verified": false,
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "name": "round-thatch-hut",
+          "reference_images": [
+            {
+              "image_id": 54,
+              "width": 73,
+              "height": 83,
+              "source_offset": [
+                -19,
+                -23
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "name": "long-thatched-cottage",
+          "reference_images": [
+            {
+              "image_id": 55,
+              "width": 90,
+              "height": 82,
+              "source_offset": [
+                -42,
+                -50
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "name": "stone-roof-hut",
+          "reference_images": [
+            {
+              "image_id": 56,
+              "width": 57,
+              "height": 69,
+              "source_offset": [
+                -12,
+                -25
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "name": "gable-house",
+          "reference_images": [
+            {
+              "image_id": 57,
+              "width": 76,
+              "height": 94,
+              "source_offset": [
+                -24,
+                -46
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "name": "round-stone-tower",
+          "reference_images": [
+            {
+              "image_id": 58,
+              "width": 74,
+              "height": 130,
+              "source_offset": [
+                -29,
+                -110
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "name": "burned-ruin",
+          "reference_images": [
+            {
+              "image_id": 59,
+              "width": 124,
+              "height": 109,
+              "source_offset": [
+                -54,
+                -52
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        }
+      ]
+    },
+    {
+      "file": "04-trees-and-props-v1.png",
+      "width": 1448,
+      "height": 1086,
+      "bit_depth": 8,
+      "color_type": 2,
+      "sha256": "e41dad7dc3fe0b66fdade39788bf9ca3007a1da4598865a934f735345abfd76a",
+      "grid_columns": 4,
+      "grid_rows": 3,
+      "grid_is_conceptual": true,
+      "background": "opaque charcoal presentation board",
+      "seamless_verified": false,
+      "alpha_ready": false,
+      "in_engine_verified": false,
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "name": "oak-full-a",
+          "reference_images": [
+            {
+              "image_id": 49,
+              "width": 37,
+              "height": 41,
+              "source_offset": [
+                -12,
+                -15
+              ]
+            },
+            {
+              "image_id": 60,
+              "width": 92,
+              "height": 64,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "name": "oak-full-b",
+          "reference_images": [
+            {
+              "image_id": 50,
+              "width": 43,
+              "height": 47,
+              "source_offset": [
+                -12,
+                -15
+              ]
+            },
+            {
+              "image_id": 61,
+              "width": 92,
+              "height": 74,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "name": "canopy-only",
+          "reference_images": [
+            {
+              "image_id": 60,
+              "width": 92,
+              "height": 64,
+              "source_offset": null
+            },
+            {
+              "image_id": 61,
+              "width": 92,
+              "height": 74,
+              "source_offset": null
+            },
+            {
+              "image_id": 62,
+              "width": 61,
+              "height": 65,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "name": "trunk-only",
+          "reference_images": [
+            {
+              "image_id": 49,
+              "width": 37,
+              "height": 41,
+              "source_offset": [
+                -12,
+                -15
+              ]
+            },
+            {
+              "image_id": 50,
+              "width": 43,
+              "height": 47,
+              "source_offset": [
+                -12,
+                -15
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "name": "rocks-low",
+          "reference_images": [
+            {
+              "image_id": 44,
+              "width": 47,
+              "height": 32,
+              "source_offset": [
+                -3,
+                -8
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "name": "standing-stone",
+          "reference_images": [
+            {
+              "image_id": 45,
+              "width": 59,
+              "height": 60,
+              "source_offset": [
+                0,
+                0
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "name": "stone-remains",
+          "reference_images": [
+            {
+              "image_id": 46,
+              "width": 42,
+              "height": 35,
+              "source_offset": [
+                -9,
+                -15
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "name": "signpost",
+          "reference_images": [
+            {
+              "image_id": 51,
+              "width": 12,
+              "height": 25,
+              "source_offset": [
+                0,
+                -5
+              ]
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "name": "stump",
+          "reference_images": [],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "name": "shrub",
+          "reference_images": [],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "name": "fallen-log",
+          "reference_images": [],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "name": "wooden-chest",
+          "reference_images": [
+            {
+              "image_id": 279,
+              "width": 27,
+              "height": 27,
+              "source_offset": null
+            }
+          ],
+          "relationship": "visual study only, not a replacement mapping",
+          "logical_footprint": null,
+          "exact_crop_rectangle": null,
+          "anchor": null
+        }
+      ]
+    }
+  ],
+  "reference_audit": "../audit-v1/README.md"
+}

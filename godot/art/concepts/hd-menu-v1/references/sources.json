@@ -1,0 +1,59 @@
+[
+  {
+    "file": "references/pc-allods1-town.jpg",
+    "url": "https://vertigosn.ru/pics/solution/Allods/town.jpg",
+    "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+    "description": "Город Плагат, PC «Аллоды: Печать тайны»",
+    "retrieved": "2026-10-27",
+    "usage": "local visual research reference; third-party original game screenshot, not generated artwork",
+    "sha256": "6ec19ce22618b256527b8b2a0bbc4f8edfef691f52d7f9a64455d9ff48a61660"
+  },
+  {
+    "file": "references/pc-allods1-tavern.jpg",
+    "url": "https://vertigosn.ru/pics/solution/Allods/taverna.jpg",
+    "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+    "description": "Трактир, PC «Аллоды: Печать тайны»",
+    "retrieved": "2026-10-27",
+    "usage": "local visual research reference; third-party original game screenshot, not generated artwork",
+    "sha256": "3b83dc50af7d68e6b59175badbbf2f026fb68983f9d98615c7a2398ca7413566"
+  },
+  {
+    "file": "references/pc-allods1-shop.jpg",
+    "url": "https://vertigosn.ru/pics/solution/Allods/lavka.jpg",
+    "page_url": "https://vertigosn.ru/solutions/pcgames/allods",
+    "description": "Оружейная лавка, PC «Аллоды: Печать тайны»",
+    "retrieved": "2026-10-27",
+    "usage": "local visual research reference; third-party original game screenshot, not generated artwork",
+    "sha256": "96ef7a758a0d3fe98482e9b8ec4645491275838fc70d539cbc5dbfe4a5eff6c9"
+  },
+  {
+    "file": "references/original-mobile-003.png",
+    "source_image_id": 3,
+    "usage": "locally supplied original Java ME artwork; not generated",
+    "sha256": "0df685c1604367b2a60fe283ca9b5a326d5cb5bf1e45ccc77350926c926efb90"
+  },
+  {
+    "file": "references/original-mobile-012.png",
+    "source_image_id": 12,
+    "usage": "locally supplied original Java ME artwork; not generated",
+    "sha256": "0d9b1ca9f66541ac5541fb33308a9de424d05f7d32a836e2d89694b61ac79e82"
+  },
+  {
+    "file": "references/original-mobile-276.png",
+    "source_image_id": 276,
+    "usage": "locally supplied original Java ME artwork; not generated",
+    "sha256": "0208517db2d091fc8da5e578fda6b8c3dc037800dd78ca8f348cc60f96409a0a"
+  },
+  {
+    "file": "references/original-mobile-277.png",
+    "source_image_id": 277,
+    "usage": "locally supplied original Java ME artwork; not generated",
+    "sha256": "c33868639e439726654fb1a88ecf19c1a1c7fc019cca953a2711bfbb5a325cbb"
+  },
+  {
+    "file": "references/original-mobile-278.png",
+    "source_image_id": 278,
+    "usage": "locally supplied original Java ME artwork; not generated",
+    "sha256": "5a1809496fe4dcf7b2cb5f223b8fe63c57a11f82900b40ef8135a208fcad6ab2"
+  }
+]

@@ -36,6 +36,7 @@ var panel: PanelContainer
 var character_header: HBoxContainer
 var portrait: TextureRect
 var resources: Label
+var hd_loot: Control
 
 
 func _ready() -> void:
@@ -89,6 +90,10 @@ func _ready() -> void:
 	notice = label(column, "")
 	notice.add_theme_color_override("font_color", Color("d8be80"))
 	close_button = button(column, "Закрыть · Esc", dismiss)
+	hd_loot = preload("res://scripts/gameplay/hd_remaining_screen.gd").new()
+	hd_loot.kind = &"loot"
+	hd_loot.controller = self
+	add_child(hd_loot)
 	visible = false
 
 
@@ -117,6 +122,7 @@ func open(session, data: Dictionary, textures: Dictionary, initial_page: int, lo
 	Inventory.sync_party(game)
 	actor_id = game.hero.instance_id
 	receipt = loot
+	hd_loot.reset()
 	party_select.clear()
 	for actor in game.party: party_select.add_item(str(data["unit_names"][actor.unit_type]), actor.instance_id)
 	notice.text = ""

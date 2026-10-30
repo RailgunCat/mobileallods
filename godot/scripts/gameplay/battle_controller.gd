@@ -43,9 +43,10 @@ var accumulator: float = 0.0
 var tick_count: int = 0
 var stalled: bool = false
 var _tick_seconds: float = 0.062
-var seed_value: int = 20261026
-var rng := LegacyRandom.new(seed_value)
-var loot_rng := LegacyRandom.new(seed_value ^ 0x1337)
+var seed_value: int = -1 # Nonnegative values explicitly pin a test/replay seed.
+var _battle_seed: int = 0
+var rng := LegacyRandom.new()
+var loot_rng := LegacyRandom.new()
 var enemy_policy: StringName = &"combat"
 var outcome: StringName = &""
 var reward: Dictionary = {}
@@ -113,7 +114,7 @@ func begin(game, triggers: Array) -> bool:
 		var actor = unit(id)
 		if actor != null and actor not in game.party and not actor.dead and actor.encounter_enabled and game.is_active(actor): ids_triggered.append(id)
 	if ids_triggered.is_empty(): return false
-	var description: Dictionary = Encounter.build(game, ids_triggered)
+	var description: Dictionary = Encounter.build(game, ids_triggered, true)
 	var bounds: Rect2i = description["arena"]
 	var ids: Array[int] = description["unit_ids"]
 	var hostile: bool = false
@@ -134,13 +135,14 @@ func begin(game, triggers: Array) -> bool:
 	var chosen: Dictionary[int, Vector2i] = {}
 	for id in ids:
 		var actor = unit(id)
+		var anchor: Vector2i = game.hero.cell if Encounter.needs_regroup(game, actor) else actor.cell
 		var best := Vector2i(-1, -1)
 		var score: int = 2147483647
 		for y in range(bounds.position.y, bounds.end.y):
 			for x in range(bounds.position.x, bounds.end.x):
 				var cell := Vector2i(x, y)
 				if not bounds.encloses(Rect2i(cell, actor.footprint)) or not placement.can_stand(cell, actor.footprint): continue
-				var distance: int = absi(x - actor.cell.x) + absi(y - actor.cell.y)
+				var distance: int = absi(x - anchor.x) + absi(y - anchor.y)
 				if distance < score:
 					score = distance
 					best = cell
@@ -163,8 +165,9 @@ func begin(game, triggers: Array) -> bool:
 	outcome = &""
 	reward = {}
 	feedback = {}
-	rng = LegacyRandom.new(seed_value)
-	loot_rng = LegacyRandom.new(seed_value ^ 0x1337)
+	_battle_seed = seed_value if seed_value >= 0 else randi()
+	rng = LegacyRandom.new(_battle_seed)
+	loot_rng = LegacyRandom.new(_battle_seed ^ 0x1337)
 	game.collision = placement
 	for id in participants:
 		var actor = unit(id)
@@ -407,7 +410,7 @@ func _start_command() -> void:
 	elif current["action"] == "cast":
 		var spell: int = int(current["spell"])
 		var target: Vector2i = current["cell"]
-		if not Spells.learned(actor, spell, session.definitions) or actor.stats[Stat.MANA] < Spells.cost(actor, spell, session.definitions) or not Spells.target_valid(self, actor, spell, target):
+		if not Spells.learned(actor, spell, session.definitions, bool(current.get("ai", false))) or actor.stats[Stat.MANA] < Spells.cost(actor, spell, session.definitions) or not Spells.target_valid(self, actor, spell, target):
 			_record("rejected", {"reason": "spell no longer valid"})
 			current = {}
 			return
@@ -509,7 +512,7 @@ func _has_timed_effect(actor) -> bool:
 func snapshot() -> Dictionary:
 	var pending: Array = []
 	for command: Dictionary in queue: pending.append(_command_snapshot(command))
-	return {"active": active, "hazards": hazards.map(func(hazard): return _command_snapshot(hazard)), "arena": [arena.position.x, arena.position.y, arena.size.x, arena.size.y], "participants": Array(participants), "side": current_side, "round": round_number, "turn_serial": turn_serial, "selected_id": selected_id, "state": state.duplicate(true), "queue": pending, "current": _command_snapshot(current), "events": events.duplicate(true), "tick": tick_count, "accumulator": accumulator, "stalled": stalled, "seed": seed_value, "rng": rng.snapshot(), "loot_rng": loot_rng.snapshot(), "outcome": str(outcome), "reward": reward.duplicate(true)}
+	return {"active": active, "hazards": hazards.map(func(hazard): return _command_snapshot(hazard)), "arena": [arena.position.x, arena.position.y, arena.size.x, arena.size.y], "participants": Array(participants), "side": current_side, "round": round_number, "turn_serial": turn_serial, "selected_id": selected_id, "state": state.duplicate(true), "queue": pending, "current": _command_snapshot(current), "events": events.duplicate(true), "tick": tick_count, "accumulator": accumulator, "stalled": stalled, "seed": _battle_seed, "rng": rng.snapshot(), "loot_rng": loot_rng.snapshot(), "outcome": str(outcome), "reward": reward.duplicate(true)}
 
 
 func _command_snapshot(command: Dictionary) -> Dictionary:
@@ -525,7 +528,7 @@ func _command_snapshot(command: Dictionary) -> Dictionary:
 
 
 func _valid_target(actor, target, allow_corpse: bool = false) -> bool:
-	return target != null and target.instance_id in participants and not target.shattered and (allow_corpse or (not target.dead and target.stats[Stat.HP] > 0)) and session.is_active(target) and target.side_id != actor.side_id and (target.encounter_enabled or target in session.party)
+	return target != null and target.instance_id in participants and not target.shattered and (allow_corpse or (not target.dead and target.stats[Stat.HP] > 0)) and session.is_active(target) and (target.side_id != actor.side_id or (allow_corpse and target.dead and actor.side_id != Side.PARTY)) and (target.encounter_enabled or target in session.party)
 
 
 func _adjacent(cell: Vector2i, footprint: Vector2i, target) -> bool:
@@ -549,9 +552,9 @@ func attack_plan(actor, target) -> Dictionary:
 	return result
 
 
-func _approach(actor, target, allow_partial: bool = false) -> Dictionary:
+func _approach(actor, target, allow_partial: bool = false, collision = null) -> Dictionary:
 	var finder := Pathfinder.new()
-	var grid := Grid.new(session.collision, arena)
+	var grid := Grid.new(session.collision if collision == null else collision, arena)
 	finder.build(grid, actor.cell, actor.footprint, actor.instance_id)
 	var best := Vector2i(-1, -1)
 	var cost: int = Pathfinder.INFINITY_COST if allow_partial else 1000
@@ -660,28 +663,50 @@ func _tick_attack(actor) -> void:
 
 
 func _enemy_action(actor) -> void:
-	if _magic_action(actor): return
+	# m.I(): fighters attack/move/clear corpses; casters cast/move. Each
+	# successful stage chooses one candidate with the original combat RNG.
+	if not eligible(actor): return
+	if actor.stats[Stat.ATTACK] > 0 or actor.stats[Stat.DEFENSE] > 0 or actor.stats[Stat.TACTICS] > 0:
+		if _physical_action(actor) or _move_action(actor) or _corpse_action(actor): return
+	else:
+		if _magic_action(actor) or _move_action(actor): return
+	_enqueue(actor.instance_id, "defend", [], true)
+
+
+func _physical_action(actor) -> bool:
 	var targets: Array = []
 	for id in participants:
 		var target = unit(id)
-		if _valid_target(actor, target): targets.append(target)
-	targets.sort_custom(func(a, b):
-		var da: int = absi(a.cell.x - actor.cell.x) + absi(a.cell.y - actor.cell.y)
-		var db: int = absi(b.cell.x - actor.cell.x) + absi(b.cell.y - actor.cell.y)
-		return a.instance_id < b.instance_id if da == db else da < db
-	)
-	for target in targets:
-		if _order_attack(actor, target): return
-	for target in targets:
+		if _valid_target(actor, target) and attack_plan(actor, target)["valid"]: targets.append(target)
+	return not targets.is_empty() and _order_attack(actor, targets[rng.bounded(targets.size())])
+
+
+func _move_action(actor) -> bool:
+	var plans: Array[Dictionary] = []
+	for id in participants:
+		var target = unit(id)
+		if not _valid_target(actor, target): continue
 		var plan: Dictionary = _approach(actor, target, true)
-		if plan["path"].is_empty(): continue
-		var cells: Array[Vector2i] = []
-		cells.assign(plan["path"].slice(0, actor.stats[Stat.ACTION_POINTS]))
-		if _enqueue(actor.instance_id, "move", cells):
-			_enqueue(actor.instance_id, "wait", [], true)
-			queue.back()["start"] = cells.back()
-			return
-	_enqueue(actor.instance_id, "defend", [], true)
+		if not plan["path"].is_empty(): plans.append(plan)
+	return not plans.is_empty() and _advance_toward(actor, plans[rng.bounded(plans.size())])
+
+
+func _corpse_action(actor) -> bool:
+	var bodies: Array = []
+	for id in participants:
+		var body = unit(id)
+		if body.dead and not body.shattered and attack_plan(actor, body)["valid"]: bodies.append(body)
+	return not bodies.is_empty() and _order_attack(actor, bodies[rng.bounded(bodies.size())])
+
+
+func _advance_toward(actor, plan: Dictionary) -> bool:
+	if plan["path"].is_empty(): return false
+	var cells: Array[Vector2i] = []
+	cells.assign(plan["path"].slice(0, actor.stats[Stat.ACTION_POINTS]))
+	if not _enqueue(actor.instance_id, "move", cells): return false
+	_enqueue(actor.instance_id, "wait", [], true)
+	queue.back()["start"] = cells.back()
+	return true
 
 
 func _check_outcome() -> bool:
@@ -777,8 +802,8 @@ func actor_at(cell: Vector2i):
 	return null
 
 
-func cast_plan(actor, spell: int, cell: Vector2i) -> Dictionary:
-	var valid: bool = actor != null and Spells.learned(actor, spell, session.definitions)
+func cast_plan(actor, spell: int, cell: Vector2i, ai: bool = false) -> Dictionary:
+	var valid: bool = actor != null and Spells.learned(actor, spell, session.definitions, ai)
 	var cost: int = Spells.cost(actor, spell, session.definitions) if valid else 0
 	if session.god_mode and actor in session.party: cost = 0
 	return {"valid": valid and actor.stats[Stat.MANA] >= cost and Spells.target_valid(self, actor, spell, cell), "cost": cost, "spell": spell, "cell": cell}
@@ -788,10 +813,11 @@ func cast(spell: int, cell: Vector2i) -> bool:
 	return can_input() and _order_cast(unit(selected_id), spell, cell)
 
 
-func _order_cast(actor, spell: int, cell: Vector2i) -> bool:
-	if not cast_plan(actor, spell, cell)["valid"] or not _enqueue(actor.instance_id, "cast"): return false
+func _order_cast(actor, spell: int, cell: Vector2i, ai: bool = false) -> bool:
+	if not cast_plan(actor, spell, cell, ai)["valid"] or not _enqueue(actor.instance_id, "cast"): return false
 	queue.back()["spell"] = spell
 	queue.back()["cell"] = cell
+	queue.back()["ai"] = ai
 	return true
 
 
@@ -872,11 +898,7 @@ func _tick_hazards() -> void:
 		var anchor: Vector2i = hazard["cell"]
 		var points: Array[Vector2i] = [anchor]
 		if int(hazard["spell"]) == Spell.MIASMA:
-			points.clear()
-			var left: int = int((anchor.x * 16 - 25) / 16.0)
-			var top: int = int((anchor.y * 16 - 20) / 16.0)
-			for y in range(top, top + 4):
-				for x in range(left, left + 4): points.append(Vector2i(x, y))
+			points = Spells.miasma_cells(anchor)
 		for cell in points:
 			var target = actor_at(cell)
 			if target != null and target.instance_id not in seen:
@@ -886,15 +908,21 @@ func _tick_hazards() -> void:
 
 
 func _magic_action(actor) -> bool:
-	# Keep deterministic choices, with distinct healer/caster priorities.
-	for spell in [Spell.HEAL, Spell.FIRE_ARROW, Spell.SPARK, Spell.LIGHTNING, Spell.FROST, Spell.METEOR, Spell.FIREBALL, Spell.SLOW, Spell.PETRIFY, Spell.MIASMA, Spell.FIRE_WALL]:
-		if not Spells.learned(actor, spell, session.definitions) or actor.stats[Stat.MANA] < Spells.cost(actor, spell, session.definitions): continue
-		for id in participants:
-			var target = unit(id)
-			if spell == Spell.HEAL and (target.unit_type in Ids.UNDEAD_TYPES or target.side_id != actor.side_id or (not target.dead and target.stats[Stat.HP] >= target.stats[Stat.MAX_HP] / 2)): continue
-			if spell != Spell.HEAL and target.side_id == actor.side_id: continue
-			if _order_cast(actor, spell, target.cell): return true
-	return false
+	# m.boolean_b(): draw a spell before checking its targets. Friendly spells
+	# (flag 2) and dead targets are excluded by the original enemy policy.
+	if actor.stats[Stat.ACTION_POINTS] <= 0: return false
+	var spells: Array[int] = []
+	for spell in range(Spell.COUNT):
+		var definition: Dictionary = session.definitions["spell_definitions"][spell]
+		if int(definition["target_flags"]) & 2: continue
+		if Spells.learned(actor, spell, session.definitions, true) and actor.stats[Stat.MANA] >= Spells.cost(actor, spell, session.definitions): spells.append(spell)
+	if spells.is_empty(): return false
+	var selected_spell: int = spells[rng.bounded(spells.size())]
+	var targets: Array = []
+	for id in participants:
+		var target = unit(id)
+		if _valid_target(actor, target) and cast_plan(actor, selected_spell, target.cell, true)["valid"]: targets.append(target)
+	return not targets.is_empty() and _order_cast(actor, selected_spell, targets[rng.bounded(targets.size())].cell, true)
 
 
 func _show_combat_text(actor, message: String) -> void:

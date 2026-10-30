@@ -1,8 +1,26 @@
-# Local original resources, replacement artwork and working notes.
+# Original resources and working notes stay local; generated HD art is tracked.
 /analysis/
 /build/
-/godot/data/
-/godot/art/
+/godot/data/*
+!/godot/data/hd/
+/godot/data/hd/*
+!/godot/data/hd/icons/
+!/godot/data/hd/README.txt
+/godot/art/*
+!/godot/art/ui/
+!/godot/art/concepts/
+/godot/art/ui/*
+!/godot/art/ui/hd-menu-v1/
+!/godot/art/ui/hd-town-v1/
+/godot/art/concepts/*
+!/godot/art/concepts/.gdignore
+!/godot/art/concepts/README.md
+!/godot/art/concepts/hd-icons-v1/
+!/godot/art/concepts/hd-management-v2/
+!/godot/art/concepts/hd-menu-v1/
+!/godot/art/concepts/hd-desktop-ui-v1/
+!/godot/art/concepts/hd-tagrim-sprites-v1/
+!/godot/art/concepts/hd-world-v1/
 /godot/builds/
 /godot/export_templates/
 /docs/internal/
@@ -10,7 +28,7 @@
 /AGENTS.md
 /docs/skill-sources.json
 
-# Source art, audio, fonts, archives and packaged games stay local.
+# Original/reference media, audio, fonts, archives and packaged games stay local.
 *.png
 *.jpg
 *.jpeg
@@ -46,6 +64,17 @@
 *.pck
 *.apk
 *.aab
+
+# Generated HD assets and their concept masters; reference images stay ignored.
+!/godot/data/hd/icons/*.png
+!/godot/art/ui/hd-menu-v1/*.png
+!/godot/art/ui/hd-town-v1/*.png
+!/godot/art/concepts/hd-icons-v1/*.png
+!/godot/art/concepts/hd-management-v2/*.png
+!/godot/art/concepts/hd-menu-v1/*.png
+!/godot/art/concepts/hd-desktop-ui-v1/*.png
+!/godot/art/concepts/hd-tagrim-sprites-v1/*.png
+!/godot/art/concepts/hd-world-v1/*.png
 
 # README previews are documentation, not source game assets.
 !/docs/screenshots/combat-crt-off.png

@@ -6,6 +6,10 @@ const Stat = Ids.Stat
 const Feedback = preload("res://scripts/gameplay/combat_feedback.gd")
 const Rain = preload("res://scripts/gameplay/rain_presentation.gd")
 const SpellVisuals = preload("res://scripts/gameplay/spell_presentation.gd")
+const SpellVFX = preload("res://scripts/gameplay/spell_vfx.gd")
+const SpellRules = preload("res://scripts/gameplay/spell_rules.gd")
+var spell_vfx := SpellVFX.new()
+var spell_preview: Dictionary = {}
 var ui_icons
 var combat_feedback := Feedback.new()
 var zone_action: StringName = &"none"
@@ -278,7 +282,8 @@ func _draw_ground_overlay() -> void:
 			elif show_reachable and (battle == null or not battle.active) and session.pathfinder.distance(cell) < 1000:
 				draw_rect(rect.grow(-1), Color(0.2, 0.9, 0.6, 0.16))
 			var zone: int = zone_image(cell)
-			if zone >= 0: draw_texture(textures[zone], rect.position)
+			if zone >= 0 and spell_preview.is_empty(): draw_texture(textures[zone], rect.position)
+	if battle != null and battle.can_input(): spell_vfx.draw_area(self, spell_preview)
 	if battle != null and battle.can_input() and zone_action == &"move":
 		for cell: Vector2i in movement_preview:
 			draw_circle(Vector2(cell * 16 + Vector2i(8, 8)), 1.25, Color.GREEN)
@@ -329,12 +334,10 @@ func _draw_foreground_overlay() -> void:
 					if int(sprite["atlas"]) == 189 and ui_icons != null: draw_texture_rect(ui_icons.spell(int(sprite["frame"])), destination, false)
 					else: draw_texture_rect_region(textures[sprite["atlas"]], destination, Rect2(int(sprite["frame"]) * 21, 0, 21, 20))
 		for hazard: Dictionary in battle.hazards:
-			var point: Vector2 = Vector2(hazard["cell"]) * 16 + Vector2(8, 8)
 			if int(hazard["spell"]) == Spell.FIRE_WALL:
 				_draw_fire_wall(hazard["cell"])
 				continue
-			var id: int = ImageId.FIRE_WALL if int(hazard["spell"]) == Spell.FIRE_WALL else ImageId.MIASMA
-			if textures.has(id): draw_texture_rect(textures[id], Rect2(point - Vector2(12, 20), Vector2(24, 24)), false)
+			if int(hazard["spell"]) == Spell.MIASMA: spell_vfx.draw_miasma(self, hazard["cell"], combat_feedback.clock)
 		if not battle.current.is_empty() and battle.current.get("phase") == "flight":
 			var command: Dictionary = battle.current
 			var from: Vector2 = command["flight_from"]
@@ -344,7 +347,6 @@ func _draw_foreground_overlay() -> void:
 			var direction: Vector2 = (to - from).normalized()
 			if command.get("action") == "cast":
 				var spell: int = int(command["spell"])
-				var image_id: int = Ids.SPELL_EFFECT_IMAGES.get(spell, -1)
 				var target: Vector2 = arrow if spell in [Spell.FIRE_ARROW, Spell.SPARK, Spell.FIREBALL] else to
 				var frame: int = SpellVisuals.projectile_frame(direction)
 				if spell == Spell.METEOR:
@@ -368,21 +370,13 @@ func _draw_foreground_overlay() -> void:
 					if _ice_glow == null: _ice_glow = SpellVisuals.ice_glow()
 					draw_texture_rect(_ice_glow, Rect2((target - Vector2(24, 40)).floor(), Vector2(48, 56)), false)
 					draw_texture_rect(textures[ImageId.FROST_PILLAR], Rect2(target - Vector2(12, 24), Vector2(24, 32)), false)
-				elif image_id in [ImageId.FIRE_PROJECTILE, ImageId.SPARK_PROJECTILE]: draw_texture_rect_region(textures[image_id], Rect2(target - Vector2(10, 10), Vector2(20, 20)), Rect2(frame * 20, 0, 20, 20))
-				elif image_id >= 0: draw_texture_rect(textures[image_id], Rect2(target - Vector2(12, 24), Vector2(24, 32)), false)
-				elif spell == Spell.HEAL:
-					# u/v use procedural green crosses rather than a sprite sheet.
-					for i in range(4):
-						var cross := target + Vector2((i - 1.5) * 7, -progress * 24 + sin(i + progress * TAU) * 3)
-						draw_rect(Rect2(cross - Vector2(1, 3), Vector2(2, 6)), Color(0.2, 1, 0.3, 1 - progress * 0.5))
-						draw_rect(Rect2(cross - Vector2(3, 1), Vector2(6, 2)), Color(0.2, 1, 0.3, 1 - progress * 0.5))
 				else:
-					var radius: float = 24 * (1 - progress if spell == Spell.SLOW else progress)
-					for i in range(8): draw_circle(target + Vector2.RIGHT.rotated(i * TAU / 8 + progress * TAU) * radius, 2, Color("b1cfff"))
+					spell_vfx.draw_cast(self, spell, from, to, progress, (float(command["clock"]) + session_view_alpha) * 0.062, command["cell"])
 			else:
 				draw_line(arrow - direction * 8, arrow, Color("ffe8a5"), 1.2)
 				draw_line(arrow - direction.rotated(0.5) * 3, arrow, Color("ffe8a5"), 1.2)
 				draw_line(arrow - direction.rotated(-0.5) * 3, arrow, Color("ffe8a5"), 1.2)
+		spell_vfx.draw_impacts(self, combat_feedback)
 		_draw_weather()
 		var font: Font = get_theme_default_font()
 		for popup: Dictionary in combat_feedback.records():
@@ -405,6 +399,13 @@ func _draw_foreground_overlay() -> void:
 func set_movement_preview(state: Dictionary) -> void:
 	movement_preview.clear()
 	if state.get("kind", "") == "move" and not state.get("blocked", true): movement_preview.assign(state.get("path", []))
+
+
+func set_spell_preview(state: Dictionary) -> void:
+	spell_preview.clear()
+	if battle == null or not battle.can_input() or state.get("kind", "") != "spell" or state.get("blocked", true): return
+	var actor = battle.unit(battle.selected_id)
+	spell_preview = SpellRules.area_preview(battle, actor, int(state["spell"]), state["cell"])
 
 func _draw_fire_wall(cell: Vector2i) -> void:
 	if _fire_glow == null: _fire_glow = SpellVisuals.fire_glow()
@@ -507,6 +508,9 @@ func _draw_battle_hud() -> void:
 	if session == null or battle == null or not battle.active or session.mode != &"battle" or battle.outcome != &"": return
 	var font: Font = get_theme_default_font()
 	draw_string(font, Vector2(28, 48), "Ход:%d" % battle.round_number, HORIZONTAL_ALIGNMENT_LEFT, -1, 26, Color.GREEN)
+	if battle.can_input() and not spell_preview.is_empty():
+		var color := Color("ff6868") if not spell_preview["allies"].is_empty() else Color("ffda91")
+		draw_string(font, Vector2(140, 45), spell_preview["caption"], HORIZONTAL_ALIGNMENT_LEFT, size.x - 164, 18, color)
 	for i in range(session.party.size()):
 		var actor = session.party[i]
 		var rect: Rect2 = _portrait_rect(i)

@@ -11,6 +11,13 @@ var has_game: bool = false
 var help_text: String
 var body: PackedStringArray = []
 var scroll: int = 0
+var hd_screen: Control
+
+func _ready() -> void:
+	super._ready()
+	hd_screen = preload("res://scripts/gameplay/hd_menu_screen.gd").new()
+	hd_screen.controller = self
+	add_child(hd_screen)
 
 
 func open(textures: Dictionary, metadata: Dictionary, can_resume: bool) -> void:
@@ -27,9 +34,14 @@ func open(textures: Dictionary, metadata: Dictionary, can_resume: bool) -> void:
 	region(Rect2(143, 178, 25, 24), func(): navigate(1))
 	region(Rect2(34, 178, 108, 24), confirm)
 	queue_redraw()
+	hd_screen.reset()
 
 
 func navigate(step: int) -> void:
+	if hd_screen.active():
+		if not body.is_empty(): hd_screen.scroll_body(step)
+		else: hd_screen.navigate_title(step)
+		return
 	if not body.is_empty(): scroll = clampi(scroll + step, 0, maxi(0, body.size() - 12))
 	else: selected = posmod(selected + step, Choice.COUNT)
 	queue_redraw()
@@ -71,6 +83,7 @@ func back() -> void:
 
 func _draw() -> void:
 	if images.is_empty(): return
+	if hd_screen.active(): return
 	begin_draw(body.is_empty())
 	if body.is_empty():
 		var atlas: Texture2D = images[UiImage.TITLE_CAPTIONS]
@@ -85,3 +98,7 @@ func _draw() -> void:
 		for i in range(scroll, mini(body.size(), scroll + 12)): write(body[i], Vector2(14, 15 + (i - scroll) * 14))
 		footer(false, true)
 	finish_draw()
+
+func _gui_input(event: InputEvent) -> void:
+	if hd_screen.active(): return
+	super._gui_input(event)

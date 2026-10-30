@@ -32,9 +32,18 @@ func drive(battle, limit: int = 1200) -> bool:
 	for tick in range(limit):
 		if battle.outcome != &"": return true
 		if battle.can_input() and battle.selected_id >= 0:
-			battle._enemy_action(battle.unit(battle.selected_id))
+			player_action(battle)
 		battle.advance(0.062)
 	return false
+
+
+func player_action(battle) -> void:
+	# Test-player archers use their shooting command. The original NPC policy
+	# classifies its fighters by Attack/Defense/Tactics, not the player's class.
+	var actor = battle.unit(battle.selected_id)
+	if actor.stats[Stat.ARCHERY] > 0:
+		if not battle._physical_action(actor) and not battle._move_action(actor): battle.defend()
+	else: battle._enemy_action(actor)
 
 
 func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, rewards: Dictionary) -> void:
@@ -139,7 +148,7 @@ func _fps(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, re
 		var battle = pair[1]
 		for frame in range(fps * 50):
 			if battle.outcome != &"": break
-			if battle.can_input(): battle._enemy_action(battle.unit(battle.selected_id))
+			if battle.can_input(): player_action(battle)
 			battle.advance(1.0 / fps)
 		var hits: Array = []
 		for event: Dictionary in battle.events:

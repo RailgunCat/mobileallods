@@ -1,0 +1,109 @@
+[
+  {
+    "key": "outdoor",
+    "file": "01-outdoor-terrain-v1.png",
+    "cols": 4,
+    "rows": 3,
+    "refs": [
+      "F:/Projects/my/mobileallods/build/legacy-previews/map-1.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/026.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/027.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/034.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/01-ui-controls-v1.png"
+    ],
+    "subjects": [
+      "grass-base",
+      "grass-variation",
+      "packed-earth",
+      "pebbled-road",
+      "road-edge-horizontal",
+      "road-edge-vertical",
+      "road-corner",
+      "open-water",
+      "shore-straight",
+      "shore-corner",
+      "wood-planks",
+      "rocky-ground"
+    ],
+    "prompt": "Use case: stylized-concept. Generate a high-resolution raster CONCEPT BOARD of HD world art for the Allods Java ME fantasy RPG. Reference images show original game artwork: preserve its low, grounded rustic fantasy, recognizable silhouettes and earthy green/brown/gray palette. Match the craftsmanship of the prior HD icon concepts, but do NOT put gold decorative UI borders or jewelry on the world. Hand-painted game art with clear edges and controlled brush textures, not pixel art, not photography, not photorealistic 3D renders, not cartoon mobile MMO. Lighting upper-left. Perspective matches original: ground is orthographic overhead with horizontal/vertical square grid; tall objects show roofs and front faces, no rotated diamond/isometric tile grid, no cinematic horizon. Design around original 16px logical cell, future proposed HD visual scale64px/cell, without changing logical footprints. This is a presentation concept, not a guaranteed seamless production tileset. No lettering, numbers, labels, UI, characters or watermark. Opaque dark neutral charcoal presentation background, separated square/rectangular study panels. Make EXACTLY 12 equally sized square TERRAIN TEXTURE PATCHES in a 4 columns x 3 rows rectangular board, preferably 2560x1920. Minimal dark gutters and absolutely no ornamental frame. Each patch is a flat overhead sample covering an implied 4x4 grid of logical cells, with NO actual grid lines or illustrative perspective. Dense but calm textures with no conspicuous focal object, suitable for repeating maps. Keep contrast below hero sprites.\nROW1 left to right: healthy olive/emerald grass; variation of same grass with a few tiny weeds and sparse ochre blades; bare packed tan earth; gray-brown pebbled dirt road.\nROW2: horizontal road/grass transition with road in bottom half; vertical road/grass transition with road in right half; right-angle grass/road junction with natural worn edges; deep cool blue lake water with fine small horizontal ripples.\nROW3: straight horizontal shore with green grass at top, narrow ochre sand strip and blue water below; convex grass/sand shore corner meeting water; weathered horizontal wooden bridge planks with simple iron nails; compact gray-brown stone/gravel ground.\nAll adjoining versions must use same visual grass, dirt and water. Natural ragged transitions like original, without decorative outlines. Water clearly blue, not swamp green. No floating islands, no thick tile bevels, no 3D blocks, no visible text.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-7d6e4ff5-7af5-4643-8d0b-30b76fadd466.png"
+  },
+  {
+    "key": "buildings",
+    "file": "03-buildings-v1.png",
+    "cols": 3,
+    "rows": 2,
+    "refs": [
+      "F:/Projects/my/mobileallods/build/legacy-previews/map-1.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/054.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/055.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/058.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/059.png"
+    ],
+    "subjects": [
+      "round-thatch-hut",
+      "long-thatched-cottage",
+      "stone-roof-hut",
+      "gable-house",
+      "round-stone-tower",
+      "burned-ruin"
+    ],
+    "prompt": "Use case: stylized-concept. Generate a high-resolution raster CONCEPT BOARD of HD world art for the Allods Java ME fantasy RPG. Reference images show original game artwork: preserve its low, grounded rustic fantasy, recognizable silhouettes and earthy green/brown/gray palette. Match the craftsmanship of the prior HD icon concepts, but do NOT put gold decorative UI borders or jewelry on the world. Hand-painted game art with clear edges and controlled brush textures, not pixel art, not photography, not photorealistic 3D renders, not cartoon mobile MMO. Lighting upper-left. Perspective matches original: ground is orthographic overhead with horizontal/vertical square grid; tall objects show roofs and front faces, no rotated diamond/isometric tile grid, no cinematic horizon. Design around original 16px logical cell, future proposed HD visual scale64px/cell, without changing logical footprints. This is a presentation concept, not a guaranteed seamless production tileset. No lettering, numbers, labels, UI, characters or watermark. Opaque dark neutral charcoal presentation background, separated square/rectangular study panels. Make EXACTLY six isolated building studies in 3 columns x 2 rows, landscape board preferably 2560x1664. Each building fully visible with ample padding and a small restrained contact shadow beneath; no landscape base, no diorama, no cobblestone plinth. Low overhead GAME SPRITE view consistent across all buildings. Preserve forms of original images54..59 supplied as references: humble medieval huts with large visible roofs, not rich fantasy castles. Match muted moss green, straw beige, gray limestone, dark wood. Do not add flags, banners or fantasy emblems.\nROW1: original54 a round wicker/wattle cottage with a low conical olive-brown thatched roof and tiny dark entrance; original55 a long low whitewashed farmhouse with thick pale straw roof, small roof hatch and modest wall doorway; original56 a squat round/rounded gray rough-stone hut with domed rock/slate cap and small doorway.\nROW2: original57 a compact gabled timber/plaster cottage with very thick straw roof, small roof window and minimal visible front facade; original58 a tall narrow circular stone watchtower, stacked rough gray blocks, two small dark windows, low conical dark slate roof; original59 a wide burned ruined house foundation, blackened timber and dark collapsed stone, several broken walls and small smoldering embers.\nNo people, no surrounding trees, no signs with text, no extra buildings. Keep each roof shape and entrance position recognizable, especially tall round tower versus low round hut. Clear silhouette readable at 96-192px tall after future cleanup.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-db39f496-a552-4c4c-ae65-be5a2611554b.png"
+  },
+  {
+    "key": "props",
+    "file": "04-trees-and-props-v1.png",
+    "cols": 4,
+    "rows": 3,
+    "refs": [
+      "F:/Projects/my/mobileallods/build/legacy-previews/map-1.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/044.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/049.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/051.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/060.png"
+    ],
+    "subjects": [
+      "oak-full-a",
+      "oak-full-b",
+      "canopy-only",
+      "trunk-only",
+      "rocks-low",
+      "standing-stone",
+      "stone-remains",
+      "signpost",
+      "stump",
+      "shrub",
+      "fallen-log",
+      "wooden-chest"
+    ],
+    "prompt": "Use case: stylized-concept. Generate a high-resolution raster CONCEPT BOARD of HD world art for the Allods Java ME fantasy RPG. Reference images show original game artwork: preserve its low, grounded rustic fantasy, recognizable silhouettes and earthy green/brown/gray palette. Match the craftsmanship of the prior HD icon concepts, but do NOT put gold decorative UI borders or jewelry on the world. Hand-painted game art with clear edges and controlled brush textures, not pixel art, not photography, not photorealistic 3D renders, not cartoon mobile MMO. Lighting upper-left. Perspective matches original: ground is orthographic overhead with horizontal/vertical square grid; tall objects show roofs and front faces, no rotated diamond/isometric tile grid, no cinematic horizon. Design around original 16px logical cell, future proposed HD visual scale64px/cell, without changing logical footprints. This is a presentation concept, not a guaranteed seamless production tileset. No lettering, numbers, labels, UI, characters or watermark. Opaque dark neutral charcoal presentation background, separated square/rectangular study panels. Make EXACTLY twelve isolated ENVIRONMENT OBJECT concepts in 4 columns x 3 rows, landscape board preferably 2560x1920. No gold frames. Each object completely visible in own cell and clearly separate from neighbors. Consistent high overhead world-sprite view, horizontal/vertical game axes. Ground shadows subdued and close. Trees follow original broadleaf canopies, warm crooked trunks and visible roots; no gigantic Christmas trees or pine forest.\nROW1: full old oak with dense irregular dark green crown and crooked warm-brown rooted trunk; second full oak leaning in opposite direction with asymmetric crown; standalone canopy layer of same oak, NO trunk, as a removable foreground crown; separate bare matching crooked tree trunk and roots, NO leaves.\nROW2: source44 low pile of small mottled gray stones with sparse moss; source45 single upright weathered grave/standing stone, rough rounded/slanted slab; source46 broken low stone monument/tomb remnant with one slab and two blocks; source51 simple wooden direction sign with one angled arrow plank.\nROW3: small gnarled cut stump; dense rounded dark-green shrub; one fallen weathered oak log; small wooden iron-bound chest matching recovered pickup graphic, three-quarter overhead, closed lid.\nTree layers are conceptual studies, do not imply mathematically registered alignment. Keep grass tufts minimal and contained, no ground square bases, no characters, no flowers as main motif, no hanging UI ornaments. Oak and chest style must suit same map, not shiny toy-like.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-541d0420-a6a3-478a-a7ae-c9df711e8d96.png"
+  },
+  {
+    "key": "dungeon",
+    "file": "02-dungeon-stonework-v1.png",
+    "cols": 3,
+    "rows": 3,
+    "refs": [
+      "F:/Projects/my/mobileallods/build/legacy-previews/map-dungeon-12.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/064.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/069.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/076.png",
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/080.png"
+    ],
+    "subjects": [
+      "dark-floor",
+      "worn-floor",
+      "north-wall",
+      "side-wall",
+      "wall-corner",
+      "round-pillar",
+      "doorway",
+      "stairs-down",
+      "ritual-floor"
+    ],
+    "prompt": "Use case: stylized-concept. Generate a high-resolution raster CONCEPT BOARD of HD world art for the Allods Java ME fantasy RPG. Reference images show original game artwork: preserve its low, grounded rustic fantasy, recognizable silhouettes and earthy green/brown/gray palette. Match the craftsmanship of the prior HD icon concepts, but do NOT put gold decorative UI borders or jewelry on the world. Hand-painted game art with clear edges and controlled brush textures, not pixel art, not photography, not photorealistic 3D renders, not cartoon mobile MMO. Lighting upper-left. Perspective matches original: ground is orthographic overhead with horizontal/vertical square grid; tall objects show roofs and front faces, no rotated diamond/isometric tile grid, no cinematic horizon. Design around original 16px logical cell, future proposed HD visual scale64px/cell, without changing logical footprints. This is a presentation concept, not a guaranteed seamless production tileset. No lettering, numbers, labels, UI, characters or watermark. Opaque dark neutral charcoal presentation background, separated square/rectangular study panels. Make EXACTLY nine dungeon tile/object studies in 3 columns x 3 rows, square board preferably 2048x2048. Thin dark gutters only, no decorative metallic frames. The original final dungeon is coarse gray stone walls above nearly black rocky earth floor, muted moss at wall feet, round pillars. Maintain this readable grounded look, no lava, skull wallpaper, magical neon or dwarven gold decorations. Ground surfaces top-down; walls show front-facing masonry and top edge in same orthographic projection as original.\nROW1: repeatable dark charcoal rough rock/earth floor patch; same floor variation with sparse worn flat gray stones; straight horizontal north wall segment with worn pale-gray rectangular blocks and very subtle moss at base.\nROW2: perpendicular vertical side wall segment with visible stone top; clean L-shaped wall corner matching the two straight sections; stout gray round stone pillar with simple cylindrical shaft and banded base/capital.\nROW3: modest dark stone arched doorway opening, no door, no text; square stairwell descending into dark stone, matching game grid; original ritual floor motif simplified to a circular incised stone seal inset into flat floor.\nAll nine panels study the same material family and top-left light. Place object studies on compatible dark ground. Texture scale consistent with proposed64px logical cell; no hero or dragon, no fog hiding silhouette, no tile extrusions/isometric diamond blocks.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-d8fbb916-2e74-4d6a-8aec-d5e46d3a3e4a.png"
+  }
+]

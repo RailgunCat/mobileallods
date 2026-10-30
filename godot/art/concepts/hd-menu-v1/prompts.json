@@ -1,0 +1,169 @@
+[
+  {
+    "key": "title_art",
+    "file": "01-main-menu-background-v1.png",
+    "role": "text-free-main-menu-background",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/012.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/02-dialogue-portraits-v1.png"
+    ],
+    "subjects": [
+      "red-hooded-figure",
+      "quiet-left-menu-area"
+    ],
+    "prompt": "Use case: stylized-concept. Generate one high-resolution LANDSCAPE MAIN MENU BACKGROUND painting for a faithful HD concept of the Allods Java ME RPG. Original title art is reference1: mysterious figure in deep crimson hood and heavy red cloak, face an almost black void with TWO small pale white luminous eyes, no visible human face, against blazing ochre/orange stormlight. Reference2 guides detailed hand-painted grounded old fantasy RPG rendering. Preserve the iconic silhouette and mood, reinterpret in rich high-resolution painted brushwork, not pixel art, not a modern 3D render. Preferred 2560x1440 desktop 16:9 landscape image. The red-hooded figure occupies the RIGHT half to two-thirds, chest and head crop, complete hood within canvas. Leftmost 35-40 percent is very dark desaturated charcoal/black with subtle stone/smoke texture, calm low detail, suitable for future overlaid menu choices. Warm backlight in upper right silhouettes the hood; restrained embers and cloth texture, near-black eye sockets, eyes small and unsettling, not laser beams. Painterly gray stone hints at lower edge, no huge castle invented in foreground. Main art can flow behind future UI but NO buttons or decorative border baked in. ABSOLUTELY NO TEXT, no title word, no logo, no Nival publisher badge, no letters, no UI, no watermark. This is an unconnected concept background; do not depict a screenshot or tiny mobile phone frame.",
+    "transparent": false,
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-bc505811-2dfb-403e-ba7a-75593f89782b.png"
+  },
+  {
+    "key": "town_art",
+    "file": "02-town-free-study-v1.png",
+    "role": "text-free-town-menu-background",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-world-v1/03-buildings-v1.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-world-v1/04-trees-and-props-v1.png",
+      "F:/Projects/my/mobileallods/build/verified-town.png"
+    ],
+    "subjects": [
+      "town-street",
+      "tavern-exterior",
+      "shop-exterior",
+      "town-gate",
+      "quiet-left-menu-area"
+    ],
+    "prompt": "Use case: stylized-concept. Generate one HD LANDSCAPE TOWN MENU BACKGROUND painting for Allods Java ME fantasy RPG concept studies. Reference1 rustic stone-and-timber houses with straw roofs and modest round stone tower; reference2 grounded hand-painted greenery and materials; reference3 is the ORIGINAL BLACK TEXT MENU, ONLY functional layout/semantic reference, NOT an existing painted town view. This image is a NEW town illustration proposal, no claim it existed in original. Prefer 2560x1440, desktop 16:9. Grounded rural Eastern-European medieval fantasy, detailed hand-painted late-1990s RPG art, no pixelation, no plastic 3D, no modern MMO castle spires, no fairy-tale candy colors. Camera at a slightly elevated human viewpoint looking down a modest cobbled street, not isometric tile view. RIGHT two-thirds: warm timber-and-stone tavern with simple mug-shaped hanging sign WITHOUT writing, small adjacent shop with rolled awning and a closed crate stand, modest distant stone town gate and one squat tower, straw/slate roofs, slight olive moss. Quiet late-afternoon overcast light, warm amber window highlights, charcoal shadows, weathered gray stone and brown wood. A small oak on edge of street, no crowds or prominent people. LEFTMOST 35-40 percent naturally fades into deep charcoal shadow with only subtle texture and very low visual detail, a clear safe space for future title and three menu choices. No map labels, NO readable signs, NO letters or numbers, no actual UI, no buttons, no logos, no border, no watermark. Horizontal spacious concept painting, not a phone mockup.",
+    "transparent": false,
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-0dbf2d91-7890-4f10-a21a-fac38eb11d54.png"
+  },
+  {
+    "key": "gold_captions",
+    "file": "03-main-menu-lettering-gold-v1.png",
+    "role": "gold-menu-lettering-concept-sheet",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/003.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/01-ui-controls-v1.png"
+    ],
+    "subjects": [
+      "Новая игра",
+      "Продолжить",
+      "Загрузить игру",
+      "Сохранить игру",
+      "Сеть",
+      "Настройки",
+      "Помощь",
+      "Авторы",
+      "Выход",
+      "Журнал",
+      "Персонаж",
+      "Инвентарь",
+      "Управление",
+      "Главное меню",
+      "Выход из игры",
+      "Музыка"
+    ],
+    "prompt": "Use case: stylized-concept. Create a high-resolution RUSSIAN CYRILLIC MENU LETTERING CONCEPT BOARD for HD Allods Java ME fantasy RPG. Reference1 is the original golden menu caption strip: keep its distinctive old fantasy handwritten/Gothic broad-nib calligraphy, compact elegant swashes, warm yellow-gold body and copper-orange shaded edges, clearly readable Cyrillic letterforms; reference2 gives matching antique metal and dark stone material vocabulary. Do not use generic English blackletter substituted for Cyrillic. Use dark charcoal opaque background and exactly 16 evenly spaced text specimens in 2 columns x 8 rows. Prefer 2048x2560 portrait, lots of clear padding, consistent text size and baseline. Each specimen is a single line of text, horizontally centered within its cell. NO buttons, frames, plaques, extra headings, Latin text, mock UI or other illustration. The list below is EXACT text left to right then row by row; copy verbatim, correct every Cyrillic letter and space.\nROW1: \"Новая игра\" | \"Продолжить\"\nROW2: \"Загрузить игру\" | \"Сохранить игру\"\nROW3: \"Сеть\" | \"Настройки\"\nROW4: \"Помощь\" | \"Авторы\"\nROW5: \"Выход\" | \"Журнал\"\nROW6: \"Персонаж\" | \"Инвентарь\"\nROW7: \"Управление\" | \"Главное меню\"\nROW8: \"Выход из игры\" | \"Музыка\"\nSpell Новая as Н-о-в-а-я, Загрузить as З-а-г-р-у-з-и-т-ь, Сохранить as С-о-х-р-а-н-и-т-ь. No invented words, no extra glyphs, no severe ornament that hides letters, no duplication, no watermark. These are graphic lettering studies, not a complete font.",
+    "transparent": false,
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-f0f7968a-ebd9-42c1-96b9-63da705a8f23.png"
+  },
+  {
+    "key": "city277",
+    "file": "06-town-original277-v1.png",
+    "role": "town-background-from-original277",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/277.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-menu-v1/references/pc-allods1-town.jpg",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-world-v1/03-buildings-v1.png"
+    ],
+    "subjects": [
+      "stone-town",
+      "red-tile-roofs",
+      "rear-gate-tower",
+      "cobbled-courtyard"
+    ],
+    "transparent": false,
+    "prompt": "Use case: stylized-concept. HIGH RESOLUTION painted HD concept for Allods Java ME menu illustration. Faithful to the supplied original game references, not generic fantasy. Rich hand-painted 1990s RPG atmosphere with clear forms, realistic worn stone/wood/cloth, controlled brush detail, no pixelation, no modern 3D glossy render, no cartoon. Desktop landscape preferably 2560x1440. This is concept art kept outside the game. No UI buttons or stats, no embedded logos, no readable lettering, no watermark. Reconstruct and extend the ORIGINAL CITY artwork, image277 (reference1), using the complete PC Allods: Seal of Mystery town screenshot (reference2) to understand architecture. Reference3 only suggests paint finish, NOT building types. The mobile image is a cropped stone town with RED TERRACOTTA TILED ROOFS, not straw huts. Preserve recognizable arrangement: massive weathered gray stone gate/tower in rear; steep red-tile roofs and narrow gabled stone facades overlapping in foreground; dark arched doorways; warm brown/gray rough masonry; small courtyard/cobbled passage. The full PC image shows the wider town and central small statue; use that to extend beyond the crop without inventing a new unrelated village. Medieval town is dense and enclosed, slightly elevated oblique courtyard view, overcast blue-gray sky just above roofline. Foreground left inn has steep red gable and small dark arch; compact shop near center; right building may show the round copper roof from PC reference, modest rather than gigantic cathedral. Center/mobile crop should remain recognizable. Most visual detail in middle and right, leftmost quarter subtly shaded for optional future captions without erasing roofs. Remove ALL huge red annotation numbers, names, interface, cursors, panels and PC HUD. No straw roofs, no new wooden country tavern, no readable shop signs. A single coherent landscape painting, not a collage or screenshot frame.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-90d7d013-43aa-4cb9-be44-9b01172c5587.png"
+  },
+  {
+    "key": "shop276",
+    "file": "07-shop-original276-v1.png",
+    "role": "shop-background-from-original276",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/276.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-menu-v1/references/pc-allods1-shop.jpg",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/06-weapons-books-crystals-v1.png"
+    ],
+    "subjects": [
+      "stone-arched-armory",
+      "merchant",
+      "weapon-racks",
+      "empty-counter"
+    ],
+    "transparent": false,
+    "prompt": "Use case: stylized-concept. HIGH RESOLUTION painted HD concept for Allods Java ME menu illustration. Faithful to the supplied original game references, not generic fantasy. Rich hand-painted 1990s RPG atmosphere with clear forms, realistic worn stone/wood/cloth, controlled brush detail, no pixelation, no modern 3D glossy render, no cartoon. Desktop landscape preferably 2560x1440. This is concept art kept outside the game. No UI buttons or stats, no embedded logos, no readable lettering, no watermark. Reinterpret original SHOP image276 (reference1) in high resolution; reference2 is the fuller PC Allods: Seal of Mystery weapon shop and clarifies its missing center. Preserve the stone arched alcove, heavy dark oak shelves/side posts, metal helmets and small blue/clear potion flasks on upper shelf, long polearms and swords leaning at left, round shields and steel cuirass to right. At center-right stands the same modest human shopkeeper from PC reference, reddish short hair and beard/mustache, green tunic, tan apron and brown belt, arms calmly folded; he is NOT the fat tavern keeper. Lower portion a sturdy dark wooden counter with a clear undecorated work area for future UI. Warm small torchlight, gray masonry and worn silver weapons against dark brown interior. Expand into a wide cohesive interior with some calmer dark shelving at left for optional overlays. NO actual item grids, inventories, prices, labels, player portraits or interface panels. Original image has a 'Магазин' sign: omit its word here so caption is a separate future graphic; a blank small dark wooden signboard is allowed. Do not scatter magical neon items; reference3 only guides crisp painterly material quality, not rainbow loot. Perspective is eye-level shop illustration as original, not a tile sprite or exterior building.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-3192d125-fa10-43a5-9f13-76bf6aa1afa8.png"
+  },
+  {
+    "key": "tavern278",
+    "file": "08-tavern-original278-v1.png",
+    "role": "tavern-background-from-original278",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/278.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-menu-v1/references/pc-allods1-tavern.jpg",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/02-dialogue-portraits-v1.png"
+    ],
+    "subjects": [
+      "heavyset-innkeeper",
+      "barrels",
+      "wooden-counter",
+      "dim-stone-tavern"
+    ],
+    "transparent": false,
+    "prompt": "Use case: stylized-concept. HIGH RESOLUTION painted HD concept for Allods Java ME menu illustration. Faithful to the supplied original game references, not generic fantasy. Rich hand-painted 1990s RPG atmosphere with clear forms, realistic worn stone/wood/cloth, controlled brush detail, no pixelation, no modern 3D glossy render, no cartoon. Desktop landscape preferably 2560x1440. This is concept art kept outside the game. No UI buttons or stats, no embedded logos, no readable lettering, no watermark. Reinterpret ORIGINAL TAVERN illustration image278 (reference1), using PC Allods: Seal of Mystery tavern screenshot (reference2) as expanded context. Preserve the specific character identity: very HEAVYSET middle-aged human innkeeper, broad jowly clean-shaven face, short dark hair receding at temples, small eyes, dark green short-sleeved tunic, huge stained beige apron over round belly; both elbows/arms rest outward at waist height in relaxed welcoming posture. He is the tavern host, not a slim shop merchant, not a bearded dwarf. Place him center-right at the wooden bar, barrel stacks behind and at lower left, mugs on side shelf, timber supports, worn stone wall, dim navy hanging cloth in the back. Lower right can show unobtrusive corner of table/workbench as original. Leftmost30 percent dark quiet barrels/wall for later 'Слухи'/'Работа' menu but no actual writing. Warm restrained candle/torch light, charcoal and brown, natural human anatomy, likeness and clothes more important than ornament. Reference3 guides painterly face detail, do not substitute its existing faces. Remove all PC HUD, character portraits, recruitment prices, captions, green UI borders and item panels. No readable signs, no coins floating in air, no exaggerated smile, no weapon pose.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-97d73e12-8e59-4c07-b2e9-41eb13dc4a4f.png"
+  },
+  {
+    "key": "green_captions",
+    "file": "04-town-and-ui-lettering-green-v1.png",
+    "role": "green-town-and-ui-lettering-sheet",
+    "refs": [
+      "F:/Projects/my/mobileallods/build/verified-town.png",
+      "F:/Projects/my/mobileallods/godot/art/concepts/hd-icons-v1/01-ui-controls-v1.png"
+    ],
+    "subjects": [
+      "Город",
+      "Таверна",
+      "Магазин",
+      "Выход",
+      "Слухи",
+      "Работа",
+      "Купить",
+      "Продать",
+      "Назад",
+      "Карта мира",
+      "Персонаж",
+      "Инвентарь",
+      "Журнал",
+      "Снаряжение",
+      "Принять",
+      "Закрыть"
+    ],
+    "transparent": false,
+    "prompt": "Use case: stylized-concept. Create a HIGH RESOLUTION RUSSIAN CYRILLIC MENU LETTERING concept sheet for the original Allods Java ME green UI, in matching HD concept direction. Reference1 shows original bright green captions on black, reference2 proposed aged materials. Exactly sixteen words/phrases, 2 columns x8 rows, dark opaque charcoal-black background, large padding between each specimen, all labels single line. Prefer2048x2560 portrait. Use readable compact Cyrillic with a subtle medieval slab-serif/calligraphic touch, very restrained bevel, bright emerald green foreground with darker green edge; avoid heavy flourishes, gold letters or huge neon bloom. Preserve crisp readability like the original green font, no pixelation. No frames, no plaques, no icons, no heading, no extra text.\nEXACT text left to right by rows:\n\"Город\" | \"Таверна\"\n\"Магазин\" | \"Выход\"\n\"Слухи\" | \"Работа\"\n\"Купить\" | \"Продать\"\n\"Назад\" | \"Карта мира\"\n\"Персонаж\" | \"Инвентарь\"\n\"Журнал\" | \"Снаряжение\"\n\"Принять\" | \"Закрыть\"\nSpell Снаряжение as С-н-а-р-я-ж-е-н-и-е; Принять as П-р-и-н-я-т-ь; Журнал as Ж-у-р-н-а-л. No invented letters, no Latin substitutes, no duplication, no watermark. This is a lettering study, not a completed font.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-c5eaeba5-8c30-4cf0-a414-4e65b96cc01e.png"
+  },
+  {
+    "key": "wordmark",
+    "file": "05-allods-wordmark-v1.png",
+    "role": "standalone-title-wordmark",
+    "refs": [
+      "F:/Projects/my/mobileallods/godot/data/legacy/images/012.png"
+    ],
+    "subjects": [
+      "АЛЛОДЫ"
+    ],
+    "transparent": true,
+    "prompt": "Use case: stylized-concept. Create ONE standalone high-resolution fantasy RPG title wordmark on a genuinely TRANSPARENT alpha background. The exact Russian title is \"АЛЛОДЫ\" (six Cyrillic letters А-Л-Л-О-Д-Ы), no subtitle, no English. Reference image is original Allods Java ME title: match recognizable BLUE-GRAY AGED STEEL carved letters, chunky tall sculpted Cyrillic, restrained spiky angular fantasy-serif forms, deep dark edges and light worn silver bevels, cold steel with a little teal patina, not gold, not glowing neon. Reinterpret original logo in crisp hand-painted HD with original letter identity, especially two consecutive Л, then О, then Д, then Ы. The entire word on ONE horizontal line, fully visible, comfortable transparent padding on every side. Prefer1600x600 or larger. Only wordmark, no red hooded figure, no backdrop, no stone plaque, no white/black rectangle, no drop shadow extending far outside letters, no fake checkerboard pattern, no publisher mark, no trademark symbol, no watermark.",
+    "source_file": "C:\\Users\\raven\\.codex-vscode\\generated_images\\01a17bd3-23f0-71b3-86af-3476e95eb7af\\exec-c4885d9a-4e20-4c4b-9c68-2550649bcfb9.png"
+  }
+]

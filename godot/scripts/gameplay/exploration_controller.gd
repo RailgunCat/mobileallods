@@ -11,6 +11,7 @@ const Encounter = preload("res://scripts/gameplay/encounter_builder.gd")
 const Pathfinder = preload("res://scripts/gameplay/grid_pathfinder.gd")
 const PixelGrid = preload("res://scripts/gameplay/exploration_grid.gd")
 const FollowerPath = preload("res://scripts/gameplay/follower_path.gd")
+const PixelPath = preload("res://scripts/gameplay/exploration_path.gd")
 var session
 var accumulator: float = 0.0
 var tick_seconds: float = 0.062
@@ -19,6 +20,7 @@ var keyboard_direction := Vector2i.ZERO
 var route: Array[Vector2i] = []
 var following_route: bool = false
 var _targets: Array[Vector2] = []
+var _pixel_route: bool = false
 var _history: Dictionary[int, Array] = {}
 var _pending: Dictionary[int, Array] = {}
 var _retry_after: Dictionary[int, int] = {}
@@ -34,6 +36,7 @@ func configure(game) -> void:
 	route.clear()
 	_targets.clear()
 	following_route = false
+	_pixel_route = false
 	_history.clear()
 	_pending.clear()
 	_retry_after.clear()
@@ -63,14 +66,24 @@ func _rebuild_paths() -> void:
 
 func preview(target: Vector2i) -> Dictionary:
 	_rebuild_paths()
-	return session.pathfinder.route(target)
+	var result: Dictionary = session.pathfinder.route(target)
+	var hero = session.hero
+	var center: Vector2 = Vector2(hero.cell) * 16 + Vector2(hero.footprint) * 8
+	if not result["reachable"] or not session.can_move_pixels(hero, center, hero.facing):
+		return PixelPath.find(session, hero, target)
+	return result
 
 
-func start_route(cells: Array[Vector2i]) -> void:
+func start_route(cells: Array[Vector2i], pixels: Array = []) -> void:
 	route.assign(cells)
 	_targets.clear()
+	_pixel_route = not pixels.is_empty()
 	keyboard_direction = Vector2i.ZERO
 	if route.is_empty():
+		return
+	if _pixel_route:
+		_targets.assign(pixels)
+		following_route = true
 		return
 	var hero = session.hero
 	# Bring the original off-center pixel entry to its route's center using the
@@ -194,12 +207,15 @@ func _tick() -> void:
 				route.pop_front()
 		if _targets.is_empty():
 			following_route = false
+			route.clear()
 			route_finished.emit(false)
 		elif not _toward(hero, _targets[0]):
 			following_route = false
 			_targets.clear()
 			route.clear()
 			route_finished.emit(true)
+	if _pixel_route:
+		while not route.is_empty() and hero.cell == route[0]: route.pop_front()
 	_record_move(hero, previous, 0)
 	for index in range(1, session.party.size()):
 		var follower = session.party[index]

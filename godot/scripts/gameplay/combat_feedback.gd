@@ -6,11 +6,13 @@ const SpellVisuals = preload("res://scripts/gameplay/spell_presentation.gd")
 var clock: float = 0
 var entries: Array[Dictionary] = []
 var meteor_impacts: Array[Dictionary] = []
+var spell_impacts: Array[Dictionary] = []
 
 func clear() -> void:
 	clock = 0
 	entries.clear()
 	meteor_impacts.clear()
+	spell_impacts.clear()
 
 func add_text(point: Vector2, message: String, born: float = -1) -> void:
 	var time: float = clock if born < 0 else born
@@ -23,6 +25,12 @@ func advance(delta: float) -> void:
 		if clock - float(entries[i]["born"]) + 0.000000001 >= LIFETIME: entries.remove_at(i)
 	for i in range(meteor_impacts.size() - 1, -1, -1):
 		if clock - float(meteor_impacts[i]["born"]) >= SpellVisuals.DEBRIS_LIFETIME: meteor_impacts.remove_at(i)
+	for i in range(spell_impacts.size() - 1, -1, -1):
+		if clock - float(spell_impacts[i]["born"]) + 0.000000001 >= SpellVisuals.IMPACT_LIFETIME: spell_impacts.remove_at(i)
+
+
+func add_spell(spell: int, cell: Vector2i, born: float) -> void:
+	spell_impacts.append({"spell": spell, "cell": cell, "born": born})
 
 
 func add_meteor(cell: Vector2i, born: float) -> void:

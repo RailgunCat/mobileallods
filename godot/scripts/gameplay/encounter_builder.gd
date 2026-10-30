@@ -18,7 +18,13 @@ static func detected(game) -> Array[int]:
 	return ids
 
 
-static func build(game, triggered: Array[int]) -> Dictionary:
+static func needs_regroup(game, unit) -> bool:
+	if unit == game.hero or unit not in game.party: return false
+	var trail_span: float = float(game.definitions["exploration"]["history_length"]) * float(game.definitions["exploration"]["pixels_per_tick"]) * maxi(1, game.party.size() - 1) + 64.0
+	var separation: Vector2 = (unit.position_pixels - game.hero.position_pixels).abs()
+	return separation.x + separation.y > trail_span
+
+static func build(game, triggered: Array[int], local_party: bool = false) -> Dictionary:
 	var hero = game.hero
 	var left: int = int((hero.position_pixels.x - 79) / 16.0)
 	var top: int = int((hero.position_pixels.y - 95) / 16.0)
@@ -26,6 +32,11 @@ static func build(game, triggered: Array[int]) -> Dictionary:
 	var bottom: int = top + 12
 	var marked: Array[int] = triggered.duplicate()
 	for unit in game.party:
+		# Checked following can leave a companion behind an NPC or a maze wall.
+		# Combat already places the whole party; use the encounter's local space
+		# for these outliers rather than pulling remote enemy waves into battle.
+		# The default remains the exact source calculation for reference audits.
+		if local_party and needs_regroup(game, unit): continue
 		var x: int = int(unit.position_pixels.x / 16.0)
 		var y: int = int(unit.position_pixels.y / 16.0)
 		left = mini(left, x - int(unit.footprint.x / 2.0) - 2)

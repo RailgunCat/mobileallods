@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "role": "opaque-town-background",
+      "source": "godot/art/concepts/hd-menu-v1/06-town-original277-v1.png",
+      "file": "town-v1.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "8401a09a8bebaedab3c21f364f2c216a3a66abc448c69219918f0ceb3f24db2e",
+      "generation": "existing built-in image_gen output, reused without image edits",
+      "ui_text": "drawn by Godot"
+    },
+    {
+      "role": "opaque-interior-background",
+      "source": "godot/art/concepts/hd-menu-v1/07-shop-original276-v1.png",
+      "file": "shop-v1.png",
+      "sha256": "17a1915314e53eea696a9e06e221a5b4162ec45dd03f5a2b47e525ec6e9a9306",
+      "generation": "existing built-in image_gen output, reused without image edits",
+      "ui_text": "drawn by Godot"
+    },
+    {
+      "role": "opaque-interior-background",
+      "source": "godot/art/concepts/hd-menu-v1/08-tavern-original278-v1.png",
+      "file": "tavern-v1.png",
+      "sha256": "6f939c2d6ac823cd8a2d98de6c01faeb4e9b358a6aef4277eb2c31f68ec127a0",
+      "generation": "existing built-in image_gen output, reused without image edits",
+      "ui_text": "drawn by Godot"
+    }
+  ],
+  "date": "2026-10-28"
+}

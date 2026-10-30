@@ -104,9 +104,87 @@ recent hit feedback must not replace it with the allied victim's portrait.
 Real enemy-turn captures before/after impact: build/bat-enemy-turn-start.png and
 bat-enemy-turn-after-hit.png (tests/capture_bat_portrait.gd).
 
+HD tavern and shop now reuse the generated interiors from hd-menu-v1 (original
+image IDs 278 and 276). Active versioned copies live in godot/art/ui/hd-town-v1,
+with the original generation prompts and a SHA-256 manifest. These are opaque
+1672×940 / 1672×941 background paintings, not tile or animation sheets; logical
+map footprints and anchors do not apply. No new image generation was needed.
+User approved the prototype and requested the project's existing fonts and
+frames for both tavern and merchant. Use LegacyTheme's original bitmap font,
+stone atlas frame and button styles; do not introduce a separate serif font or
+replace the frame with generated decorations. Interior art is linearly filtered;
+original items and UI retain nearest filtering. Canvas layout is 1280×800 with
+the existing viewport stretch. The generated host remains visible to the right.
+The HD setting now reads “HD-режим” and includes these screens. Missing local
+backgrounds fall back to the legacy screen; town/world map stay in legacy style.
+Rumours, jobs, real item stock, prices, comparison and confirmation continue to
+use the existing controllers and rules. QA: tests/hd_town_checks.gd checks mouse
+transactions, modal input, dialogue scroll, HD toggle and resized window input;
+build/hd-town-*.png contains the in-engine previews.
+
 Firewall uses the original flame PNG with independently swaying vertical strips,
 a breathing glow and rising pixel embers; keep its feet anchored to the hazard
 cell. It samples presentation time without consuming combat RNG. Green movement
 route dots are visible in ordinary battle movement mode, including hover preview.
 In-engine QA captures: build/portrait-li-fixed.png, cursor-spell.png, crt-off.png,
 crt-on.png and settings-crt.png (tests/capture_interaction.gd).
+
+Inventory and character-training proposals v2 are saved under
+`godot/art/concepts/hd-management-v2`; see `docs/inventory-character-concept.md`
+for the checked rule constraints and interaction brief. They are static visual
+proposals, not active screens. Keep separate attribute/skill budgets, the displayed
+skill cap of 24 (internal base value 25), and only weapon/armor equipment slots.
+The user requested a doll that changes with equipment: plan separate body,
+armor, weapon and hand/occlusion layers plus a clearly marked try-on preview.
+The current composite illustrations do not yet supply those layers. At integration,
+use the project's real font/theme and compute bars/comparisons from game state.
+
+Magic presentation pass: retain the Java ME spell sprites and add code-drawn
+pixel trails, motes, rings and palette glows in `spell_vfx.gd`. Ten casts now
+have distinct motion; all fifteen spells have bounded impact feedback. Keep the
+existing lightning, meteor, fire-arrow, frost and blessing cores. Sample visual
+time at the source 62 ms interval, without drawing from the combat RNG.
+AOE previews show the shared gameplay geometry: amber affected cells, pale blue
+possible frost cells, red allied danger cells. Hide the movement range while
+showing an AOE so the two overlays remain readable.
+Technical QA: `tests/spell_presentation_checks.gd` and native GPU captures from
+`tests/capture_spell_effects.gd`; galleries `build/spells-after-cast.png` and
+`build/spells-after-impact.png`, individual `build/aoe-*.png`. The capture also
+checks that the ten enhanced casts change pixels over time and leave the battle
+snapshot unchanged. This pass does not introduce replacement raster art.
+
+HD management windows now use a 1280×800 code-built layout inspired by the v2
+inventory/training proposals: deep green panels, muted gold, the project bitmap
+font, original stone frames and shared button styles. Inventory has a shared
+16-item paged bag, class compatibility, equipment comparison and a modal socket
+picker. Character development keeps separate attribute/skill budgets. Journal
+uses a quest list and a reflowed description. HD portraits and original item icons
+remain the active artwork; no composite concept PNG with baked labels is used as
+an interactive screen. A full-body equipment doll still needs separate layers.
+Switching off HD restores the Java ME management screens. Actual GPU previews
+are `build/hd-management-*.png`, produced by `tests/run_hd_management_checks.gd`
+with `-- --capture`; mouse tests also cover a 1600×900 resized window.
+
+HD menu integration reuses the existing text-free red-hood painting from
+`art/concepts/hd-menu-v1/01-main-menu-background-v1.png` as the versioned active
+`art/ui/hd-menu-v1/title-v1.png` (1672×941, opaque RGB, SHA-256 in its manifest;
+original generation prompts copied alongside). No new raster generation or
+edits were needed. Preserve the figure on the right and keep the title buttons
+in the quiet left area. The canvas is 1280×800; only the painting uses linear
+filtering. Titles, menus, settings, help and save slots use the project bitmap
+font, stone frame and button styles. Pause overlays the frozen game; title
+settings and loading retain the painting. Network remains explicitly unavailable.
+HD off and a missing title painting use the original title presentation.
+GPU previews: `build/hd-menu-title.png`, `hd-menu-pause.png`, `hd-menu-settings.png`,
+`hd-menu-load.png`, `hd-menu-save.png`, `hd-menu-controls.png`, `hd-menu-combat.png`
+and `hd-menu-resized.png`; generated by `tests/run_hd_menu_checks.gd -- --capture`.
+
+The remaining HD screens share the same 1280×800 menu surface: city, world map,
+pickup receipt and battle intro/victory/defeat. The city reuses original-277's
+text-free HD concept as `art/ui/hd-town-v1/town-v1.png` (1672×941 opaque RGB;
+source, SHA-256 and original prompts retained alongside). The world menu keeps
+the original 158×163 map geography with nearest filtering and adds large numbered
+markers and an open-destination list; it does not invent new map terrain or IDs.
+Loot groups repeated definitions by count and pages at eight rows, with a fixed
+Continue button. The legacy victory window also has a scrolling body so long
+loot cannot push Continue off screen. QA captures are `build/hd-extra-*.png`.

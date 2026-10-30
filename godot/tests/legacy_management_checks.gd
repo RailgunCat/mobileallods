@@ -92,6 +92,7 @@ func run(root, checks) -> void:
 	click.position = ui.screen_origin + Vector2(65, 24 + 17 + 5) * ui.screen_scale
 	ui._gui_input(click)
 	checks.check(ui.screen == &"items" and ui.actor() == actor and ui.candidates[0].definition_id < 36, "clicking Li opens her item carousel with equipment first")
+	_check_inventory_arrows(ui, checks)
 	select_item(ui, upgrade)
 	var old_weapon = actor.weapon
 	var comparison: Array = ui.comparison()
@@ -148,3 +149,27 @@ func run(root, checks) -> void:
 	for page in [Page.CHARACTER, Page.INVENTORY, Page.JOURNAL]: root._open_management(page)
 	checks.check(not ui.visible and not root.management.visible and root.battle.active, "combat still blocks source character, inventory and journal")
 	root._restart(false)
+
+
+func _check_inventory_arrows(ui, checks) -> void:
+	var original_size: Vector2 = ui.size
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = true
+	for extent: Vector2 in [Vector2(800, 600), Vector2(1280, 800), Vector2(900, 1100)]:
+		ui.size = extent
+		ui.selected = 1
+		ui._refresh()
+		click.position = ui.screen_origin + Vector2(50, 13) * ui.screen_scale
+		ui._gui_input(click)
+		checks.check(ui.selected == 0, "clicking the visible previous item arrow selects the preceding item at %s" % extent)
+		ui.selected = 0
+		ui._refresh()
+		click.position = ui.screen_origin + Vector2(80, 13) * ui.screen_scale
+		ui._gui_input(click)
+		checks.check(ui.selected == 1, "clicking the visible next item arrow selects the following item at %s" % extent)
+		click.position = ui.screen_origin + Vector2(30, 13) * ui.screen_scale
+		ui._gui_input(click)
+		checks.check(ui.selected == 1, "clicking the item counter does not change the selected item at %s" % extent)
+	ui.size = original_size
+	ui._position_regions()

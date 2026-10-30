@@ -112,6 +112,9 @@ func reset_interpolation() -> void:
 
 
 func animate_tick(definition: Dictionary) -> void:
+	# Preserve the pose and frame timer until Statue wears off, including the
+	# bat's continuous idle animation.
+	if petrified(): return
 	var idle: int = int(definition["idle_frame"])
 	var duration: int = int(definition["frame_ticks"][facing])
 	if facing != _animation_facing:

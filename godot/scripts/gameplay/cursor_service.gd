@@ -51,7 +51,7 @@ func resolve(game, point: Vector2, on_map: bool) -> Dictionary:
 				var plan: Dictionary = game.battle.preview(cell)
 				blocked = not plan["affordable"] or plan["path"].is_empty()
 				path = plan["path"]
-	_resolved = {"kind": kind, "spell": game.selected_spell, "blocked": blocked, "path": path}
+	_resolved = {"kind": kind, "spell": game.selected_spell, "cell": cell, "blocked": blocked, "path": path}
 	return _resolved.duplicate()
 
 func _pixels(texture: Texture2D) -> Image:

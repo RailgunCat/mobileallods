@@ -24,6 +24,7 @@ func fixture(world: Dictionary, metadata: Dictionary, table: Dictionary) -> Arra
 	game.start({"maps": [map], "constants": world["constants"], "scenes": [{"units": [[2, 56, 216, 1, 1, 0, 0, 0, 0], [0, 352, 272, 14, 8, 1, 0, 0, 0]]}]}, defs, table)
 	game.add_demo_companion()
 	var battle := Battle.new()
+	battle.seed_value = 20261026
 	battle.enemy_policy = &"defend" # Regression fixture for the stage-three runner.
 	return [game, battle]
 

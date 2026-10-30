@@ -8,6 +8,7 @@ func _run() -> void:
 	root.add_child(game)
 	await process_frame
 	game.set_process(false)
+	game.battle.seed_value = 20261026
 	game.preferences.update("music_enabled", false, false)
 	game.preferences.update("sfx_enabled", false, false)
 	var checks = preload("res://tests/gameplay_checks.gd").new()

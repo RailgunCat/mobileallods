@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "date": "2026-10-30",
+  "status": "active-when-hd-enabled",
+  "assets": [{
+    "file": "title-v1.png",
+    "source": "godot/art/concepts/hd-menu-v1/01-main-menu-background-v1.png",
+    "original_reference_image_ids": [12],
+    "role": "text-free-title-background",
+    "width": 1672,
+    "height": 941,
+    "transparent": false,
+    "filter": "linear",
+    "sha256": "79a345bb3bcbdf18e658bed5b544bdd87dba3c6397f1f399d2f5c37f55ad42c3"
+  }],
+  "layout": [1280, 800],
+  "interface": "Godot text, original stone frame and project button styles",
+  "generation": "Existing concept reused; original generation prompts copied alongside"
+}

@@ -1,0 +1,926 @@
+{
+  "version": 1,
+  "status": "concept-only",
+  "created": "2026-10-27",
+  "active_game_graphics_changed": false,
+  "assets": [
+    {
+      "file": "01-ui-controls-v1.png",
+      "status": "concept-only-not-integrated",
+      "width": 1254,
+      "height": 1254,
+      "color_type": 2,
+      "bit_depth": 8,
+      "sha256": "871a2f1f6d7245bc6b0449ae04fdc535adcd16415b3900863cf46278ca97f9dd",
+      "grid_columns": 6,
+      "grid_rows": 6,
+      "grid_is_conceptual": true,
+      "exact_crop_rectangles": null,
+      "background": "opaque dark presentation board",
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "name": "attack"
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "name": "move"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "name": "defend"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "name": "back"
+        },
+        {
+          "row": 1,
+          "column": 5,
+          "name": "magic"
+        },
+        {
+          "row": 1,
+          "column": 6,
+          "name": "shoot"
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "name": "up"
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "name": "down"
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "name": "left"
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "name": "right"
+        },
+        {
+          "row": 2,
+          "column": 5,
+          "name": "selection-pointer"
+        },
+        {
+          "row": 2,
+          "column": 6,
+          "name": "accept"
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "name": "cancel"
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "name": "close"
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "name": "plus"
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "name": "minus"
+        },
+        {
+          "row": 3,
+          "column": 5,
+          "name": "scrollbar-thumb"
+        },
+        {
+          "row": 3,
+          "column": 6,
+          "name": "more-text"
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "name": "world-map"
+        },
+        {
+          "row": 4,
+          "column": 2,
+          "name": "party-flag"
+        },
+        {
+          "row": 4,
+          "column": 3,
+          "name": "map-cursor"
+        },
+        {
+          "row": 4,
+          "column": 4,
+          "name": "map-node"
+        },
+        {
+          "row": 4,
+          "column": 5,
+          "name": "selected-map-node"
+        },
+        {
+          "row": 4,
+          "column": 6,
+          "name": "locked"
+        },
+        {
+          "row": 5,
+          "column": 1,
+          "name": "journal"
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "name": "inventory"
+        },
+        {
+          "row": 5,
+          "column": 3,
+          "name": "character-sheet"
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "name": "gold"
+        },
+        {
+          "row": 5,
+          "column": 5,
+          "name": "chest"
+        },
+        {
+          "row": 5,
+          "column": 6,
+          "name": "music"
+        },
+        {
+          "row": 6,
+          "column": 1,
+          "name": "slot-normal"
+        },
+        {
+          "row": 6,
+          "column": 2,
+          "name": "slot-selected"
+        },
+        {
+          "row": 6,
+          "column": 3,
+          "name": "slot-disabled"
+        },
+        {
+          "row": 6,
+          "column": 4,
+          "name": "sockets-empty"
+        },
+        {
+          "row": 6,
+          "column": 5,
+          "name": "sockets-filled"
+        },
+        {
+          "row": 6,
+          "column": 6,
+          "name": "hp-mp-gauges"
+        }
+      ],
+      "generator": "built-in image_gen",
+      "prompt_key": "ui"
+    },
+    {
+      "file": "02-dialogue-portraits-v1.png",
+      "status": "concept-only-not-integrated",
+      "width": 1254,
+      "height": 1254,
+      "color_type": 2,
+      "bit_depth": 8,
+      "sha256": "a16779b9ff16187d10bb8094cb9b5fc1746e7f5af76fd6de28388d341617fdc7",
+      "grid_columns": 3,
+      "grid_rows": 3,
+      "grid_is_conceptual": true,
+      "exact_crop_rectangles": null,
+      "background": "opaque dark presentation board",
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "source_image_id": 16
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "source_image_id": 17
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "source_image_id": 18
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "source_image_id": 19
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "source_image_id": 20
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "source_image_id": 21
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "source_image_id": 22
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "source_image_id": 23
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "source_image_id": 24
+        }
+      ],
+      "generator": "built-in image_gen",
+      "prompt_key": "portraits"
+    },
+    {
+      "file": "04-spells-and-status-v1.png",
+      "status": "concept-only-not-integrated",
+      "width": 1254,
+      "height": 1254,
+      "color_type": 2,
+      "bit_depth": 8,
+      "sha256": "cd110a8533397f0a0325e9667f66cff26dd17a8cc0b38a31113bd7883424d979",
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "grid_is_conceptual": true,
+      "exact_crop_rectangles": null,
+      "background": "opaque dark presentation board",
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "name": "FIRE_ARROW",
+          "spell_id": 0,
+          "source_atlas_image": 189,
+          "source_frame": 0
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "name": "HEAL",
+          "spell_id": 1,
+          "source_atlas_image": 189,
+          "source_frame": 1
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "name": "LIGHTNING",
+          "spell_id": 2,
+          "source_atlas_image": 189,
+          "source_frame": 2
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "name": "SPARK",
+          "spell_id": 3,
+          "source_atlas_image": 189,
+          "source_frame": 3
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "name": "SLOW",
+          "spell_id": 4,
+          "source_atlas_image": 189,
+          "source_frame": 4
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "name": "FROST",
+          "spell_id": 5,
+          "source_atlas_image": 189,
+          "source_frame": 5
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "name": "VAMPIRISM",
+          "spell_id": 6,
+          "source_atlas_image": 189,
+          "source_frame": 6
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "name": "METEOR",
+          "spell_id": 7,
+          "source_atlas_image": 189,
+          "source_frame": 7
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "name": "MIASMA",
+          "spell_id": 8,
+          "source_atlas_image": 189,
+          "source_frame": 8
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "name": "FIRE_WALL",
+          "spell_id": 9,
+          "source_atlas_image": 189,
+          "source_frame": 9
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "name": "FIREBALL",
+          "spell_id": 10,
+          "source_atlas_image": 189,
+          "source_frame": 10
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "name": "PETRIFY",
+          "spell_id": 11,
+          "source_atlas_image": 189,
+          "source_frame": 11
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "name": "HASTE",
+          "spell_id": 12,
+          "source_atlas_image": 189,
+          "source_frame": 12
+        },
+        {
+          "row": 4,
+          "column": 2,
+          "name": "BLESS",
+          "spell_id": 13,
+          "source_atlas_image": 189,
+          "source_frame": 13
+        },
+        {
+          "row": 4,
+          "column": 3,
+          "name": "STONE_SKIN",
+          "spell_id": 14,
+          "source_atlas_image": 189,
+          "source_frame": 14
+        },
+        {
+          "row": 4,
+          "column": 4,
+          "name": "STUN",
+          "spell_id": null,
+          "source_atlas_image": 189,
+          "source_frame": 15
+        }
+      ],
+      "generator": "built-in image_gen",
+      "prompt_key": "magic"
+    },
+    {
+      "file": "03-unit-portraits-v1.png",
+      "status": "concept-only-not-integrated",
+      "width": 1619,
+      "height": 971,
+      "color_type": 2,
+      "bit_depth": 8,
+      "sha256": "d970720fe26f6d5cd00e2055a0d6de8e8ba876bca13572a83b93f0089f2ab611",
+      "grid_columns": 5,
+      "grid_rows": 3,
+      "grid_is_conceptual": true,
+      "exact_crop_rectangles": null,
+      "background": "opaque dark presentation board",
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "source_image_id": 205,
+          "unit_type_ids": [
+            0
+          ]
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "source_image_id": 206,
+          "unit_type_ids": [
+            1
+          ]
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "source_image_id": 207,
+          "unit_type_ids": [
+            4,
+            17
+          ]
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "source_image_id": 208,
+          "unit_type_ids": [
+            9
+          ]
+        },
+        {
+          "row": 1,
+          "column": 5,
+          "source_image_id": 209,
+          "unit_type_ids": [
+            15
+          ]
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "source_image_id": 210,
+          "unit_type_ids": [
+            6
+          ]
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "source_image_id": 211,
+          "unit_type_ids": [
+            14
+          ]
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "source_image_id": 212,
+          "unit_type_ids": [
+            12
+          ]
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "source_image_id": 213,
+          "unit_type_ids": [
+            10,
+            13
+          ]
+        },
+        {
+          "row": 2,
+          "column": 5,
+          "source_image_id": 214,
+          "unit_type_ids": [
+            5
+          ]
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "source_image_id": 215,
+          "unit_type_ids": [
+            2
+          ]
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "source_image_id": 216,
+          "unit_type_ids": [
+            3
+          ]
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "source_image_id": 217,
+          "unit_type_ids": [
+            11
+          ]
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "source_image_id": 218,
+          "unit_type_ids": [
+            7
+          ]
+        },
+        {
+          "row": 3,
+          "column": 5,
+          "source_image_id": 219,
+          "unit_type_ids": [
+            8,
+            16
+          ]
+        }
+      ],
+      "generator": "built-in image_gen",
+      "prompt_key": "unit_portraits"
+    },
+    {
+      "file": "05-armor-and-robes-v1.png",
+      "status": "concept-only-not-integrated",
+      "width": 1448,
+      "height": 1086,
+      "color_type": 2,
+      "bit_depth": 8,
+      "sha256": "87c66756019ff8daad0fc4df504f1f9156b2bc053e4aa4fa7b3f1d1e77e481c9",
+      "grid_columns": 4,
+      "grid_rows": 3,
+      "grid_is_conceptual": true,
+      "exact_crop_rectangles": null,
+      "background": "opaque dark presentation board",
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "item_id": 0,
+          "name": "Кольчуга",
+          "source_image_id": 220,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "item_id": 1,
+          "name": "Полные латы",
+          "source_image_id": 221,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "item_id": 2,
+          "name": "Адамантин. доспех",
+          "source_image_id": 222,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "item_id": 3,
+          "name": "Усиленная кожа",
+          "source_image_id": 223,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "item_id": 4,
+          "name": "Пластины из черепахи",
+          "source_image_id": 224,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "item_id": 5,
+          "name": "Драконья чешуя",
+          "source_image_id": 225,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "item_id": 6,
+          "name": "Роба послушника",
+          "source_image_id": 226,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "item_id": 7,
+          "name": "Балахон травника",
+          "source_image_id": 227,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "item_id": 8,
+          "name": "Одеяние целителя",
+          "source_image_id": 228,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "item_id": 9,
+          "name": "Мантия ученика",
+          "source_image_id": 229,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "item_id": 10,
+          "name": "Мантия мага",
+          "source_image_id": 230,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "item_id": 11,
+          "name": "Мантия Владыки",
+          "source_image_id": 231,
+          "source_frame": null
+        }
+      ],
+      "generator": "built-in image_gen",
+      "prompt_key": "armor"
+    },
+    {
+      "file": "06-weapons-books-crystals-v1.png",
+      "status": "concept-only-not-integrated",
+      "width": 1322,
+      "height": 1190,
+      "color_type": 2,
+      "bit_depth": 8,
+      "sha256": "c1b9986d5976af6fbc2bface5789fcaf391b6f652f3047e3ed76070ad72a791a",
+      "grid_columns": 6,
+      "grid_rows": 5,
+      "grid_is_conceptual": true,
+      "exact_crop_rectangles": null,
+      "background": "opaque dark presentation board",
+      "cells": [
+        {
+          "row": 1,
+          "column": 1,
+          "item_id": 12,
+          "name": "Бронзовый меч",
+          "source_image_id": 232,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "item_id": 13,
+          "name": "Стальной клинок",
+          "source_image_id": 233,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "item_id": 14,
+          "name": "Метеоритный меч",
+          "source_image_id": 234,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "item_id": 15,
+          "name": "Мифрильный палаш",
+          "source_image_id": 235,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 5,
+          "item_id": 16,
+          "name": "Адамантин. палаш",
+          "source_image_id": 236,
+          "source_frame": null
+        },
+        {
+          "row": 1,
+          "column": 6,
+          "item_id": 17,
+          "name": "Алмазный меч",
+          "source_image_id": 237,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "item_id": 18,
+          "name": "Лук охотника",
+          "source_image_id": 238,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "item_id": 19,
+          "name": "Дубовый лук",
+          "source_image_id": 239,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 3,
+          "item_id": 20,
+          "name": "Лук снайпера",
+          "source_image_id": 240,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 4,
+          "item_id": 21,
+          "name": "Длинный лук",
+          "source_image_id": 241,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 5,
+          "item_id": 22,
+          "name": "Волшебный лук",
+          "source_image_id": 242,
+          "source_frame": null
+        },
+        {
+          "row": 2,
+          "column": 6,
+          "item_id": 23,
+          "name": "Лук Луголеса",
+          "source_image_id": 243,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 1,
+          "item_id": 24,
+          "name": "Руна лекаря",
+          "source_image_id": 244,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 2,
+          "item_id": 25,
+          "name": "Руна травника",
+          "source_image_id": 245,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "item_id": 26,
+          "name": "Руна 9-ти жизней",
+          "source_image_id": 246,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 4,
+          "item_id": 27,
+          "name": "Сфера целителя",
+          "source_image_id": 247,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 5,
+          "item_id": 28,
+          "name": "Сфера Благославения",
+          "source_image_id": 248,
+          "source_frame": null
+        },
+        {
+          "row": 3,
+          "column": 6,
+          "item_id": 29,
+          "name": "Сфера Вечной Жизни",
+          "source_image_id": 249,
+          "source_frame": null
+        },
+        {
+          "row": 4,
+          "column": 1,
+          "item_id": 30,
+          "name": "Книга ученика",
+          "source_image_id": 250,
+          "source_frame": null
+        },
+        {
+          "row": 4,
+          "column": 2,
+          "item_id": 31,
+          "name": "Книга фокусника",
+          "source_image_id": 251,
+          "source_frame": null
+        },
+        {
+          "row": 4,
+          "column": 3,
+          "item_id": 32,
+          "name": "Книга волшебника",
+          "source_image_id": 252,
+          "source_frame": null
+        },
+        {
+          "row": 4,
+          "column": 4,
+          "item_id": 33,
+          "name": "Книга мага",
+          "source_image_id": 253,
+          "source_frame": null
+        },
+        {
+          "row": 4,
+          "column": 5,
+          "item_id": 34,
+          "name": "Книга мастера",
+          "source_image_id": 254,
+          "source_frame": null
+        },
+        {
+          "row": 4,
+          "column": 6,
+          "item_id": 35,
+          "name": "Книга Оз",
+          "source_image_id": 255,
+          "source_frame": null
+        },
+        {
+          "row": 5,
+          "column": 1,
+          "item_id": 36,
+          "name": "Кристалл Огня",
+          "source_image_id": 257,
+          "source_frame": 0
+        },
+        {
+          "row": 5,
+          "column": 2,
+          "item_id": 37,
+          "name": "Кристалл Земли",
+          "source_image_id": 257,
+          "source_frame": 1
+        },
+        {
+          "row": 5,
+          "column": 3,
+          "item_id": 38,
+          "name": "Кристалл Воды",
+          "source_image_id": 257,
+          "source_frame": 2
+        },
+        {
+          "row": 5,
+          "column": 4,
+          "item_id": 39,
+          "name": "Кристалл Воздуха",
+          "source_image_id": 257,
+          "source_frame": 3
+        },
+        {
+          "row": 5,
+          "column": 5,
+          "item_id": 40,
+          "name": "Кристалл Астрала",
+          "source_image_id": 257,
+          "source_frame": 4
+        },
+        {
+          "row": 5,
+          "column": 6,
+          "name": "empty-socket-study",
+          "item_id": null
+        }
+      ],
+      "generator": "built-in image_gen",
+      "prompt_key": "weapons"
+    }
+  ]
+}

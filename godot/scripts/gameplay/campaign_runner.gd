@@ -44,6 +44,7 @@ var enabled: bool = false
 var data: Dictionary
 var triggers: Array = []
 var scripts: Dictionary[int, Array] = {}
+var missing_scripts: Array[int] = []
 var script_id: int = -1
 var pc: int = 0
 var modal: Dictionary = {}
@@ -67,6 +68,7 @@ func configure(session, world: Dictionary, campaign_data: Dictionary, activate: 
 	triggers = []
 	for record: Array in game.current_scene["triggers"]: triggers.append(SceneData.trigger(record))
 	scripts.clear()
+	missing_scripts.clear()
 	var entries: Array = SceneData.scripts(game.current_scene["scripts"], game.definitions["travel"]["opcode_lengths"])
 	# Original m.void_d scans in source order and stops at the first match.
 	# Map four contains two records numbered 45; the first is the hermit talk.
@@ -122,7 +124,13 @@ func _fail(message: String) -> void:
 func start_script(id: int, reason: String = "trigger") -> bool:
 	if not enabled or busy() or game.mode != &"exploration": return false
 	if not scripts.has(id):
-		_fail("Не найден сценарий %d" % id)
+		# Original m.void_d(int) leaves exploration unchanged when lookup finds
+		# no program. Recovered regions include 57 (map 5), 99/100 (map 7).
+		# Keep the flags and first-region polling order, and diagnose once per
+		# scene so standing inside a dangling region does not grow the event log.
+		if id not in missing_scripts:
+			missing_scripts.append(id)
+			_record("script_missing", {"requested_id": id, "reason": reason})
 		return false
 	script_id = id
 	pc = 0
