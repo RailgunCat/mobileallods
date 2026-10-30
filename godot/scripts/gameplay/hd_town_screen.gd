@@ -57,7 +57,7 @@ func _process(_delta: float) -> void:
 		visible = enabled
 		controller.queue_redraw()
 	if not enabled or not controller.visible: return
-	var next: String = str([controller.screen, controller.selected if is_shop else controller.town_selected, controller.message, controller.game.gold, controller.candidates.size() if is_shop else controller.lines, controller.ui_icons.revision])
+	var next: String = str([controller.screen, controller.selected if is_shop else controller.town_selected, controller.message, controller.game.gold, controller.candidates.size() if is_shop else [controller.lines, controller.body_page], controller.ui_icons.revision])
 	if next != signature:
 		signature = next
 		queue_redraw()
@@ -116,18 +116,31 @@ func _choose(index: int) -> void:
 func _tavern() -> void:
 	_panel(Rect2(38, 150, 488, 542))
 	if controller.screen == &"body":
+		var page: Dictionary = controller.current_body_page()
 		var text: String = "\n".join(controller.lines)
-		if body_key != text:
-			body_key = text
+		var key: String = str([text, page, controller.body_page])
+		if body_key != key:
+			body_key = key
 			body_scroll = 0
-		_text("Хозяин таверны", Vector2(64, 191), 24, GOLD, true)
+		if not page.is_empty():
+			var portrait: int = int(page.get("portrait", -1))
+			if portrait >= 0:
+				var texture: Texture2D = controller.portrait_texture(portrait)
+				draw_texture_rect(texture, preload("res://scripts/gameplay/ui_icons.gd").fit_rect(texture, Rect2(64, 170, 80, 88)), false)
+			_text(str(page["speaker"]), Vector2(164, 202), 24, GOLD, true, 334)
+			_text("%d / %d" % [controller.body_page + 1, controller.body_pages.size()], Vector2(164, 236), 18, MUTED)
+		else: _text("Хозяин таверны", Vector2(64, 191), 24, GOLD, true)
 		# Reflow the source text for the HD panel, without its legacy line breaks.
 		text = text.replace("\n\n", "\t").replace("\n", " ").replace("\t", "\n\n")
-		var count: int = _paragraph(text, Vector2(64, 235), 434, 11, 20, body_scroll)
-		body_limit = maxi(0, count - 11)
+		var visible_lines: int = 10 if not page.is_empty() else 11
+		var count: int = _paragraph(str(page["text"]) if not page.is_empty() else text, Vector2(64, 282 if not page.is_empty() else 235), 434, visible_lines, 20, body_scroll)
+		body_limit = maxi(0, count - visible_lines)
 		_button(Rect2(64, 601, 100, 44), "Выше", _scroll_body.bind(-8), false, body_scroll > 0)
-		_button(Rect2(174, 601, 100, 44), "Ниже", _scroll_body.bind(8), false, body_scroll + 11 < count)
-		_button(Rect2(290, 601, 208, 44), "К разговору", controller.back)
+		_button(Rect2(174, 601, 100, 44), "Ниже", _scroll_body.bind(8), false, body_scroll + visible_lines < count)
+		_button(Rect2(290, 601, 208, 44), "Далее" if not page.is_empty() and controller.body_page + 1 < controller.body_pages.size() else "В таверну", controller.confirm)
+		if not page.is_empty():
+			_button(Rect2(64, 652, 210, 30), "Реплика назад", controller.change_body_page.bind(-1), false, controller.body_page > 0)
+			_button(Rect2(290, 652, 208, 30), "В таверну", controller.back)
 	else:
 		_text("Добро пожаловать, путник.", Vector2(64, 197), 24, GOLD, true)
 		_paragraph("Здесь всегда найдутся свежие вести и работа для смелых.", Vector2(64, 235), 425, 3, 20)

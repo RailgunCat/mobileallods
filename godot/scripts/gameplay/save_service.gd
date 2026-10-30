@@ -19,6 +19,24 @@ func path(slot: int) -> String:
 func exists(slot: int) -> bool:
 	return slot >= 0 and slot < TOTAL_SLOT_COUNT and (FileAccess.file_exists(path(slot)) or FileAccess.file_exists(path(slot) + ".bak"))
 
+func slot_info(slot: int) -> Dictionary:
+	if not exists(slot): return {}
+	var target: String = path(slot) if FileAccess.file_exists(path(slot)) else path(slot) + ".bak"
+	var file := FileAccess.open(target, FileAccess.READ)
+	if file == null or file.get_length() > MAX_BYTES: return {"invalid": true}
+	var document = JSON.parse_string(file.get_as_text())
+	file.close()
+	if document is not Dictionary or document.get("format") != "allods-godot-save" or document.get("version") != VERSION or document.get("payload") is not String: return {"invalid": true}
+	if document.get("sha256") != document["payload"].sha256_text(): return {"invalid": true}
+	var payload = JSON.parse_string(document["payload"])
+	if payload is not Dictionary or payload.get("world") is not Dictionary: return {"invalid": true}
+	var location = payload["world"].get("location_id")
+	if not _integer(location) or location < -12 or location > 11: return {"invalid": true}
+	# Old version-one saves have no timestamp; their file date remains usable.
+	var saved_at = document.get("saved_at", FileAccess.get_modified_time(target))
+	if not _integer(saved_at) or saved_at <= 0: saved_at = FileAccess.get_modified_time(target)
+	return {"location_id": int(location), "saved_at": int(saved_at)}
+
 func capture(game, story, exploration) -> Dictionary:
 	if game.mode not in [&"exploration", &"game_menu"] or story.busy() or not story.enabled or game.campaign_completed:
 		error = "Сохранение доступно при исследовании, вне боя и сюжетной сцены."
@@ -44,7 +62,7 @@ func _write_slot(slot: int, game, story, exploration) -> bool:
 	var state: Dictionary = capture(game, story, exploration)
 	if state.is_empty(): return false
 	var payload: String = JSON.stringify(state, "", true, true)
-	var document := {"format": "allods-godot-save", "version": VERSION, "payload": payload, "sha256": payload.sha256_text()}
+	var document := {"format": "allods-godot-save", "version": VERSION, "payload": payload, "sha256": payload.sha256_text(), "saved_at": int(Time.get_unix_time_from_system())}
 	var encoded: String = JSON.stringify(document)
 	if encoded.to_utf8_buffer().size() > MAX_BYTES:
 		error = "Сохранение превышает допустимый размер."

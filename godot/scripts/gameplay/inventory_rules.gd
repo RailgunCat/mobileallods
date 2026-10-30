@@ -61,6 +61,30 @@ static func available(game, actor = null, kind: int = -1) -> Array:
 		result.append(item)
 	return result
 
+## Inventory views share class filtering and a quality-first display order.
+## Keep the backing bag in acquisition order for saves, rewards and shops.
+static func ordered_available(game, actor, kind: int = -1) -> Array:
+	var result: Array = []
+	var order := {ItemKind.WEAPON: 0, ItemKind.ARMOR: 1, ItemKind.CRYSTAL: 2}
+	var keys: Dictionary = {}
+	for item in available(game, actor, kind):
+		var equipped_by = owner(game, item)
+		if actor != null and equipped_by != null and equipped_by != actor: continue
+		var spec: Dictionary = definition(game, item.definition_id)
+		var category: int = int(spec["kind"])
+		# Each equipment family has three ascending source tiers. Among equal
+		# tiers, include mounted crystals in the item's value; IDs break ties.
+		keys[item.instance_id] = [order[category], -(item.definition_id % 3) if category != ItemKind.CRYSTAL else 0, -price(game, item), item.definition_id, item.instance_id]
+		result.append(item)
+	result.sort_custom(func(a, b):
+		var left: Array = keys[a.instance_id]
+		var right: Array = keys[b.instance_id]
+		for i in range(left.size()):
+			if left[i] != right[i]: return left[i] < right[i]
+		return false
+	)
+	return result
+
 
 ## Calculate an equipment preview without mutating items, stats or resources.
 static func preview_stats(game, actor, item, removing: bool = false) -> PackedInt32Array:

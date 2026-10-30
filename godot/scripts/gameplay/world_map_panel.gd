@@ -13,6 +13,8 @@ var selected: int = 0
 var town_selected: int = 0
 var screen: StringName = &"world"
 var lines: PackedStringArray = []
+var body_pages: Array = []
+var body_page: int = 0
 var scroll: int = 0
 var message: String = ""
 var map_position := Vector2(41, 48)
@@ -119,11 +121,29 @@ func _menu_regions() -> void:
 
 func _show_body(text: String) -> void:
 	screen = &"body"
+	body_pages.clear()
+	body_page = 0
 	lines = wrap_lines(text, 200)
 	scroll = 0
 	clear_regions()
-	region(Rect2(9, 294, 100, 25), show_tavern.bind(true))
+	region(Rect2(9, 294, 100, 25), confirm)
 	region(Rect2(130, 294, 100, 25), show_tavern.bind(true))
+	queue_redraw()
+
+func current_body_page() -> Dictionary:
+	return body_pages[body_page] if not body_pages.is_empty() else {}
+
+func _show_dialogue(pages: Array) -> void:
+	_show_body("")
+	body_pages = pages.duplicate(true)
+	change_body_page(0)
+	region(Rect2(20, 274, 120, 17), change_body_page.bind(-1))
+
+func change_body_page(step: int) -> void:
+	if body_pages.is_empty(): return
+	body_page = clampi(body_page + step, 0, body_pages.size() - 1)
+	lines = wrap_lines(str(current_body_page()["text"]), 200)
+	scroll = 0
 	queue_redraw()
 
 func show_rumour() -> void:
@@ -134,10 +154,7 @@ func take_quest() -> void:
 	if offer.is_empty():
 		_show_body("Новой работы пока нет.")
 		return
-	var text: PackedStringArray = []
-	for page: Dictionary in data["dialogues"][int(offer["dialogue_id"])]["pages"]:
-		text.append(str(page["speaker"]) + "\n" + str(page["text"]))
-	_show_body("\n\n".join(text))
+	_show_dialogue(data["dialogues"][int(offer["dialogue_id"])]["pages"])
 
 func navigate(step: int) -> void:
 	if screen == &"world":
@@ -147,7 +164,7 @@ func navigate(step: int) -> void:
 		_world_message()
 	elif screen in [&"town", &"tavern"]: town_selected = posmod(town_selected + step, 3)
 	elif screen == &"body" and hd_interior.active(): hd_interior._scroll_body(step)
-	else: scroll = clampi(scroll + step, 0, maxi(0, lines.size() - 18))
+	else: scroll = clampi(scroll + step, 0, maxi(0, lines.size() - (12 if not body_pages.is_empty() else 18)))
 	queue_redraw()
 
 func confirm() -> void:
@@ -169,11 +186,15 @@ func confirm() -> void:
 		if town_selected == 0: show_rumour()
 		elif town_selected == 1: take_quest()
 		else: show_town()
-	elif screen == &"body": show_tavern(true)
+	elif screen == &"body":
+		if not body_pages.is_empty() and body_page + 1 < body_pages.size(): change_body_page(1)
+		else: show_tavern(true)
 	else: show_town()
 
 func show_tavern(keep_selection: bool = false) -> void:
 	screen = &"tavern"
+	body_pages.clear()
+	body_page = 0
 	if not keep_selection: town_selected = 0
 	_menu_regions()
 	queue_redraw()
@@ -214,6 +235,14 @@ func _draw() -> void:
 		var titles: Array = ["Таверна", "Магазин", "Выход"] if screen == &"town" else ["Слухи", "Работа", "Выход"]
 		for i in range(3): write(titles[i], Vector2(108, 88 + i * 16))
 		selection_arrow(Vector2(67, 88 + town_selected * 16))
+	elif screen == &"body" and not body_pages.is_empty():
+		var page: Dictionary = current_body_page()
+		var portrait: int = int(page.get("portrait", -1))
+		if portrait >= 0: draw_portrait_rect(portrait, Rect2(20, 26, 48, 60))
+		write(str(page["speaker"]), Vector2(80, 32))
+		write("%d / %d" % [body_page + 1, body_pages.size()], Vector2(80, 60))
+		for i in range(scroll, mini(lines.size(), scroll + 12)): write(lines[i], Vector2(20, 96 + (i - scroll) * 14))
+		if body_page > 0: write("Предыдущая реплика", Vector2(20, 275))
 	else:
 		for i in range(scroll, mini(lines.size(), scroll + 18)): write(lines[i], Vector2(120 if screen == &"town_help" else 20, 30 + (i - scroll) * 14), HORIZONTAL_ALIGNMENT_CENTER if screen == &"town_help" else HORIZONTAL_ALIGNMENT_LEFT)
 	if not message.is_empty(): write(message, Vector2(120, 267), HORIZONTAL_ALIGNMENT_CENTER)

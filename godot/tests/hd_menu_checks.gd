@@ -124,6 +124,8 @@ func run(root, checks) -> void:
 	await _click(root, slots, "slot_1", checks)
 	await _click(root, slots, "slot_confirm", checks)
 	checks.check(root.saves.exists(1) and root.save_slots.message.contains("сохранена"), "HD save writes through the real save service")
+	checks.check(root.save_slots.slot_title(1).begins_with("2. ") and root.save_slots.slot_title(1).contains(":") and root.save_slots.slot_location(1) == "1. На край земли", "saving immediately refreshes the slot date and location")
+	checks.check(root.save_slots.text_width(root.save_slots.slot_title(1, true)) <= 190 and root.save_slots.text_width(root.save_slots.slot_location(1)) <= 190, "dated save labels fit the original two-line slot rows")
 	await _click(root, slots, "back", checks)
 	root.session.gold = 987
 	await _click(root, pause, "pause_5", checks)

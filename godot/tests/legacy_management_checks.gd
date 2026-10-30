@@ -83,6 +83,7 @@ func run(root, checks) -> void:
 	key(root, KEY_ESCAPE)
 	checks.check(not ui.visible and root.session.mode == &"exploration", "closing Character restores exploration")
 	var upgrade = Inventory.add(root.session, 19)
+	var best_upgrade = Inventory.add(root.session, 20)
 	var crystal = Inventory.add(root.session, 36)
 	key(root, KEY_I)
 	checks.check(ui.screen == &"party" and ui.game.party.size() == 3 and not root.management.visible, "normal I opens the complete source inventory party list")
@@ -92,6 +93,7 @@ func run(root, checks) -> void:
 	click.position = ui.screen_origin + Vector2(65, 24 + 17 + 5) * ui.screen_scale
 	ui._gui_input(click)
 	checks.check(ui.screen == &"items" and ui.actor() == actor and ui.candidates[0].definition_id < 36, "clicking Li opens her item carousel with equipment first")
+	checks.check(ui.candidates[0] == best_upgrade and ui.candidates.find(upgrade) > 0 and ui.candidates.all(func(entry): return entry.definition_id >= 36 or Inventory.definition(root.session, entry.definition_id)["hero_type"] == actor.unit_type), "legacy inventory also filters the hero's class and puts the best tier first")
 	_check_inventory_arrows(ui, checks)
 	select_item(ui, upgrade)
 	var old_weapon = actor.weapon

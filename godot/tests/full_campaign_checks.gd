@@ -80,9 +80,16 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, rew
 	if dragon == null: return
 	var battle := Battle.new()
 	checks.check(battle.begin(game, [dragon.instance_id]), "final dragon battle begins")
+	game.god_mode = true
 	dragon.dead = true
 	dragon.stats[Ids.Stat.HP] = 0
 	var gold: int = game.gold
-	checks.check(battle._check_outcome() and battle.outcome == &"ending" and game.campaign_completed, "dragon death enters campaign ending")
+	checks.check(battle._check_outcome() and not battle.finale.is_empty() and battle.outcome == &"" and not game.party[1].dead and not battle.can_input(), "dragon defeat starts its final meteor before Li dies and blocks combat input")
+	battle.advance(0.062 * (battle.FINALE_FALL_TICKS - 1))
+	checks.check(not game.party[1].dead and not game.campaign_completed, "Li stays alive until the final stone lands")
+	battle.advance(0.062)
+	checks.check(game.party[1].dead and battle.outcome == &"", "Li dies at impact before the final dialogue")
+	battle.advance(0.062 * battle.FINALE_AFTER_TICKS)
+	checks.check(battle.outcome == &"ending" and game.campaign_completed, "final meteor aftermath enters the campaign ending")
 	checks.check(game.party[1].dead and game.party[1].stats[Ids.Stat.HP] == 0 and game.gold == gold and battle.reward.is_empty(), "dragon retaliation kills Li and bypasses ordinary loot")
 	checks.check(not battle.return_to_exploration(), "ending cannot revive Li through ordinary victory recovery")

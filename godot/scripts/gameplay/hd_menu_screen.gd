@@ -221,7 +221,11 @@ func _slots() -> void:
 	_panel(Rect2(220, 90, 840, 640), true)
 	_text("Сохранить игру" if controller.saving else "Загрузить игру", Vector2(250, 142), 34, GOLD)
 	for slot in range(controller.slot_count()):
-		_button("slot_%d" % slot, Rect2(248, 180 + slot * 68, 784, 54), controller.slot_label(slot), _select_slot.bind(slot), true, controller.selected == slot)
+		var rect := Rect2(248, 180 + slot * 68, 784, 54)
+		_button("slot_%d" % slot, rect, "", _select_slot.bind(slot), true, controller.selected == slot)
+		var location: String = controller.slot_location(slot)
+		_text(controller.slot_title(slot), rect.position + Vector2(16, 24 if not location.is_empty() else 35), 23, GOLD if controller.selected == slot else INK, rect.size.x - 28)
+		if not location.is_empty(): _text(location, rect.position + Vector2(16, 46), 18, MUTED, rect.size.x - 28)
 	var lines := _lines(controller.message, 784, 19)
 	for i in range(mini(2, lines.size())): _text(lines[i], Vector2(248, 612 + i * 25), 19, GOLD)
 	_button("slot_confirm", Rect2(248, 663, 310, 46), "Сохранить" if controller.saving else "Загрузить", controller.confirm)

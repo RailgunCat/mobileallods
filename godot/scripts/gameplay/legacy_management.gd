@@ -116,13 +116,7 @@ func _refresh() -> void:
 			region(Rect2(140, 264, 80, 17), back)
 	else:
 		if screen == &"items":
-			candidates = Inventory.available(game, actor())
-			candidates.sort_custom(func(a, b):
-				var a_kind: int = int(Inventory.definition(game, a.definition_id)["kind"])
-				var b_kind: int = int(Inventory.definition(game, b.definition_id)["kind"])
-				var order := {Kind.WEAPON: 0, Kind.ARMOR: 1, Kind.CRYSTAL: 2}
-				return order[a_kind] < order[b_kind] if a_kind != b_kind else a.instance_id < b.instance_id
-			)
+			candidates = Inventory.ordered_available(game, actor())
 			selected = clampi(selected, 0, maxi(0, candidates.size() - 1))
 			region(Rect2(44, 6, 16, 16), func(): navigate(-1))
 			region(Rect2(74, 6, 16, 16), func(): navigate(1))

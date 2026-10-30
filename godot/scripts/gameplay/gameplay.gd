@@ -118,6 +118,7 @@ var continue_button: Button
 var defeat_restart_button: Button
 var campaign_data: Dictionary
 var dialogue_layer: Control
+var ending_credits: Control
 var dialogue_title: Label
 var dialogue_body: Label
 var dialogue_counter: Label
@@ -180,6 +181,9 @@ func _ready() -> void:
 	add_child(sound_effects)
 	sound_effects.configure(preferences)
 	ui_icons.configure(preferences, view.textures)
+	ending_credits = preload("res://scripts/gameplay/ending_credits.gd").new()
+	add_child(ending_credits)
+	ending_credits.finished.connect(func(): _show_main_menu(true))
 	crt_filter = CRTFilter.new()
 	add_child(crt_filter)
 	crt_filter.apply(bool(preferences.values["crt_enabled"]))
@@ -200,7 +204,10 @@ func _ready() -> void:
 	exploration.route_finished.connect(_route_finished)
 	exploration.encounter_detected.connect(_begin_battle)
 	battle.changed.connect(_refresh)
-	battle.presentation_event.connect(func(event: Dictionary): sound_effects.combat(event, battle))
+	battle.presentation_event.connect(func(event: Dictionary):
+		sound_effects.combat(event, battle)
+		if event["event"] == "final_dragon_retaliation_started": view.combat_feedback.entries.clear()
+	)
 	battle.combat_text.connect(func(point: Vector2, message: String): view.combat_feedback.add_text(point, message, battle.tick_count * 0.062))
 	battle.spell_impact.connect(func(spell: int, cell: Vector2i, tick: int):
 		sound_effects.spell_impact(spell)
@@ -631,6 +638,7 @@ func _dev_shortcut(event: InputEventKey, key: int) -> bool:
 
 
 func _restart(activate_campaign: bool = true, autosave_entry: bool = true) -> void:
+	if ending_credits != null: ending_credits.hide()
 	battle_cursor_action = &""
 	if cursors != null: cursors.invalidate()
 	if sound_effects != null: sound_effects.stop_all()
@@ -754,6 +762,7 @@ func _begin_battle(ids: Array[int]) -> void:
 
 func _finish_battle_intro() -> void:
 	if not battle.active: return
+	battle_overlay.hide_screen()
 	session.mode = &"battle"
 	_refresh()
 	if campaign.enabled: campaign.show_tutorial(2)
@@ -1041,6 +1050,9 @@ func _begin_move() -> void:
 func _process(delta: float) -> void:
 	if exploration.session == null:
 		return
+	if ending_credits.visible:
+		held_keys.clear()
+		return
 	if music != null: music.play_track(0 if main_menu.visible or _settings_from_title else 1)
 	if sound_effects != null: sound_effects.pause_world(management.visible or legacy_management.visible or world_panel.visible or shop.visible or main_menu.visible or game_menu.visible or save_slots.visible or campaign.busy())
 	if management.visible or legacy_management.visible or world_panel.visible or shop.visible or main_menu.visible or game_menu.visible or save_slots.visible:
@@ -1065,7 +1077,9 @@ func _process(delta: float) -> void:
 		_refresh_visuals()
 		return
 	if session.mode == &"ending":
-		_show_main_menu(true)
+		session.mode = &"credits"
+		main_menu.hide()
+		ending_credits.open()
 		return
 	exploration.set_direction(_keyboard_direction())
 	exploration.advance(delta)
@@ -1275,7 +1289,7 @@ func _save_slot_selected(slot: int) -> void:
 		if battle.active: return
 		if saves.save_slot(slot, session, campaign, exploration): save_slots.message = "Игра сохранена в слот %d." % (slot + 1)
 		else: save_slots.message = saves.error
-		save_slots.queue_redraw()
+		save_slots.refresh_slots()
 		return
 	var loaded: Dictionary = saves.read_slot(slot, world, metadata, table, rewards)
 	if loaded.is_empty():
@@ -1393,6 +1407,13 @@ func _input(event: InputEvent) -> void:
 	if event is not InputEventKey or event.echo:
 		return
 	var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+	if ending_credits.visible:
+		if event.pressed and key in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE, KEY_ESCAPE]: ending_credits.finish()
+		get_viewport().set_input_as_handled()
+		return
+	if not battle.finale.is_empty():
+		get_viewport().set_input_as_handled()
+		return
 	if _dev_shortcut(event, key):
 		get_viewport().set_input_as_handled()
 		return
@@ -1690,8 +1711,10 @@ func _run_checks() -> void:
 	MapFourChecks.new().run(checks, world, metadata, table, rewards, campaign_data)
 	MapFiveChecks.new().run(checks, world, metadata, table, rewards)
 	preload("res://tests/map_seven_checks.gd").new().run(checks, world, metadata, table, rewards, campaign_data)
+	preload("res://tests/map_eleven_checks.gd").new().run(checks, world, metadata, table, rewards, campaign_data)
 	preload("res://tests/mage_encounter_checks.gd").new().run(checks, world, metadata, table, rewards, campaign_data)
 	LateMapChecks.new().run(self, checks)
+	preload("res://tests/tavern_dialogue_checks.gd").new().run(self, checks)
 	CombatNavigationChecks.new().run(self, checks)
 	PresentationChecks.new().run(self, checks)
 	SpellPresentationChecks.new().run(self, checks)
@@ -1878,6 +1901,7 @@ func _capture_stage8(ending: bool) -> void:
 			actor.dead = true
 			actor.stats[Stat.HP] = 0
 			battle._check_outcome()
+			_process(0.062 * (battle.FINALE_FALL_TICKS + battle.FINALE_AFTER_TICKS))
 			_refresh()
 			break
 	else:

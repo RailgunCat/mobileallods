@@ -16,6 +16,13 @@ func clear() -> void:
 
 func add_text(point: Vector2, message: String, born: float = -1) -> void:
 	var time: float = clock if born < 0 else born
+	if message.contains("реген."):
+		# Last enemy impact and the party's regeneration can share a tick.
+		# Separate their read-only popups without delaying turn rules or RNG.
+		for entry in entries:
+			if str(entry["text"]).begins_with("-") and Vector2(entry["origin"]).distance_squared_to(point) <= 1:
+				time = maxf(time, float(entry["born"]) + 8 * STEP)
+		point += Vector2(0, 10)
 	if clock - time >= LIFETIME: return
 	entries.append({"origin": point, "text": message, "born": time})
 
@@ -47,6 +54,9 @@ func meteor_shards() -> PackedVector2Array:
 func records() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	for entry in entries:
+		if clock + 0.000000001 < float(entry["born"]): continue
 		var rise: int = maxi(0, int((clock - float(entry["born"]) + 0.000000001) / STEP))
-		result.append({"point": Vector2(entry["origin"]) - Vector2(0, rise), "text": entry["text"]})
+		var text: String = entry["text"]
+		var color := Color("ff8d76") if text.begins_with("-") else Color("8fe366") if text.begins_with("+") else Color("f2c973")
+		result.append({"point": Vector2(entry["origin"]) - Vector2(0, rise), "text": text, "color": color})
 	return result

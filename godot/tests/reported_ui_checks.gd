@@ -121,6 +121,8 @@ func _tavern_return(root, checks) -> void:
 	var rumour: int = root.session.last_rumour
 	var world_rng: Dictionary = root.session.world_rng.snapshot()
 	click(root.world_panel, Vector2(50, 305))
+	checks.check(root.world_panel.screen == &"body" and root.world_panel.body_page == 1, "mouse confirm advances the tavern reply and its speaker")
+	while root.world_panel.screen == &"body": click(root.world_panel, Vector2(50, 305))
 	checks.check(root.world_panel.screen == &"tavern" and root.world_panel.town_selected == 1, "acknowledging Work with the mouse returns to tavern choices with Work selected")
 	checks.check(root.session.last_rumour == rumour and root.session.world_rng.snapshot() == world_rng, "acknowledging a job never generates a rumour or consumes its RNG")
 	root.world_panel.show_tavern()

@@ -113,6 +113,37 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary) -> 
 	_fps(checks, world, metadata, table)
 	_meteor(checks, world, metadata, table)
 	_petrified_animation(checks, world, metadata, table)
+	_enemy_spell_regeneration(checks, world, metadata, table)
+
+func _enemy_spell_regeneration(checks, world, metadata, table) -> void:
+	var pair: Array = preload("res://tests/enemy_ai_checks.gd").new().fixture(world, metadata, table)
+	var game = pair[0]
+	var battle = pair[1]
+	var enemy = game.units[2]
+	for slot in range(Stat.LIGHT_FIRE_MAGIC, Stat.RESERVED): enemy.base_stats[slot] = 17
+	enemy.recalculate(table)
+	for actor in game.party:
+		actor.base_stats[Stat.MAX_HP] = 10000
+		actor.base_stats[Stat.HP_REGEN_PERCENT] = 10
+		actor.recalculate(table)
+		actor.stats[Stat.HP] = actor.stats[Stat.MAX_HP] - 2000
+	var target = game.hero
+	for spell in [Spell.FIRE_ARROW, Spell.LIGHTNING, Spell.SPARK, Spell.FROST, Spell.METEOR, Spell.FIREBALL]:
+		var hp: int = target.stats[Stat.HP]
+		Spells.impact(battle, enemy, spell, target.cell)
+		checks.check(target.stats[Stat.HP] < hp, "enemy damage spell %d removes HP before turn regeneration" % spell)
+	for spell in [Spell.MIASMA, Spell.FIRE_WALL]:
+		Spells.impact(battle, enemy, spell, target.cell)
+		var before_tick: int = target.stats[Stat.HP]
+		battle._tick_hazards()
+		checks.check(target.stats[Stat.HP] < before_tick, "enemy persistent spell %d removes HP on its area tick" % spell)
+		battle.hazards.clear()
+	var hp: int = target.stats[Stat.HP]
+	var periodic: Dictionary = Effects.start_turn(target, table, battle.rng)
+	checks.check(target.stats[Stat.HP] == hp + periodic["regeneration"] and periodic["regeneration"] > 0, "post-attack healing is the party's separate turn regeneration")
+	target.stats[Stat.HP] = target.stats[Stat.MAX_HP] - 2
+	checks.check(Effects.start_turn(target, table, battle.rng)["regeneration"] == 2, "regeneration popup reports only health actually restored")
+	checks.check(Effects.start_turn(target, table, battle.rng)["regeneration"] == 0, "full-health actors do not report fictional healing")
 
 
 func _petrified_animation(checks, world: Dictionary, metadata: Dictionary, table: Dictionary) -> void:

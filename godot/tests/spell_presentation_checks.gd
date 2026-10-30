@@ -15,6 +15,12 @@ func run(root, checks) -> void:
 
 
 func _particles(checks) -> void:
+	var popup := Feedback.new()
+	popup.add_text(Vector2(100, 100), "-7", 0)
+	popup.add_text(Vector2(100, 100), "+20 реген.", 0)
+	checks.check(popup.records().size() == 1 and popup.records()[0]["color"].r > popup.records()[0]["color"].g, "damage is red and regeneration cannot obscure the impact immediately")
+	popup.advance(0.5)
+	checks.check(popup.records().size() == 2 and popup.records()[1]["color"].g > popup.records()[1]["color"].r and popup.records()[0]["point"].distance_to(popup.records()[1]["point"]) >= 16, "regeneration appears later in green and apart from damage")
 	for spell in range(Spell.COUNT):
 		var reference: Array = []
 		for fps in [30, 60, 144]:

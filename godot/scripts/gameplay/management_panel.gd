@@ -252,7 +252,7 @@ func render_inventory() -> void:
 	item_list.fixed_icon_size = Vector2i(40, 40)
 	item_list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	body.add_child(item_list)
-	var candidates: Array = Inventory.available(game, unit)
+	var candidates: Array = Inventory.ordered_available(game, unit)
 	for item in candidates:
 		item_list.add_item(item_name(item.definition_id) + (" · надето" if Inventory.owner(game, item) != null else ""), icon(item.definition_id))
 		item_list.set_item_metadata(item_list.item_count - 1, item.instance_id)

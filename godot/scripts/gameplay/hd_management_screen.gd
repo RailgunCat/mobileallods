@@ -110,7 +110,7 @@ func _name(entry) -> String:
 	return str(controller.game.definitions["economy"]["item_names"][entry.definition_id])
 
 func items() -> Array:
-	return Inventory.available(controller.game, null, filter_kind)
+	return Inventory.ordered_available(controller.game, controller.actor(), filter_kind)
 
 func item():
 	return Inventory.find(controller.game, selected_item)
@@ -121,6 +121,8 @@ func _changed() -> void:
 
 func _choose_actor(index: int) -> void:
 	controller.choose_actor(index)
+	bag_page = 0
+	selected_item = -1
 	skill_page = 0
 	socket = -1
 	message = ""
@@ -284,7 +286,7 @@ func _inventory() -> void:
 	for i in range(4): _button("filter_%d" % kinds[i][0], Rect2(344 + i * 130, 160, 122, 44), kinds[i][1], _filter.bind(kinds[i][0]), true, filter_kind == kinds[i][0])
 	var bag: Array = items()
 	bag_page = clampi(bag_page, 0, maxi(0, int((bag.size() - 1) / float(PAGE_SIZE))))
-	if item() == null and not bag.is_empty(): selected_item = bag[0].instance_id
+	if item() not in bag: selected_item = bag[0].instance_id if not bag.is_empty() else -1
 	for i in range(PAGE_SIZE):
 		var rect := Rect2(344 + (i % 4) * 130, 226 + int(i / 4.0) * 98, 122, 90)
 		draw_rect(rect, Color("0b100e"))

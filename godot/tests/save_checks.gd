@@ -37,6 +37,9 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, rew
 	var state: Dictionary = saves.capture(game, story, exploration)
 	checks.check(not state["world"].has("commands") and not state["world"].has("format"), "save omits unbounded diagnostic history and debug format")
 	checks.check(saves.save_slot(0, game, story, exploration), "native save writes a slot")
+	var info: Dictionary = saves.slot_info(0)
+	checks.check(info.get("location_id", -1) == 0 and absf(float(info.get("saved_at", 0)) - Time.get_unix_time_from_system()) < 5, "slot metadata records its map and actual save date")
+	checks.check(saves.slot_info(4).is_empty(), "empty slot has no date or map")
 	var loaded: Dictionary = saves.read_slot(0, world, metadata, table, rewards)
 	checks.check(not loaded.is_empty(), "native save loads a detached validated session: " + saves.error)
 	if not loaded.is_empty():
@@ -52,15 +55,22 @@ func run(checks, world: Dictionary, metadata: Dictionary, table: Dictionary, rew
 	checks.check(saves.save_slot(0, game, story, exploration) and FileAccess.file_exists(saves.path(0) + ".bak"), "overwriting a slot retains the previous completed save")
 	DirAccess.remove_absolute(saves.path(0))
 	checks.check(saves.exists(0) and not saves.read_slot(0, world, metadata, table, rewards).is_empty(), "backup loads if an interrupted replacement left no primary file")
+	checks.check(saves.slot_info(0).get("location_id", -1) == 0, "slot caption reads the same backup as the load action")
 	checks.check(saves.save_slot(0, game, story, exploration), "slot can be saved again after backup recovery")
 	var checksum_file := FileAccess.open(saves.path(0), FileAccess.READ)
 	var document: Dictionary = JSON.parse_string(checksum_file.get_as_text())
 	checksum_file.close()
+	document.erase("saved_at")
+	checksum_file = FileAccess.open(saves.path(0), FileAccess.WRITE)
+	checksum_file.store_string(JSON.stringify(document))
+	checksum_file.close()
+	checks.check(saves.slot_info(0).get("saved_at", 0) == FileAccess.get_modified_time(saves.path(0)) and not saves.read_slot(0, world, metadata, table, rewards).is_empty(), "older saves show the file date and still load")
 	document["payload"] += " "
 	checksum_file = FileAccess.open(saves.path(0), FileAccess.WRITE)
 	checksum_file.store_string(JSON.stringify(document))
 	checksum_file.close()
 	checks.check(saves.read_slot(0, world, metadata, table, rewards).is_empty(), "checksum rejects a changed payload before restore")
+	checks.check(saves.slot_info(0).get("invalid", false), "damaged save is labelled without displaying unverified map data")
 	saves.save_slot(0, game, story, exploration)
 	for mode in [&"battle", &"battle_intro", &"victory", &"defeat", &"dialogue", &"script", &"travel"]:
 		game.mode = mode
@@ -147,16 +157,25 @@ func run_ui(root, checks) -> void:
 		var dragon_ids: Array[int] = [dragon.instance_id]
 		root._begin_battle(dragon_ids)
 		root._finish_battle_intro()
+		root.view.combat_feedback.add_text(root.session.party[1].position_pixels, "+9 реген.")
 		dragon.dead = true
 		dragon.stats[0] = 0
 		root.battle._check_outcome()
+		checks.check(root.view.combat_feedback.records().is_empty(), "final stone scene clears stale healing and combat popups")
+		checks.check(not root.battle.finale.is_empty() and not root.session.party[1].dead and not root.dialogue_layer.visible, "final battle UI shows the falling stone before death and dialogue")
+		root._process(0.062 * root.battle.FINALE_FALL_TICKS)
+		checks.check(root.session.party[1].dead and root.campaign.modal.is_empty() and not root.main_menu.visible, "final stone kills Li before the epilogue opens")
+		root._process(0.062 * root.battle.FINALE_AFTER_TICKS)
 		root._refresh()
 		checks.check(root.dialogue_layer.visible and root.campaign.modal.get("kind") == "ending" and not root.battle.active and root.battle_overlay.phase == &"", "dragon outcome shows original ending pages without ordinary victory overlay")
 		for page in range(20):
 			if root.campaign.modal.is_empty(): break
 			root.campaign.acknowledge()
 		root._process(0.062)
-		checks.check(root.main_menu.visible and not root._has_started and root.session.campaign_completed, "acknowledging final pages returns to title without reviving Li")
+		checks.check(root.ending_credits.visible and not root.main_menu.visible and root.session.mode == &"credits" and root.session.campaign_completed, "acknowledging final pages opens credits instead of the menu")
+		checks.check(root.ending_credits.text.contains("railgun_cat & OpenAI Sol 6.1"), "ending credits include the requested port authors exactly")
+		root.ending_credits.advance(1000)
+		checks.check(not root.ending_credits.visible and root.main_menu.visible and not root._has_started and root.session.party[1].dead, "credits finish at the menu without reviving Li")
 	for slot in range(root.saves.TOTAL_SLOT_COUNT):
 		for suffix in ["", ".tmp", ".bak"]:
 			if FileAccess.file_exists(root.saves.path(slot) + suffix): DirAccess.remove_absolute(root.saves.path(slot) + suffix)
@@ -183,7 +202,7 @@ func run_autosave_ui(root, checks) -> void:
 	checks.check(FileAccess.get_file_as_string(root.saves.path(auto)) == previous and not FileAccess.file_exists(root.saves.path(auto) + ".bak"), "title initialization preserves the existing autosave")
 	root.main_menu.selected = 2
 	root.main_menu.confirm()
-	checks.check(root.save_slots.slot_count() == 6 and root.save_slots.regions.size() == 8 and root.save_slots.slot_label(auto) == "Автосохранение", "load picker exposes five manual slots and the named autosave")
+	checks.check(root.save_slots.slot_count() == 6 and root.save_slots.regions.size() == 8 and root.save_slots.slot_title(auto).begins_with("Автосохранение: ") and root.save_slots.slot_location(auto) == "1. На край земли", "load picker exposes five manual slots and the dated autosave with its map")
 	root.save_slots.navigate(-1)
 	checks.check(root.save_slots.selected == auto, "keyboard navigation reaches the autosave")
 	root.save_slots.confirm()

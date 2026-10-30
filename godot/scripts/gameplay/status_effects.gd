@@ -45,5 +45,6 @@ static func start_turn(actor, table: Dictionary, rng) -> Dictionary:
 			poison["duration"] = 2 * remaining
 	actor.stats[Stat.MANA] = mini(actor.stats[Stat.MAX_MANA], actor.stats[Stat.MANA] + actor.stats[Stat.MANA_REGEN])
 	var healing: int = maxi(0, int(actor.stats[Stat.MAX_HP] * actor.stats[Stat.HP_REGEN_PERCENT] / 100.0))
+	healing = mini(healing, maxi(0, actor.stats[Stat.MAX_HP] - actor.stats[Stat.HP]))
 	actor.stats[Stat.HP] = clampi(actor.stats[Stat.HP] + healing, 0, actor.stats[Stat.MAX_HP])
 	return {"poison": damage, "regeneration": healing}

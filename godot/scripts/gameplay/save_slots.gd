@@ -8,6 +8,8 @@ var saving: bool = false
 var selected: int = 0
 var message: String = ""
 var hd_screen: Control
+var slot_details: Array[Dictionary] = []
+var location_names: Array = []
 
 func _ready() -> void:
 	super._ready()
@@ -18,10 +20,12 @@ func _ready() -> void:
 
 func open(saves, textures: Dictionary, metadata: Dictionary, write_save: bool) -> void:
 	service = saves
+	location_names = metadata["travel"]["location_names"]
 	saving = write_save
 	selected = 0
 	message = ""
 	setup(textures, metadata)
+	refresh_slots()
 	visible = true
 	hd_screen.reset()
 	clear_regions()
@@ -37,10 +41,31 @@ func open(saves, textures: Dictionary, metadata: Dictionary, write_save: bool) -
 func slot_count() -> int:
 	return service.SLOT_COUNT if saving else service.TOTAL_SLOT_COUNT
 
+func refresh_slots() -> void:
+	slot_details.clear()
+	for slot in range(service.TOTAL_SLOT_COUNT): slot_details.append(service.slot_info(slot))
+	queue_redraw()
+	if hd_screen != null: hd_screen.queue_redraw()
+
+func slot_title(slot: int, compact: bool = false) -> String:
+	var prefix: String = ("Авто: " if compact else "Автосохранение: ") if slot == service.AUTOSAVE_SLOT else "%d. " % (slot + 1)
+	var info: Dictionary = slot_details[slot]
+	if info.is_empty(): return prefix + "Пусто"
+	if info.get("invalid", false): return prefix + "Повреждено"
+	var local_time: int = int(info["saved_at"]) + int(Time.get_time_zone_from_system()["bias"]) * 60
+	var date: Dictionary = Time.get_datetime_dict_from_unix_time(local_time)
+	return prefix + "%02d.%02d.%04d %02d:%02d" % [date.day, date.month, date.year, date.hour, date.minute]
+
+func slot_location(slot: int) -> String:
+	var info: Dictionary = slot_details[slot]
+	if info.is_empty() or info.get("invalid", false): return ""
+	var location: int = int(info["location_id"])
+	if location < 0: return "Подземелье %d" % -location
+	return "%d. %s" % [location + 1, location_names[location + 1]]
+
 func slot_label(slot: int) -> String:
-	if slot == service.AUTOSAVE_SLOT:
-		return "Автосохранение" if service.exists(slot) else "Автосохранение (пусто)"
-	return "%d. %s" % [slot + 1, "Сохранённая игра" if service.exists(slot) else "Пусто"]
+	var location: String = slot_location(slot)
+	return slot_title(slot) + (" · " + location if not location.is_empty() else "")
 
 func navigate(step: int) -> void:
 	selected = posmod(selected + step, slot_count())
@@ -60,7 +85,8 @@ func _draw() -> void:
 	begin_draw()
 	write("Сохранить игру" if saving else "Загрузить игру", Vector2(120, 28), HORIZONTAL_ALIGNMENT_CENTER)
 	for slot in range(slot_count()):
-		write(slot_label(slot), Vector2(45, ROW_TOP + 3 + slot * ROW_STEP))
+		write(slot_title(slot, true), Vector2(40, ROW_TOP + slot * ROW_STEP))
+		write(slot_location(slot), Vector2(40, ROW_TOP + 13 + slot * ROW_STEP))
 	selection_arrow(Vector2(22, ROW_TOP + 1 + selected * ROW_STEP))
 	var lines: PackedStringArray = wrap_lines(message, 200)
 	for i in range(mini(3, lines.size())): write(lines[i], Vector2(20, 245 + i * 14))

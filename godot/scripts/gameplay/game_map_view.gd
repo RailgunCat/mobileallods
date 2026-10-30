@@ -383,7 +383,7 @@ func _draw_foreground_overlay() -> void:
 			var text: String = popup["text"]
 			var point: Vector2 = popup["point"]
 			point.x -= font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x * 0.5
-			draw_string(font, point.floor() + Vector2(0, font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color.GREEN)
+			draw_string(font, point.floor() + Vector2(0, font.get_ascent(13)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, popup["color"])
 
 		return
 	_draw_weather()

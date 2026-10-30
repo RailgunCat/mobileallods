@@ -52,6 +52,9 @@ var outcome: StringName = &""
 var reward: Dictionary = {}
 var feedback: Dictionary = {}
 var hazards: Array[Dictionary] = []
+var finale: Dictionary = {}
+const FINALE_FALL_TICKS: int = 14
+const FINALE_AFTER_TICKS: int = 12
 
 
 func reset() -> void:
@@ -85,6 +88,7 @@ func reset() -> void:
 	reward = {}
 	feedback = {}
 	hazards.clear()
+	finale.clear()
 
 
 func unit(id: int):
@@ -95,7 +99,7 @@ func unit(id: int):
 
 
 func busy() -> bool:
-	return not queue.is_empty() or not current.is_empty()
+	return not finale.is_empty() or not queue.is_empty() or not current.is_empty()
 
 
 func _record(kind: String, detail: Dictionary = {}) -> void:
@@ -310,7 +314,7 @@ func _start_side(side: int) -> void:
 			periodic["poison"] = 0
 		if periodic.get("poison", 0) > 0 or periodic.get("regeneration", 0) > 0: _record("periodic", {"actor": id, "result": periodic})
 		if int(periodic.get("poison", 0)) > 0: _show_combat_text(actor, "-%d" % int(periodic["poison"]))
-		if int(periodic.get("regeneration", 0)) > 0: _show_combat_text(actor, "+%d" % int(periodic["regeneration"]))
+		if int(periodic.get("regeneration", 0)) > 0: _show_combat_text(actor, "+%d реген." % int(periodic["regeneration"]))
 		if actor.stats[Stat.HP] <= 0:
 			actor.dead = true
 			_record("death", {"actor": id})
@@ -472,6 +476,10 @@ func _tick_move(actor) -> void:
 
 func _tick() -> void:
 	tick_count += 1
+	if not finale.is_empty():
+		_tick_finale()
+		changed.emit()
+		return
 	if _check_outcome(): return
 	for id in participants:
 		var actor = unit(id)
@@ -711,18 +719,26 @@ func _advance_toward(actor, plan: Dictionary) -> bool:
 
 func _check_outcome() -> bool:
 	if outcome != &"": return true
+	if not finale.is_empty(): return true
 	if session.location_id == -12 and not session.campaign_completed:
 		for id in participants:
 			var dragon = unit(id)
 			if dragon.unit_type != Ids.UnitKind.DRAGON or (not dragon.dead and dragon.stats[Stat.HP] > 0): continue
-			session.campaign_completed = true
-			dragon.dead = true
+			var companion
 			for other_id in participants:
-				var companion = unit(other_id)
-				if companion.unit_type == Ids.UnitKind.LI:
-					companion.dead = true
-					companion.stats[Stat.HP] = 0
-			_record("final_dragon_retaliation", {"target_type": Ids.UnitKind.LI})
+				if unit(other_id).unit_type == Ids.UnitKind.LI: companion = unit(other_id)
+			if companion != null:
+				# m.A()/ag.a(): the dragon's last meteor lands before Li dies.
+				queue.clear()
+				feedback = {}
+				dragon.dead = false
+				finale = {"dragon": dragon.instance_id, "target": companion.instance_id, "phase": "fall", "clock": 0}
+				current = {"actor": dragon.instance_id, "action": "cast", "spell": Spell.METEOR, "phase": "flight", "clock": 0, "flight_ticks": FINALE_FALL_TICKS, "flight_from": dragon.position_pixels, "flight_to": companion.position_pixels, "cell": companion.cell, "path": []}
+				selected_id = companion.instance_id
+				_record("final_dragon_retaliation_started", {"actor": dragon.instance_id, "target": companion.instance_id})
+				return true
+			# Debug parties without Li still reach the epilogue safely.
+			session.campaign_completed = true
 			break
 	var friendly: bool = false
 	var hostile: bool = false
@@ -754,6 +770,28 @@ func _check_outcome() -> bool:
 	session.mode = outcome
 	_record(str(outcome), {"reward": reward.duplicate(true)})
 	return true
+
+func _tick_finale() -> void:
+	finale["clock"] += 1
+	if finale["phase"] == "fall":
+		current["clock"] = int(finale["clock"])
+		if int(finale["clock"]) < FINALE_FALL_TICKS: return
+		var companion = unit(int(finale["target"]))
+		companion.dead = true
+		companion.stats[Stat.HP] = 0
+		companion.walking = false
+		companion.reset_interpolation()
+		unit(int(finale["dragon"])).dead = true
+		state[companion.instance_id]["ended"] = true
+		spell_impact.emit(Spell.METEOR, companion.cell, tick_count)
+		_record("final_dragon_retaliation", {"target_type": Ids.UnitKind.LI, "target": companion.instance_id})
+		current = {}
+		finale["phase"] = "aftermath"
+		finale["clock"] = 0
+	elif int(finale["clock"]) >= FINALE_AFTER_TICKS:
+		finale.clear()
+		session.campaign_completed = true
+		_check_outcome()
 
 
 func return_to_exploration() -> bool:

@@ -89,7 +89,17 @@ func configure(session, world: Dictionary, campaign_data: Dictionary, activate: 
 	encounter_ids.clear()
 	force_encounter = false
 	_repair_skipped_hermit_conversation()
+	_repair_survivor_collision()
 	changed.emit()
+
+func _repair_survivor_collision() -> void:
+	# Older saves retain the map-eleven survivor's footprint after scene 139.
+	# m.M(), case 2 ends with n.j(): the NPC stays visible but no longer blocks.
+	if not enabled or game.location_id != 10 or int(game.triggers[139]) != TriggerState.DISABLED: return
+	var actor = _actor(11)
+	if actor == null or actor in game.party or not actor.collision_enabled or not game.is_active(actor): return
+	_release_motion_collision(actor)
+	_record("collision_repaired", {"actor": actor.instance_id, "reason": "completed_survivor_scene"})
 
 func _repair_skipped_hermit_conversation() -> void:
 	# Old builds ran the later duplicate, disabled 45 and left the hermit
@@ -398,6 +408,7 @@ func _start_motion(operands: Dictionary) -> void:
 	var cells: Array[Vector2i] = []
 	cells.assign(result["path"])
 	if cells.is_empty():
+		_release_motion_collision(actor)
 		_record("movement_no_path", {"actor": actor.instance_id, "goal": [goal.x, goal.y]})
 		pc += 1
 		return
@@ -435,10 +446,18 @@ func _tick_motion() -> void:
 func _finish_motion(actor) -> void:
 	actor.walking = false
 	actor.reset_interpolation()
-	game.collision.occupy(actor.instance_id, actor.cell, actor.footprint)
+	_release_motion_collision(actor)
 	motion = {}
 	pc += 1
 	changed.emit()
+
+func _release_motion_collision(actor) -> void:
+	# Source m.M(), MOVE_ACTOR releases occupancy even for an empty route.
+	# Party members already ignore each other during exploration; retain their
+	# normal state. GROUP_COLLISION can explicitly block an NPC again later.
+	if actor in game.party: return
+	actor.collision_enabled = false
+	game.collision.remove(actor.instance_id)
 
 
 func snapshot() -> Dictionary:
